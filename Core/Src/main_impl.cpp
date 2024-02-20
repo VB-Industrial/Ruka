@@ -1,0 +1,378 @@
+#include "main.h"
+#include "ruka_joints.h"
+
+#include <memory>
+
+#include "cyphal/cyphal.h"
+#include "cyphal/providers/G4CAN.h"
+#include "cyphal/allocators/sys/sys_allocator.h"
+#include "cyphal/subscriptions/subscription.h"
+
+#include "uavcan/node/Heartbeat_1_0.h"
+#include "uavcan/primitive/scalar/Integer32_1_0.h"
+#include "reg/udral/physics/kinematics/rotation/Planar_0_1.h"
+#include "reg/udral/physics/kinematics/cartesian/Twist_0_1.h"
+#include "reg/udral/physics/kinematics/cartesian/State_0_1.h"
+
+#include <uavcan/_register/Access_1_0.h>
+#include <uavcan/_register/List_1_0.h>
+
+extern "C" {
+
+TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
+TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
+TYPE_ALIAS(State, reg_udral_physics_kinematics_cartesian_State_0_1)
+
+
+TYPE_ALIAS(RegisterListRequest, uavcan_register_List_Request_1_0)
+TYPE_ALIAS(RegisterListResponse, uavcan_register_List_Response_1_0)
+
+TYPE_ALIAS(RegisterAccessRequest, uavcan_register_Access_Request_1_0)
+TYPE_ALIAS(RegisterAccessResponse, uavcan_register_Access_Response_1_0)
+
+
+std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
+std::shared_ptr<CyphalInterface> interface;
+
+
+void error_handler() { Error_Handler(); }
+// Тут не нужен точный таймер, поэтому так
+uint64_t micros_64() { return HAL_GetTick() * 1000; }
+UtilityConfig utilities(micros_64, error_handler);
+
+class HBeatReader: public AbstractSubscription<HBeat> {
+public:
+    HBeatReader(InterfacePtr interface): AbstractSubscription<HBeat>(interface,
+        // Тут параметры - port_id, transfer kind или только port_id
+        uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_
+    ) {};
+    void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {
+    	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    }
+};
+
+
+HBeatReader* h_reader;
+
+class JSReader: public AbstractSubscription<JS_msg> {
+public:
+	JSReader(InterfacePtr interface): AbstractSubscription<JS_msg>(interface,
+        // Тут параметры - port_id, transfer kind или только port_id
+		JS_SUB_PORT_ID
+    ) {};
+    void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override {
+    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+    }
+};
+
+JSReader* js_reader;
+
+
+
+
+class RegisterListReader : public AbstractSubscription<RegisterListRequest> {
+public:
+    RegisterListReader(InterfacePtr interface): AbstractSubscription<RegisterListRequest>(
+        interface,
+        uavcan_register_List_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+    void handler(const RegisterListRequest::Type&, CanardRxTransfer*) override;
+};
+
+RegisterListReader* reg_list_service;
+
+class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
+public:
+    RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
+        interface,
+        uavcan_register_Access_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+    void handler(const RegisterAccessRequest::Type&, CanardRxTransfer*) override;
+};
+
+RegisterAccessReader* reg_access_service;
+
+#define TEST_REG_NAME_LEN 8
+#define MOTOR_ON_REG_NAME_LEN 11
+#define MOTOR_SPEED_REG_NAME_LEN 11
+#define MOTOR_CURRENT_LIM_REG_NAME_LEN 19
+#define MOTOR_VOLTAGE_REG_NAME_LEN 13
+
+uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg";
+uint8_t motor_current_lim_reg_name[MOTOR_CURRENT_LIM_REG_NAME_LEN + 1] = "motor.current_limit";
+uint8_t motor_speed_reg_name[MOTOR_SPEED_REG_NAME_LEN + 1] = "motor.speed";
+uint8_t motor_voltage_reg_name[MOTOR_VOLTAGE_REG_NAME_LEN + 1] = "motor.voltage";
+
+
+void RegisterAccessReader::handler(
+    const uavcan_register_Access_Request_1_0& register_access_request,
+    CanardRxTransfer* transfer
+) {
+    static uint8_t register_access_response_buf[RegisterAccessResponse::buffer_size];
+    RegisterAccessResponse::Type register_access_response = {};
+
+    register_access_response.timestamp.microsecond = micros_64();
+    uavcan_register_Value_1_0 value = {};
+    if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
+    {
+        if (register_access_request.value._tag_ == 11) {
+            if (register_access_request.value.natural8.value.elements[0] > 0) {
+            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+            } else {
+                //stop_motor();
+                //controller.electric_regulator.integral_error = 0;
+                //controller.electric_regulator.prev_error = 0;
+                //controller.velocity_regulator.integral_error = 0;
+                //controller.velocity_regulator.prev_error = 0;
+                //motor_set_speed(0);
+            }
+        }
+
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = 127; //(uint8_t)motor_get_state();
+        result.value.count = 1;
+        value.natural8 = result;
+    } else if (memcmp(register_access_request.name.name.elements, motor_speed_reg_name, MOTOR_SPEED_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 12) {
+            double new_speed = register_access_request.value.real64.value.elements[0];
+            //motor_set_speed(new_speed);
+        }
+
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 12;
+        uavcan_primitive_array_Real64_1_0 result = {};
+        result.value.elements[0] = 11; //motor_get_speed();
+        result.value.count = 1;
+        value.real64 = result;
+    } else if (memcmp(register_access_request.name.name.elements, motor_current_lim_reg_name, MOTOR_CURRENT_LIM_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 12) {
+            double new_current_lim = register_access_request.value.real64.value.elements[0];
+            if (new_current_lim > 0) {
+                //motor_set_current_lim(new_current_lim);
+            }
+        }
+
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 12;
+        uavcan_primitive_array_Real64_1_0 result = {};
+        result.value.elements[0] = 1; //motor_get_current_lim();
+        result.value.count = 1;
+        value.real64 = result;
+    } else if (memcmp(register_access_request.name.name.elements, motor_voltage_reg_name, MOTOR_VOLTAGE_REG_NAME_LEN) == 0) {
+        HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+        if (register_access_request.value._tag_ == 12) {
+            double new_voltage = register_access_request.value.real64.value.elements[0];
+            //motor_set_voltage(new_voltage);
+        }
+
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 12;
+        uavcan_primitive_array_Real64_1_0 result = {};
+        result.value.elements[0] = 1; //motor_get_current_lim();
+        result.value.count = 1;
+        value.real64 = result;
+    } else {
+        value._tag_ = 0;
+        value.empty = (uavcan_primitive_Empty_1_0){};
+    }
+    register_access_response.value = value;
+
+    interface->send_cyphal_response<RegisterAccessResponse>(
+        &register_access_response,
+        register_access_response_buf,
+        transfer,
+        uavcan_register_Access_1_0_FIXED_PORT_ID_
+    );
+}
+
+void RegisterListReader::handler(
+    const uavcan_register_List_Request_1_0& register_list_request,
+    CanardRxTransfer* transfer
+) {
+    static uint8_t register_list_response_buf[RegisterListResponse::buffer_size];
+    RegisterListResponse::Type register_list_response = {};
+
+    uavcan_register_Name_1_0 name = {};
+    uint8_t* reg_name = nullptr;
+    size_t reg_name_len = 0;
+    switch (register_list_request.index) {
+        case 0:
+            reg_name = test_reg_name;
+            reg_name_len = TEST_REG_NAME_LEN;
+            break;
+        case 1:
+            reg_name = motor_speed_reg_name;
+            reg_name_len = MOTOR_SPEED_REG_NAME_LEN;
+            break;
+        case 2:
+            reg_name = motor_current_lim_reg_name;
+            reg_name_len = MOTOR_CURRENT_LIM_REG_NAME_LEN;
+            break;
+    }
+    if (reg_name != nullptr) {
+        memcpy(name.name.elements, reg_name, reg_name_len);
+        name.name.count = reg_name_len;
+    }
+    register_list_response.name = name;
+
+    interface->send_cyphal_response<RegisterListResponse>(
+        &register_list_response,
+        register_list_response_buf,
+        transfer,
+        uavcan_register_List_1_0_FIXED_PORT_ID_
+    );
+}
+
+
+void send_JS(float* pos, float* vel, float* eff) {
+	static uint8_t js_buffer[JS_msg::buffer_size];
+	static CanardTransferID int_transfer_id = 0;
+	reg_udral_physics_kinematics_rotation_Planar_0_1 js_msg =
+	{
+			.angular_position = *pos,
+			.angular_velocity = *vel,
+			.angular_acceleration = *eff
+	};
+    interface->send_cyphal_default_msg<JS_msg>(
+		&js_msg,
+		js_buffer,
+		AGENT_JS_SUB_PORT,
+		&int_transfer_id
+	);
+}
+
+void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz)
+{
+	static uint8_t state_buffer[State::buffer_size];
+	static CanardTransferID int_transfer_id = 0;
+
+	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+
+	//uavcan_si_unit_angle_Quaternion_1_0 q_orient = {*av_1, *av_2, *av_3, *av_3};
+	reg_udral_physics_kinematics_cartesian_Pose_0_1 imu_pose;
+	imu_pose.orientation = {*qw, *qx, *qy, *qz};
+	//imu_pose.position =
+
+	reg_udral_physics_kinematics_cartesian_Twist_0_1 imu_twist;
+	imu_twist.angular = {*ax, *ay, *az};
+	imu_twist.linear = {*gx, *gy, *gz};
+
+	reg_udral_physics_kinematics_cartesian_State_0_1 state_msg =
+	{
+			.pose = imu_pose,
+			.twist = imu_twist
+	};
+    interface->send_cyphal_default_msg<State>(
+		&state_msg,
+		state_buffer,
+		AGENT_IMU_PORT,
+		&int_transfer_id
+	);
+}
+
+void heartbeat() {
+	static uint8_t hbeat_buffer[HBeat::buffer_size];
+	static CanardTransferID hbeat_transfer_id = 0;
+	static uint32_t uptime = 0;
+    uavcan_node_Heartbeat_1_0 heartbeat_msg = {
+        .uptime = uptime,
+        .health = {uavcan_node_Health_1_0_NOMINAL},
+        .mode = {uavcan_node_Mode_1_0_OPERATIONAL}
+    };
+    interface->send_cyphal_default_msg<HBeat>(
+		&heartbeat_msg,
+		hbeat_buffer,
+		uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_,
+		&hbeat_transfer_id
+	);
+    uptime += 1;
+
+}
+
+void setup_cyphal(FDCAN_HandleTypeDef* handler) {
+	interface = std::shared_ptr<CyphalInterface>(
+		         // memory location, node_id, fdcan handler, messages memory pool, utils ref
+		CyphalInterface::create<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
+	);
+	h_reader = new HBeatReader(interface);
+	js_reader = new JSReader(interface);
+	reg_access_service = new RegisterAccessReader(interface);
+}
+
+void cyphal_loop() {
+    interface->loop();
+}
+
+void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
+{
+
+	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
+	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(1125);//JS_SUB_PORT_ID
+	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID
+	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
+
+	static FDCAN_FilterTypeDef sFilterConfig;
+	static FDCAN_FilterTypeDef hbFilterConfig;
+	static FDCAN_FilterTypeDef niFilterConfig;
+
+	niFilterConfig.IdType = FDCAN_EXTENDED_ID;
+	niFilterConfig.FilterIndex = 0;
+	niFilterConfig.FilterType = FDCAN_FILTER_MASK;
+	niFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	niFilterConfig.FilterID1 =  cyphal_filter_for_node_id.extended_can_id;
+	niFilterConfig.FilterID2 =  cyphal_filter_for_node_id.extended_mask;
+
+	sFilterConfig.IdType = FDCAN_EXTENDED_ID;
+	sFilterConfig.FilterIndex = 1;
+	sFilterConfig.FilterType = FDCAN_FILTER_MASK;
+	sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	sFilterConfig.FilterID1 =  cyphal_filter_for_JS.extended_can_id;
+	sFilterConfig.FilterID2 =  cyphal_filter_for_JS.extended_mask;
+
+	hbFilterConfig.IdType = FDCAN_EXTENDED_ID;
+	hbFilterConfig.FilterIndex = 2;
+	hbFilterConfig.FilterType = FDCAN_FILTER_MASK;
+	hbFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
+	hbFilterConfig.FilterID1 =  cyphal_filter_for_HB.extended_can_id;
+	hbFilterConfig.FilterID2 =  cyphal_filter_for_HB.extended_mask;
+
+
+
+	if (HAL_FDCAN_ConfigGlobalFilter(hfdcan, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT) != HAL_OK)
+	{
+	  Error_Handler();
+	}
+	if (HAL_FDCAN_ConfigFilter(hfdcan, &niFilterConfig) != HAL_OK) {
+	  Error_Handler();
+	}
+//	if (HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK) {
+//	  Error_Handler();
+//	}
+	if (HAL_FDCAN_ConfigFilter(hfdcan, &hbFilterConfig) != HAL_OK) {
+	  Error_Handler();
+	}
+
+	if (HAL_FDCAN_ConfigTxDelayCompensation(hfdcan, 5, 0) != HAL_OK) {
+	  Error_Handler();
+	}
+	if (HAL_FDCAN_EnableTxDelayCompensation(hfdcan) != HAL_OK) {
+	  Error_Handler();
+	}
+//	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
+//	{
+//	  Error_Handler();
+//	}
+
+	HAL_FDCAN_Start(hfdcan);
+}
+
+}
+
