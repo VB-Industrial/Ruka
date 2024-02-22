@@ -17,6 +17,8 @@
 #include <uavcan/_register/Access_1_0.h>
 #include <uavcan/_register/List_1_0.h>
 
+#include <uavcan/node/GetInfo_1_0.h>
+
 extern "C" {
 
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
@@ -29,6 +31,9 @@ TYPE_ALIAS(RegisterListResponse, uavcan_register_List_Response_1_0)
 
 TYPE_ALIAS(RegisterAccessRequest, uavcan_register_Access_Request_1_0)
 TYPE_ALIAS(RegisterAccessResponse, uavcan_register_Access_Response_1_0)
+
+TYPE_ALIAS(NodeInfoRequest, uavcan_node_GetInfo_Request_1_0)
+TYPE_ALIAS(NodeInfoResponse, uavcan_node_GetInfo_Response_1_0)
 
 
 std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
@@ -82,6 +87,21 @@ public:
 
 RegisterListReader* reg_list_service;
 
+
+class NodeInfoReader : public AbstractSubscription<NodeInfoRequest> {
+public:
+    NodeInfoReader(InterfacePtr interface): AbstractSubscription<NodeInfoRequest>(
+        interface,
+        uavcan_node_GetInfo_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+    void handler(const NodeInfoRequest::Type&, CanardRxTransfer*) override;
+};
+
+NodeInfoReader* nireader;
+
+
+
 class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
 public:
     RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
@@ -94,6 +114,9 @@ public:
 
 RegisterAccessReader* reg_access_service;
 
+
+
+
 #define TEST_REG_NAME_LEN 8
 #define MOTOR_ON_REG_NAME_LEN 11
 #define MOTOR_SPEED_REG_NAME_LEN 11
@@ -104,6 +127,67 @@ uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg";
 uint8_t motor_current_lim_reg_name[MOTOR_CURRENT_LIM_REG_NAME_LEN + 1] = "motor.current_limit";
 uint8_t motor_speed_reg_name[MOTOR_SPEED_REG_NAME_LEN + 1] = "motor.speed";
 uint8_t motor_voltage_reg_name[MOTOR_VOLTAGE_REG_NAME_LEN + 1] = "motor.voltage";
+
+
+void NodeInfoReader::handler(
+    const uavcan_node_GetInfo_Request_1_0& object,
+    CanardRxTransfer* transfer
+) {
+    static uint8_t node_info_buf[NodeInfoResponse::buffer_size];
+
+    NodeInfoResponse::Type node_info_response = {
+        .protocol_version =
+            {
+                1,
+                0,
+            },
+        .hardware_version =
+            {
+                1,
+                0,
+            },
+        .software_version = {0, 1},
+        .software_vcs_revision_id = 0};
+    node_info_response.certificate_of_authenticity.count = 0;
+    node_info_response.software_image_crc.count = 0;
+
+    size_t name_len;
+    switch (5) {
+        case 2:
+            name_len = 22;
+            memcpy(node_info_response.name.elements, "org.voltbro.motor.left", name_len);
+            break;
+        case 4:
+            name_len = 23;
+            memcpy(node_info_response.name.elements, "org.voltbro.motor.right", name_len);
+            break;
+        default:
+            name_len = 7;
+            memcpy(node_info_response.name.elements, "unknown", name_len);
+            break;
+    }
+    node_info_response.name.count = name_len;
+
+    uint32_t word0 = 1;
+    uint32_t word1 = 2;
+    uint32_t word2 = 3;
+    memcpy(node_info_response.unique_id, &word0, 4);
+    memcpy(node_info_response.unique_id + 4, &word1, 4);
+    memcpy(node_info_response.unique_id + 8, &word2, 4);
+
+    node_info_response.unique_id[0] = 5;
+
+    interface->send_response<NodeInfoResponse>(
+        &node_info_response,
+        node_info_buf,
+        transfer,
+        uavcan_node_GetInfo_1_0_FIXED_PORT_ID_
+    );
+}
+
+
+
+
 
 
 void RegisterAccessReader::handler(
@@ -118,9 +202,12 @@ void RegisterAccessReader::handler(
     if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
     {
         if (register_access_request.value._tag_ == 11) {
-            if (register_access_request.value.natural8.value.elements[0] > 0) {
+            if (register_access_request.value.natural8.value.elements[0] == 2)
+            {
             	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-            } else {
+            }
+            else
+            {
                 //stop_motor();
                 //controller.electric_regulator.integral_error = 0;
                 //controller.electric_regulator.prev_error = 0;
@@ -185,12 +272,13 @@ void RegisterAccessReader::handler(
     }
     register_access_response.value = value;
 
-    interface->send_cyphal_response<RegisterAccessResponse>(
+    interface->send_response<RegisterAccessResponse>(
         &register_access_response,
         register_access_response_buf,
         transfer,
         uavcan_register_Access_1_0_FIXED_PORT_ID_
     );
+
 }
 
 void RegisterListReader::handler(
@@ -223,7 +311,7 @@ void RegisterListReader::handler(
     }
     register_list_response.name = name;
 
-    interface->send_cyphal_response<RegisterListResponse>(
+    interface->send_response<RegisterListResponse>(
         &register_list_response,
         register_list_response_buf,
         transfer,
@@ -241,7 +329,7 @@ void send_JS(float* pos, float* vel, float* eff) {
 			.angular_velocity = *vel,
 			.angular_acceleration = *eff
 	};
-    interface->send_cyphal_default_msg<JS_msg>(
+    interface->send_msg<JS_msg>(
 		&js_msg,
 		js_buffer,
 		AGENT_JS_SUB_PORT,
@@ -270,7 +358,7 @@ void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, 
 			.pose = imu_pose,
 			.twist = imu_twist
 	};
-    interface->send_cyphal_default_msg<State>(
+    interface->send_msg<State>(
 		&state_msg,
 		state_buffer,
 		AGENT_IMU_PORT,
@@ -287,7 +375,7 @@ void heartbeat() {
         .health = {uavcan_node_Health_1_0_NOMINAL},
         .mode = {uavcan_node_Mode_1_0_OPERATIONAL}
     };
-    interface->send_cyphal_default_msg<HBeat>(
+    interface->send_msg<HBeat>(
 		&heartbeat_msg,
 		hbeat_buffer,
 		uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_,
@@ -300,11 +388,12 @@ void heartbeat() {
 void setup_cyphal(FDCAN_HandleTypeDef* handler) {
 	interface = std::shared_ptr<CyphalInterface>(
 		         // memory location, node_id, fdcan handler, messages memory pool, utils ref
-		CyphalInterface::create<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
+		CyphalInterface::create_bss<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
 	);
 	h_reader = new HBeatReader(interface);
 	js_reader = new JSReader(interface);
 	reg_access_service = new RegisterAccessReader(interface);
+	nireader = new NodeInfoReader(interface);
 }
 
 void cyphal_loop() {

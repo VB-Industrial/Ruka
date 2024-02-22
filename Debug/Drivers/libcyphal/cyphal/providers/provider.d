@@ -1,5 +1,6 @@
 Drivers/libcyphal/cyphal/providers/provider.o: \
  ../Drivers/libcyphal/cyphal/providers/provider.cpp \
+ ../Drivers/libcyphal/cyphal/interfaces.h \
  ../Drivers/libcyphal/cyphal/providers/provider.h \
  ../Drivers/libcyphal/cyphal/allocators/allocator.h \
  ../Drivers/libcyphal/cyphal/definitions.h \
@@ -34,8 +35,8 @@ Drivers/libcyphal/cyphal/providers/provider.o: \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Drivers/libcyphal/libs/libcanard/canard.h \
- ../Drivers/libcyphal/cyphal/interfaces.h
+ ../Drivers/libcyphal/libs/libcanard/canard.h
+../Drivers/libcyphal/cyphal/interfaces.h:
 ../Drivers/libcyphal/cyphal/providers/provider.h:
 ../Drivers/libcyphal/cyphal/allocators/allocator.h:
 ../Drivers/libcyphal/cyphal/definitions.h:
@@ -71,4 +72,3 @@ Drivers/libcyphal/cyphal/providers/provider.o: \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
 ../Drivers/libcyphal/libs/libcanard/canard.h:
-../Drivers/libcyphal/cyphal/interfaces.h:

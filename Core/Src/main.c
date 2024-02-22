@@ -125,7 +125,7 @@ int main(void)
   {
 
       uint32_t now = HAL_GetTick();
-      if ( (now - last_hbeat) >= 100) {
+      if ( (now - last_hbeat) >= 1000) {
       	  //imu_get_quat(&quat);
       	  //imu_get_linear(&linear);
       	  //imu_get_gyro(&gyro);
