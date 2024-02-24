@@ -29,23 +29,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  12 .comment      00000043  00000000  00000000  00030240  2**0
                   CONTENTS, READONLY
- 13 .debug_info   000472a2  00000000  00000000  00030283  2**0
+ 13 .debug_info   000472a1  00000000  00000000  00030283  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00008586  00000000  00000000  00077525  2**0
+ 14 .debug_abbrev 00008586  00000000  00000000  00077524  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_aranges 00002980  00000000  00000000  0007fab0  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_rnglists 00002091  00000000  00000000  00082430  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  000311c6  00000000  00000000  000844c1  2**0
+ 17 .debug_macro  000311cb  00000000  00000000  000844c1  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00036012  00000000  00000000  000b5687  2**0
+ 18 .debug_line   00035ff2  00000000  00000000  000b568c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0012a988  00000000  00000000  000eb699  2**0
+ 19 .debug_str    0012a988  00000000  00000000  000eb67e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .debug_frame  0000ca94  00000000  00000000  00216024  2**2
+ 20 .debug_frame  0000ca94  00000000  00000000  00216008  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000063  00000000  00000000  00222ab8  2**0
+ 21 .debug_line_str 00000063  00000000  00000000  00222a9c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3186,10 +3186,10 @@ int main(void)
   joint_config joint_config;
   cyphal_can_starter(&hfdcan1);
  8001cce:	481b      	ldr	r0, [pc, #108]	; (8001d3c <main+0x9c>)
- 8001cd0:	f004 fb70 	bl	80063b4 <cyphal_can_starter>
+ 8001cd0:	f004 fb6e 	bl	80063b0 <cyphal_can_starter>
   setup_cyphal(&hfdcan1);
  8001cd4:	4819      	ldr	r0, [pc, #100]	; (8001d3c <main+0x9c>)
- 8001cd6:	f004 fac9 	bl	800626c <setup_cyphal>
+ 8001cd6:	f004 fac7 	bl	8006268 <setup_cyphal>
   HAL_Delay(10);
  8001cda:	200a      	movs	r0, #10
  8001cdc:	f007 f914 	bl	8008f08 <HAL_Delay>
@@ -3257,13 +3257,13 @@ int main(void)
  8001d2e:	6e7b      	ldr	r3, [r7, #100]	; 0x64
  8001d30:	66fb      	str	r3, [r7, #108]	; 0x6c
           heartbeat();
- 8001d32:	f004 fa6b 	bl	800620c <heartbeat>
+ 8001d32:	f004 fa69 	bl	8006208 <heartbeat>
           //sprintf(msg,"%d\n\0", q[1]);
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           //send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
       }
       cyphal_loop();
- 8001d36:	f004 fb2f 	bl	8006398 <cyphal_loop>
+ 8001d36:	f004 fb2d 	bl	8006394 <cyphal_loop>
   {
  8001d3a:	e7ef      	b.n	8001d1c <main+0x7c>
  8001d3c:	20000278 	.word	0x20000278
@@ -3638,13 +3638,13 @@ struct UtilityConfig {
  8001f2a:	68fb      	ldr	r3, [r7, #12]
  8001f2c:	68b9      	ldr	r1, [r7, #8]
  8001f2e:	4618      	mov	r0, r3
- 8001f30:	f004 fb16 	bl	8006560 <_ZNSt8functionIFyvEEC1ERKS1_>
+ 8001f30:	f004 fb14 	bl	800655c <_ZNSt8functionIFyvEEC1ERKS1_>
         error_handler(handler)
  8001f34:	68fb      	ldr	r3, [r7, #12]
  8001f36:	3310      	adds	r3, #16
  8001f38:	6879      	ldr	r1, [r7, #4]
  8001f3a:	4618      	mov	r0, r3
- 8001f3c:	f004 fb3b 	bl	80065b6 <_ZNSt8functionIFvvEEC1ERKS1_>
+ 8001f3c:	f004 fb39 	bl	80065b2 <_ZNSt8functionIFvvEEC1ERKS1_>
     {};
  8001f40:	68fb      	ldr	r3, [r7, #12]
  8001f42:	4618      	mov	r0, r3
@@ -3695,7 +3695,7 @@ inline void* alloc_f (CanardInstance* ins, size_t amount) {
  8001f80:	6039      	str	r1, [r7, #0]
     if (!_alloc_ptr) {
  8001f82:	480d      	ldr	r0, [pc, #52]	; (8001fb8 <_Z7alloc_fP14CanardInstancej+0x40>)
- 8001f84:	f004 fb42 	bl	800660c <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>
+ 8001f84:	f004 fb40 	bl	8006608 <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>
  8001f88:	4603      	mov	r3, r0
  8001f8a:	f083 0301 	eor.w	r3, r3, #1
  8001f8e:	b2db      	uxtb	r3, r3
@@ -3710,7 +3710,7 @@ inline void* alloc_f (CanardInstance* ins, size_t amount) {
     }
     return _alloc_ptr->allocate(ins, amount);
  8001f9a:	4807      	ldr	r0, [pc, #28]	; (8001fb8 <_Z7alloc_fP14CanardInstancej+0x40>)
- 8001f9c:	f004 fb47 	bl	800662e <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEptEv>
+ 8001f9c:	f004 fb45 	bl	800662a <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEptEv>
  8001fa0:	4603      	mov	r3, r0
  8001fa2:	681a      	ldr	r2, [r3, #0]
  8001fa4:	6814      	ldr	r4, [r2, #0]
@@ -3735,7 +3735,7 @@ inline void free_f (CanardInstance* ins, void* pointer) {
  8001fc4:	6039      	str	r1, [r7, #0]
     if (!_alloc_ptr) {
  8001fc6:	480d      	ldr	r0, [pc, #52]	; (8001ffc <_Z6free_fP14CanardInstancePv+0x40>)
- 8001fc8:	f004 fb20 	bl	800660c <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>
+ 8001fc8:	f004 fb1e 	bl	8006608 <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>
  8001fcc:	4603      	mov	r3, r0
  8001fce:	f083 0301 	eor.w	r3, r3, #1
  8001fd2:	b2db      	uxtb	r3, r3
@@ -3750,7 +3750,7 @@ inline void free_f (CanardInstance* ins, void* pointer) {
     }
     return _alloc_ptr->free(ins, pointer);
  8001fde:	4807      	ldr	r0, [pc, #28]	; (8001ffc <_Z6free_fP14CanardInstancePv+0x40>)
- 8001fe0:	f004 fb25 	bl	800662e <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEptEv>
+ 8001fe0:	f004 fb23 	bl	800662a <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEptEv>
  8001fe4:	4603      	mov	r3, r0
  8001fe6:	681a      	ldr	r2, [r3, #0]
  8001fe8:	3204      	adds	r2, #4
@@ -3841,7 +3841,7 @@ public:
  8002062:	3308      	adds	r3, #8
  8002064:	6839      	ldr	r1, [r7, #0]
  8002066:	4618      	mov	r0, r3
- 8002068:	f004 fafd 	bl	8006666 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EEC1IS2_vEEPS0_>
+ 8002068:	f004 fafb 	bl	8006662 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EEC1IS2_vEEPS0_>
  800206c:	68fb      	ldr	r3, [r7, #12]
  800206e:	4618      	mov	r0, r3
  8002070:	3710      	adds	r7, #16
@@ -13911,7 +13911,7 @@ static inline int8_t uavcan_node_GetInfo_Response_1_0_serialize_(
  8005a50:	687b      	ldr	r3, [r7, #4]
  8005a52:	3304      	adds	r3, #4
  8005a54:	4618      	mov	r0, r3
- 8005a56:	f000 fe37 	bl	80066c8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
+ 8005a56:	f000 fe35 	bl	80066c4 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>
  8005a5a:	687b      	ldr	r3, [r7, #4]
  8005a5c:	4618      	mov	r0, r3
  8005a5e:	3708      	adds	r7, #8
@@ -13983,7 +13983,7 @@ uint64_t micros_64() { return HAL_GetTick() * 1000; }
  8005ac6:	3304      	adds	r3, #4
  8005ac8:	4619      	mov	r1, r3
  8005aca:	4610      	mov	r0, r2
- 8005acc:	f000 fe6e 	bl	80067ac <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_>
+ 8005acc:	f000 fe6c 	bl	80067a8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_>
  8005ad0:	687b      	ldr	r3, [r7, #4]
  8005ad2:	4618      	mov	r0, r3
  8005ad4:	3708      	adds	r7, #8
@@ -14051,7 +14051,7 @@ public:
  8005b30:	f641 5255 	movw	r2, #7509	; 0x1d55
  8005b34:	4619      	mov	r1, r3
  8005b36:	4620      	mov	r0, r4
- 8005b38:	f000 fe4f 	bl	80067da <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt>
+ 8005b38:	f000 fe4d 	bl	80067d6 <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt>
  8005b3c:	f107 0308 	add.w	r3, r7, #8
  8005b40:	4618      	mov	r0, r3
  8005b42:	f7ff ffda 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
@@ -14104,7 +14104,7 @@ public:
  8005b90:	f240 4265 	movw	r2, #1125	; 0x465
  8005b94:	4619      	mov	r1, r3
  8005b96:	4620      	mov	r0, r4
- 8005b98:	f000 fe3d 	bl	8006816 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt>
+ 8005b98:	f000 fe3b 	bl	8006812 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt>
  8005b9c:	f107 0308 	add.w	r3, r7, #8
  8005ba0:	4618      	mov	r0, r3
  8005ba2:	f7ff ffaa 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
@@ -14163,7 +14163,7 @@ public:
  8005bf8:	2302      	movs	r3, #2
  8005bfa:	f44f 72d7 	mov.w	r2, #430	; 0x1ae
  8005bfe:	4620      	mov	r0, r4
- 8005c00:	f000 fe38 	bl	8006874 <_ZN20AbstractSubscriptionI15NodeInfoRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
+ 8005c00:	f000 fe36 	bl	8006870 <_ZN20AbstractSubscriptionI15NodeInfoRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
  8005c04:	f107 0308 	add.w	r3, r7, #8
  8005c08:	4618      	mov	r0, r3
  8005c0a:	f7ff ff76 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
@@ -14178,210 +14178,210 @@ public:
  8005c1e:	bf00      	nop
  8005c20:	08016a00 	.word	0x08016a00
 
-08005c24 <_ZN20RegisterAccessReaderC1ESt10shared_ptrI15CyphalInterfaceE>:
-
-
-
-class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
-public:
-    RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
- 8005c24:	b590      	push	{r4, r7, lr}
- 8005c26:	b085      	sub	sp, #20
- 8005c28:	af00      	add	r7, sp, #0
- 8005c2a:	6078      	str	r0, [r7, #4]
- 8005c2c:	6039      	str	r1, [r7, #0]
-        interface,
-        uavcan_register_Access_1_0_FIXED_PORT_ID_,
-        CanardTransferKindRequest
-    ) {};
- 8005c2e:	687c      	ldr	r4, [r7, #4]
- 8005c30:	f107 0308 	add.w	r3, r7, #8
- 8005c34:	6839      	ldr	r1, [r7, #0]
- 8005c36:	4618      	mov	r0, r3
- 8005c38:	f7ff ff4f 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 8005c3c:	f107 0108 	add.w	r1, r7, #8
- 8005c40:	2302      	movs	r3, #2
- 8005c42:	f44f 72c0 	mov.w	r2, #384	; 0x180
- 8005c46:	4620      	mov	r0, r4
- 8005c48:	f000 fe46 	bl	80068d8 <_ZN20AbstractSubscriptionI21RegisterAccessRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
- 8005c4c:	f107 0308 	add.w	r3, r7, #8
- 8005c50:	4618      	mov	r0, r3
- 8005c52:	f7ff ff52 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
- 8005c56:	4a04      	ldr	r2, [pc, #16]	; (8005c68 <_ZN20RegisterAccessReaderC1ESt10shared_ptrI15CyphalInterfaceE+0x44>)
- 8005c58:	687b      	ldr	r3, [r7, #4]
- 8005c5a:	601a      	str	r2, [r3, #0]
- 8005c5c:	687b      	ldr	r3, [r7, #4]
- 8005c5e:	4618      	mov	r0, r3
- 8005c60:	3714      	adds	r7, #20
- 8005c62:	46bd      	mov	sp, r7
- 8005c64:	bd90      	pop	{r4, r7, pc}
- 8005c66:	bf00      	nop
- 8005c68:	080169e0 	.word	0x080169e0
-
-08005c6c <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer>:
-
+08005c24 <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer>:
+NodeInfoReader* nireader;
 
 void NodeInfoReader::handler(
     const uavcan_node_GetInfo_Request_1_0& object,
     CanardRxTransfer* transfer
 ) {
- 8005c6c:	b590      	push	{r4, r7, lr}
- 8005c6e:	b0e5      	sub	sp, #404	; 0x194
- 8005c70:	af06      	add	r7, sp, #24
- 8005c72:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005c76:	f5a3 73b6 	sub.w	r3, r3, #364	; 0x16c
- 8005c7a:	6018      	str	r0, [r3, #0]
- 8005c7c:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005c80:	f5a3 73b8 	sub.w	r3, r3, #368	; 0x170
- 8005c84:	6019      	str	r1, [r3, #0]
- 8005c86:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005c8a:	f5a3 73ba 	sub.w	r3, r3, #372	; 0x174
- 8005c8e:	601a      	str	r2, [r3, #0]
+ 8005c24:	b590      	push	{r4, r7, lr}
+ 8005c26:	b0e5      	sub	sp, #404	; 0x194
+ 8005c28:	af06      	add	r7, sp, #24
+ 8005c2a:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c2e:	f5a3 73b6 	sub.w	r3, r3, #364	; 0x16c
+ 8005c32:	6018      	str	r0, [r3, #0]
+ 8005c34:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c38:	f5a3 73b8 	sub.w	r3, r3, #368	; 0x170
+ 8005c3c:	6019      	str	r1, [r3, #0]
+ 8005c3e:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c42:	f5a3 73ba 	sub.w	r3, r3, #372	; 0x174
+ 8005c46:	601a      	str	r2, [r3, #0]
     static uint8_t node_info_buf[NodeInfoResponse::buffer_size];
 
     NodeInfoResponse::Type node_info_response = {
- 8005c90:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005c94:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005c98:	4618      	mov	r0, r3
- 8005c9a:	f44f 73a8 	mov.w	r3, #336	; 0x150
- 8005c9e:	461a      	mov	r2, r3
- 8005ca0:	2100      	movs	r1, #0
- 8005ca2:	f00c fe12 	bl	80128ca <memset>
- 8005ca6:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005caa:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005cae:	2201      	movs	r2, #1
- 8005cb0:	701a      	strb	r2, [r3, #0]
- 8005cb2:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005cb6:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005cba:	2201      	movs	r2, #1
- 8005cbc:	709a      	strb	r2, [r3, #2]
- 8005cbe:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005cc2:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005cc6:	2201      	movs	r2, #1
- 8005cc8:	715a      	strb	r2, [r3, #5]
+ 8005c48:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c4c:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005c50:	4618      	mov	r0, r3
+ 8005c52:	f44f 73a8 	mov.w	r3, #336	; 0x150
+ 8005c56:	461a      	mov	r2, r3
+ 8005c58:	2100      	movs	r1, #0
+ 8005c5a:	f00c fe36 	bl	80128ca <memset>
+ 8005c5e:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c62:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005c66:	2201      	movs	r2, #1
+ 8005c68:	701a      	strb	r2, [r3, #0]
+ 8005c6a:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c6e:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005c72:	2201      	movs	r2, #1
+ 8005c74:	709a      	strb	r2, [r3, #2]
+ 8005c76:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c7a:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005c7e:	2201      	movs	r2, #1
+ 8005c80:	715a      	strb	r2, [r3, #5]
                 1,
                 0,
             },
         .software_version = {0, 1},
         .software_vcs_revision_id = 0};
     node_info_response.certificate_of_authenticity.count = 0;
- 8005cca:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005cce:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005cd2:	2200      	movs	r2, #0
- 8005cd4:	f8c3 2148 	str.w	r2, [r3, #328]	; 0x148
+ 8005c82:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c86:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005c8a:	2200      	movs	r2, #0
+ 8005c8c:	f8c3 2148 	str.w	r2, [r3, #328]	; 0x148
     node_info_response.software_image_crc.count = 0;
- 8005cd8:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005cdc:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005ce0:	2200      	movs	r2, #0
- 8005ce2:	661a      	str	r2, [r3, #96]	; 0x60
+ 8005c90:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005c94:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005c98:	2200      	movs	r2, #0
+ 8005c9a:	661a      	str	r2, [r3, #96]	; 0x60
         case 4:
             name_len = 23;
             memcpy(node_info_response.name.elements, "org.voltbro.motor.right", name_len);
             break;
         default:
             name_len = 7;
- 8005ce4:	2307      	movs	r3, #7
- 8005ce6:	f8c7 3174 	str.w	r3, [r7, #372]	; 0x174
+ 8005c9c:	2307      	movs	r3, #7
+ 8005c9e:	f8c7 3174 	str.w	r3, [r7, #372]	; 0x174
             memcpy(node_info_response.name.elements, "JOINT_5", name_len);
- 8005cea:	f107 0320 	add.w	r3, r7, #32
- 8005cee:	3320      	adds	r3, #32
- 8005cf0:	f8d7 2174 	ldr.w	r2, [r7, #372]	; 0x174
- 8005cf4:	4933      	ldr	r1, [pc, #204]	; (8005dc4 <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x158>)
- 8005cf6:	4618      	mov	r0, r3
- 8005cf8:	f00c fecd 	bl	8012a96 <memcpy>
+ 8005ca2:	f107 0320 	add.w	r3, r7, #32
+ 8005ca6:	3320      	adds	r3, #32
+ 8005ca8:	f8d7 2174 	ldr.w	r2, [r7, #372]	; 0x174
+ 8005cac:	4933      	ldr	r1, [pc, #204]	; (8005d7c <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x158>)
+ 8005cae:	4618      	mov	r0, r3
+ 8005cb0:	f00c fef1 	bl	8012a96 <memcpy>
             break;
- 8005cfc:	bf00      	nop
+ 8005cb4:	bf00      	nop
     }
     node_info_response.name.count = name_len;
- 8005cfe:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d02:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005d06:	f8d7 2174 	ldr.w	r2, [r7, #372]	; 0x174
- 8005d0a:	655a      	str	r2, [r3, #84]	; 0x54
+ 8005cb6:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005cba:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005cbe:	f8d7 2174 	ldr.w	r2, [r7, #372]	; 0x174
+ 8005cc2:	655a      	str	r2, [r3, #84]	; 0x54
 
     uint32_t word0 = 1;
- 8005d0c:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d10:	f5a3 73ae 	sub.w	r3, r3, #348	; 0x15c
- 8005d14:	2201      	movs	r2, #1
- 8005d16:	601a      	str	r2, [r3, #0]
+ 8005cc4:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005cc8:	f5a3 73ae 	sub.w	r3, r3, #348	; 0x15c
+ 8005ccc:	2201      	movs	r2, #1
+ 8005cce:	601a      	str	r2, [r3, #0]
     uint32_t word1 = 2;
- 8005d18:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d1c:	f5a3 73b0 	sub.w	r3, r3, #352	; 0x160
- 8005d20:	2202      	movs	r2, #2
- 8005d22:	601a      	str	r2, [r3, #0]
+ 8005cd0:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005cd4:	f5a3 73b0 	sub.w	r3, r3, #352	; 0x160
+ 8005cd8:	2202      	movs	r2, #2
+ 8005cda:	601a      	str	r2, [r3, #0]
     uint32_t word2 = 3;
- 8005d24:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d28:	f5a3 73b2 	sub.w	r3, r3, #356	; 0x164
- 8005d2c:	2203      	movs	r2, #3
- 8005d2e:	601a      	str	r2, [r3, #0]
- 8005d30:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d34:	f5a3 73ae 	sub.w	r3, r3, #348	; 0x15c
- 8005d38:	681a      	ldr	r2, [r3, #0]
+ 8005cdc:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005ce0:	f5a3 73b2 	sub.w	r3, r3, #356	; 0x164
+ 8005ce4:	2203      	movs	r2, #3
+ 8005ce6:	601a      	str	r2, [r3, #0]
+ 8005ce8:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005cec:	f5a3 73ae 	sub.w	r3, r3, #348	; 0x15c
+ 8005cf0:	681a      	ldr	r2, [r3, #0]
     memcpy(node_info_response.unique_id, &word0, 4);
- 8005d3a:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d3e:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005d42:	611a      	str	r2, [r3, #16]
+ 8005cf2:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005cf6:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005cfa:	611a      	str	r2, [r3, #16]
     memcpy(node_info_response.unique_id + 4, &word1, 4);
- 8005d44:	f107 0320 	add.w	r3, r7, #32
- 8005d48:	3310      	adds	r3, #16
- 8005d4a:	3304      	adds	r3, #4
- 8005d4c:	f507 72bc 	add.w	r2, r7, #376	; 0x178
- 8005d50:	f5a2 72b0 	sub.w	r2, r2, #352	; 0x160
- 8005d54:	6812      	ldr	r2, [r2, #0]
- 8005d56:	601a      	str	r2, [r3, #0]
+ 8005cfc:	f107 0320 	add.w	r3, r7, #32
+ 8005d00:	3310      	adds	r3, #16
+ 8005d02:	3304      	adds	r3, #4
+ 8005d04:	f507 72bc 	add.w	r2, r7, #376	; 0x178
+ 8005d08:	f5a2 72b0 	sub.w	r2, r2, #352	; 0x160
+ 8005d0c:	6812      	ldr	r2, [r2, #0]
+ 8005d0e:	601a      	str	r2, [r3, #0]
     memcpy(node_info_response.unique_id + 8, &word2, 4);
- 8005d58:	f107 0320 	add.w	r3, r7, #32
- 8005d5c:	3310      	adds	r3, #16
- 8005d5e:	3308      	adds	r3, #8
- 8005d60:	f507 72bc 	add.w	r2, r7, #376	; 0x178
- 8005d64:	f5a2 72b2 	sub.w	r2, r2, #356	; 0x164
- 8005d68:	6812      	ldr	r2, [r2, #0]
- 8005d6a:	601a      	str	r2, [r3, #0]
+ 8005d10:	f107 0320 	add.w	r3, r7, #32
+ 8005d14:	3310      	adds	r3, #16
+ 8005d16:	3308      	adds	r3, #8
+ 8005d18:	f507 72bc 	add.w	r2, r7, #376	; 0x178
+ 8005d1c:	f5a2 72b2 	sub.w	r2, r2, #356	; 0x164
+ 8005d20:	6812      	ldr	r2, [r2, #0]
+ 8005d22:	601a      	str	r2, [r3, #0]
 
     node_info_response.unique_id[0] = JOINT_N;
- 8005d6c:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d70:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
- 8005d74:	2205      	movs	r2, #5
- 8005d76:	741a      	strb	r2, [r3, #16]
+ 8005d24:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005d28:	f5a3 73ac 	sub.w	r3, r3, #344	; 0x158
+ 8005d2c:	2205      	movs	r2, #5
+ 8005d2e:	741a      	strb	r2, [r3, #16]
 
     interface->send_response<NodeInfoResponse>(
- 8005d78:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d7c:	f5a3 73b6 	sub.w	r3, r3, #364	; 0x16c
- 8005d80:	681b      	ldr	r3, [r3, #0]
- 8005d82:	f503 730c 	add.w	r3, r3, #560	; 0x230
- 8005d86:	4618      	mov	r0, r3
- 8005d88:	f000 fdd8 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
- 8005d8c:	4604      	mov	r4, r0
- 8005d8e:	f507 73bc 	add.w	r3, r7, #376	; 0x178
- 8005d92:	f5a3 71ba 	sub.w	r1, r3, #372	; 0x174
- 8005d96:	f107 0020 	add.w	r0, r7, #32
- 8005d9a:	2304      	movs	r3, #4
- 8005d9c:	9304      	str	r3, [sp, #16]
- 8005d9e:	4a0a      	ldr	r2, [pc, #40]	; (8005dc8 <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x15c>)
- 8005da0:	f04f 0300 	mov.w	r3, #0
- 8005da4:	e9cd 2302 	strd	r2, r3, [sp, #8]
- 8005da8:	f44f 73d7 	mov.w	r3, #430	; 0x1ae
- 8005dac:	9300      	str	r3, [sp, #0]
- 8005dae:	680b      	ldr	r3, [r1, #0]
- 8005db0:	4a06      	ldr	r2, [pc, #24]	; (8005dcc <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x160>)
- 8005db2:	4601      	mov	r1, r0
- 8005db4:	4620      	mov	r0, r4
- 8005db6:	f000 fdcd 	bl	8006954 <_ZNK15CyphalInterface13send_responseI16NodeInfoResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>
+ 8005d30:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005d34:	f5a3 73b6 	sub.w	r3, r3, #364	; 0x16c
+ 8005d38:	681b      	ldr	r3, [r3, #0]
+ 8005d3a:	f503 730c 	add.w	r3, r3, #560	; 0x230
+ 8005d3e:	4618      	mov	r0, r3
+ 8005d40:	f000 fdc8 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 8005d44:	4604      	mov	r4, r0
+ 8005d46:	f507 73bc 	add.w	r3, r7, #376	; 0x178
+ 8005d4a:	f5a3 71ba 	sub.w	r1, r3, #372	; 0x174
+ 8005d4e:	f107 0020 	add.w	r0, r7, #32
+ 8005d52:	2304      	movs	r3, #4
+ 8005d54:	9304      	str	r3, [sp, #16]
+ 8005d56:	4a0a      	ldr	r2, [pc, #40]	; (8005d80 <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x15c>)
+ 8005d58:	f04f 0300 	mov.w	r3, #0
+ 8005d5c:	e9cd 2302 	strd	r2, r3, [sp, #8]
+ 8005d60:	f44f 73d7 	mov.w	r3, #430	; 0x1ae
+ 8005d64:	9300      	str	r3, [sp, #0]
+ 8005d66:	680b      	ldr	r3, [r1, #0]
+ 8005d68:	4a06      	ldr	r2, [pc, #24]	; (8005d84 <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x160>)
+ 8005d6a:	4601      	mov	r1, r0
+ 8005d6c:	4620      	mov	r0, r4
+ 8005d6e:	f000 fdbd 	bl	80068ec <_ZNK15CyphalInterface13send_responseI16NodeInfoResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>
         &node_info_response,
         node_info_buf,
         transfer,
         uavcan_node_GetInfo_1_0_FIXED_PORT_ID_
     );
 }
- 8005dba:	bf00      	nop
- 8005dbc:	f507 77be 	add.w	r7, r7, #380	; 0x17c
- 8005dc0:	46bd      	mov	sp, r7
- 8005dc2:	bd90      	pop	{r4, r7, pc}
- 8005dc4:	080169b4 	.word	0x080169b4
- 8005dc8:	000f4240 	.word	0x000f4240
- 8005dcc:	20000480 	.word	0x20000480
+ 8005d72:	bf00      	nop
+ 8005d74:	f507 77be 	add.w	r7, r7, #380	; 0x17c
+ 8005d78:	46bd      	mov	sp, r7
+ 8005d7a:	bd90      	pop	{r4, r7, pc}
+ 8005d7c:	080169b4 	.word	0x080169b4
+ 8005d80:	000f4240 	.word	0x000f4240
+ 8005d84:	2000047c 	.word	0x2000047c
+
+08005d88 <_ZN20RegisterAccessReaderC1ESt10shared_ptrI15CyphalInterfaceE>:
+
+
+
+class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
+public:
+    RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
+ 8005d88:	b590      	push	{r4, r7, lr}
+ 8005d8a:	b085      	sub	sp, #20
+ 8005d8c:	af00      	add	r7, sp, #0
+ 8005d8e:	6078      	str	r0, [r7, #4]
+ 8005d90:	6039      	str	r1, [r7, #0]
+        interface,
+        uavcan_register_Access_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+ 8005d92:	687c      	ldr	r4, [r7, #4]
+ 8005d94:	f107 0308 	add.w	r3, r7, #8
+ 8005d98:	6839      	ldr	r1, [r7, #0]
+ 8005d9a:	4618      	mov	r0, r3
+ 8005d9c:	f7ff fe9d 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 8005da0:	f107 0108 	add.w	r1, r7, #8
+ 8005da4:	2302      	movs	r3, #2
+ 8005da6:	f44f 72c0 	mov.w	r2, #384	; 0x180
+ 8005daa:	4620      	mov	r0, r4
+ 8005dac:	f000 fde8 	bl	8006980 <_ZN20AbstractSubscriptionI21RegisterAccessRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
+ 8005db0:	f107 0308 	add.w	r3, r7, #8
+ 8005db4:	4618      	mov	r0, r3
+ 8005db6:	f7ff fea0 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 8005dba:	4a04      	ldr	r2, [pc, #16]	; (8005dcc <_ZN20RegisterAccessReaderC1ESt10shared_ptrI15CyphalInterfaceE+0x44>)
+ 8005dbc:	687b      	ldr	r3, [r7, #4]
+ 8005dbe:	601a      	str	r2, [r3, #0]
+ 8005dc0:	687b      	ldr	r3, [r7, #4]
+ 8005dc2:	4618      	mov	r0, r3
+ 8005dc4:	3714      	adds	r7, #20
+ 8005dc6:	46bd      	mov	sp, r7
+ 8005dc8:	bd90      	pop	{r4, r7, pc}
+ 8005dca:	bf00      	nop
+ 8005dcc:	080169e0 	.word	0x080169e0
 
 08005dd0 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer>:
-
+uint8_t motor_voltage_reg_name[MOTOR_VOLTAGE_REG_NAME_LEN + 1] = "motor.voltage";
 
 void RegisterAccessReader::handler(
     const uavcan_register_Access_Request_1_0& register_access_request,
@@ -14424,269 +14424,263 @@ void RegisterAccessReader::handler(
  8005e2e:	461a      	mov	r2, r3
  8005e30:	2100      	movs	r1, #0
  8005e32:	f00c fd4a 	bl	80128ca <memset>
-    uint8_t tv = 0; //PZDC!!!! temp value...
- 8005e36:	2300      	movs	r3, #0
- 8005e38:	f887 3567 	strb.w	r3, [r7, #1383]	; 0x567
+    uint64_t tv = 0; //PZDC!!!! temp value...
+ 8005e36:	f04f 0200 	mov.w	r2, #0
+ 8005e3a:	f04f 0300 	mov.w	r3, #0
+ 8005e3e:	f507 61ac 	add.w	r1, r7, #1376	; 0x560
+ 8005e42:	e9c1 2300 	strd	r2, r3, [r1]
     if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
- 8005e3c:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005e40:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005e44:	681b      	ldr	r3, [r3, #0]
- 8005e46:	2208      	movs	r2, #8
- 8005e48:	49c6      	ldr	r1, [pc, #792]	; (8006164 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x394>)
- 8005e4a:	4618      	mov	r0, r3
- 8005e4c:	f00c fd13 	bl	8012876 <memcmp>
- 8005e50:	4603      	mov	r3, r0
- 8005e52:	2b00      	cmp	r3, #0
- 8005e54:	d165      	bne.n	8005f22 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x152>
+ 8005e46:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005e4a:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005e4e:	681b      	ldr	r3, [r3, #0]
+ 8005e50:	2208      	movs	r2, #8
+ 8005e52:	49c4      	ldr	r1, [pc, #784]	; (8006164 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x394>)
+ 8005e54:	4618      	mov	r0, r3
+ 8005e56:	f00c fd0e 	bl	8012876 <memcmp>
+ 8005e5a:	4603      	mov	r3, r0
+ 8005e5c:	2b00      	cmp	r3, #0
+ 8005e5e:	d15b      	bne.n	8005f18 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x148>
     {
-        if (register_access_request.value._tag_ == 11) {
- 8005e56:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005e5a:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005e5e:	681b      	ldr	r3, [r3, #0]
- 8005e60:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
- 8005e64:	2b0b      	cmp	r3, #11
- 8005e66:	d120      	bne.n	8005eaa <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0xda>
-            if (register_access_request.value.natural8.value.elements[0] == 2)
- 8005e68:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005e6c:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005e70:	681b      	ldr	r3, [r3, #0]
- 8005e72:	f893 3108 	ldrb.w	r3, [r3, #264]	; 0x108
- 8005e76:	2b02      	cmp	r3, #2
- 8005e78:	d10b      	bne.n	8005e92 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0xc2>
-            {
-            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
- 8005e7a:	2104      	movs	r1, #4
- 8005e7c:	48ba      	ldr	r0, [pc, #744]	; (8006168 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x398>)
- 8005e7e:	f004 fa1d 	bl	800a2bc <HAL_GPIO_TogglePin>
-            	tv = 111;  //PZDC!!!
- 8005e82:	236f      	movs	r3, #111	; 0x6f
- 8005e84:	f887 3567 	strb.w	r3, [r7, #1383]	; 0x567
-            	tmc5160_move(50000);
- 8005e88:	f24c 3050 	movw	r0, #50000	; 0xc350
- 8005e8c:	f002 fd2c 	bl	80088e8 <tmc5160_move>
- 8005e90:	e00b      	b.n	8005eaa <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0xda>
-            }
-            else
-            {
-            	tv = register_access_request.value.natural8.value.elements[0];  //PZDC!!!
- 8005e92:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005e96:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005e9a:	681b      	ldr	r3, [r3, #0]
- 8005e9c:	f893 3108 	ldrb.w	r3, [r3, #264]	; 0x108
- 8005ea0:	f887 3567 	strb.w	r3, [r7, #1383]	; 0x567
-            	tmc5160_move(0);
- 8005ea4:	2000      	movs	r0, #0
- 8005ea6:	f002 fd1f 	bl	80088e8 <tmc5160_move>
-            }
+    	//tv = register_access_request.value._tag_;
+        if (register_access_request.value._tag_ == 4) {
+ 8005e60:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005e64:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005e68:	681b      	ldr	r3, [r3, #0]
+ 8005e6a:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
+ 8005e6e:	2b04      	cmp	r3, #4
+ 8005e70:	d113      	bne.n	8005e9a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0xca>
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+ 8005e72:	2104      	movs	r1, #4
+ 8005e74:	48bc      	ldr	r0, [pc, #752]	; (8006168 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x398>)
+ 8005e76:	f004 fa21 	bl	800a2bc <HAL_GPIO_TogglePin>
+//            if (register_access_request.value.integer64.value.elements[0] != 0)
+//            {
+            	tv = register_access_request.value.integer64.value.elements[0];  //PZDC!!!
+ 8005e7a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005e7e:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005e82:	681b      	ldr	r3, [r3, #0]
+ 8005e84:	e9d3 2342 	ldrd	r2, r3, [r3, #264]	; 0x108
+ 8005e88:	f507 61ac 	add.w	r1, r7, #1376	; 0x560
+ 8005e8c:	e9c1 2300 	strd	r2, r3, [r1]
+            	tmc5160_move(tv);
+ 8005e90:	f8d7 3560 	ldr.w	r3, [r7, #1376]	; 0x560
+ 8005e94:	4618      	mov	r0, r3
+ 8005e96:	f002 fd27 	bl	80088e8 <tmc5160_move>
+//            	tv = register_access_request.value.integer64.value.elements[0];  //PZDC!!!
+//            	tmc5160_move(0);
+//            }
         }
 
         register_access_response.persistent = true;
- 8005eaa:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005eae:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 8005eb2:	2201      	movs	r2, #1
- 8005eb4:	725a      	strb	r2, [r3, #9]
+ 8005e9a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005e9e:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 8005ea2:	2201      	movs	r2, #1
+ 8005ea4:	725a      	strb	r2, [r3, #9]
         register_access_response._mutable = true;
- 8005eb6:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005eba:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 8005ebe:	2201      	movs	r2, #1
- 8005ec0:	721a      	strb	r2, [r3, #8]
-        value._tag_ = 11;
- 8005ec2:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005ec6:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
- 8005eca:	220b      	movs	r2, #11
- 8005ecc:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
-        uavcan_primitive_array_Natural8_1_0 result = {};
- 8005ed0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005ed4:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005ed8:	4618      	mov	r0, r3
- 8005eda:	f44f 7382 	mov.w	r3, #260	; 0x104
- 8005ede:	461a      	mov	r2, r3
- 8005ee0:	2100      	movs	r1, #0
- 8005ee2:	f00c fcf2 	bl	80128ca <memset>
+ 8005ea6:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005eaa:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 8005eae:	2201      	movs	r2, #1
+ 8005eb0:	721a      	strb	r2, [r3, #8]
+        value._tag_ = 4;
+ 8005eb2:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005eb6:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
+ 8005eba:	2204      	movs	r2, #4
+ 8005ebc:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
+        uavcan_primitive_array_Integer64_1_0 result = {};
+ 8005ec0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005ec4:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8005ec8:	4618      	mov	r0, r3
+ 8005eca:	f44f 7384 	mov.w	r3, #264	; 0x108
+ 8005ece:	461a      	mov	r2, r3
+ 8005ed0:	2100      	movs	r1, #0
+ 8005ed2:	f00c fcfa 	bl	80128ca <memset>
         result.value.elements[0] = tv; //PZDC!!!
- 8005ee6:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005eea:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005eee:	f897 2567 	ldrb.w	r2, [r7, #1383]	; 0x567
- 8005ef2:	701a      	strb	r2, [r3, #0]
+ 8005ed6:	f507 63ac 	add.w	r3, r7, #1376	; 0x560
+ 8005eda:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 8005ede:	f507 61ad 	add.w	r1, r7, #1384	; 0x568
+ 8005ee2:	f5a1 61ab 	sub.w	r1, r1, #1368	; 0x558
+ 8005ee6:	e9c1 2300 	strd	r2, r3, [r1]
         result.value.count = 1;
- 8005ef4:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005ef8:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005efc:	2201      	movs	r2, #1
- 8005efe:	f8c3 2100 	str.w	r2, [r3, #256]	; 0x100
-        value.natural8 = result;
- 8005f02:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f06:	f5a3 628a 	sub.w	r2, r3, #1104	; 0x450
- 8005f0a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f0e:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005f12:	4610      	mov	r0, r2
- 8005f14:	4619      	mov	r1, r3
- 8005f16:	f44f 7382 	mov.w	r3, #260	; 0x104
- 8005f1a:	461a      	mov	r2, r3
- 8005f1c:	f00c fdbb 	bl	8012a96 <memcpy>
- 8005f20:	e13b      	b.n	800619a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3ca>
+ 8005eea:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005eee:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8005ef2:	2201      	movs	r2, #1
+ 8005ef4:	f8c3 2100 	str.w	r2, [r3, #256]	; 0x100
+        value.integer64 = result;
+ 8005ef8:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005efc:	f5a3 628a 	sub.w	r2, r3, #1104	; 0x450
+ 8005f00:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f04:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8005f08:	4610      	mov	r0, r2
+ 8005f0a:	4619      	mov	r1, r3
+ 8005f0c:	f44f 7384 	mov.w	r3, #264	; 0x108
+ 8005f10:	461a      	mov	r2, r3
+ 8005f12:	f00c fdc0 	bl	8012a96 <memcpy>
+ 8005f16:	e13e      	b.n	8006196 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3c6>
     } else if (memcmp(register_access_request.name.name.elements, motor_speed_reg_name, MOTOR_SPEED_REG_NAME_LEN) == 0) {
- 8005f22:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f26:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005f2a:	681b      	ldr	r3, [r3, #0]
- 8005f2c:	220b      	movs	r2, #11
- 8005f2e:	498f      	ldr	r1, [pc, #572]	; (800616c <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x39c>)
- 8005f30:	4618      	mov	r0, r3
- 8005f32:	f00c fca0 	bl	8012876 <memcmp>
- 8005f36:	4603      	mov	r3, r0
- 8005f38:	2b00      	cmp	r3, #0
- 8005f3a:	d151      	bne.n	8005fe0 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x210>
+ 8005f18:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f1c:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005f20:	681b      	ldr	r3, [r3, #0]
+ 8005f22:	220b      	movs	r2, #11
+ 8005f24:	4991      	ldr	r1, [pc, #580]	; (800616c <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x39c>)
+ 8005f26:	4618      	mov	r0, r3
+ 8005f28:	f00c fca5 	bl	8012876 <memcmp>
+ 8005f2c:	4603      	mov	r3, r0
+ 8005f2e:	2b00      	cmp	r3, #0
+ 8005f30:	d15a      	bne.n	8005fe8 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x218>
         if (register_access_request.value._tag_ == 12) {
- 8005f3c:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f40:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005f44:	681b      	ldr	r3, [r3, #0]
- 8005f46:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
- 8005f4a:	2b0c      	cmp	r3, #12
- 8005f4c:	d10a      	bne.n	8005f64 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x194>
+ 8005f32:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f36:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005f3a:	681b      	ldr	r3, [r3, #0]
+ 8005f3c:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
+ 8005f40:	2b0c      	cmp	r3, #12
+ 8005f42:	d10a      	bne.n	8005f5a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x18a>
             double new_speed = register_access_request.value.real64.value.elements[0];
- 8005f4e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f52:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005f56:	681b      	ldr	r3, [r3, #0]
- 8005f58:	e9d3 2342 	ldrd	r2, r3, [r3, #264]	; 0x108
- 8005f5c:	f507 61a9 	add.w	r1, r7, #1352	; 0x548
- 8005f60:	e9c1 2300 	strd	r2, r3, [r1]
+ 8005f44:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f48:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005f4c:	681b      	ldr	r3, [r3, #0]
+ 8005f4e:	e9d3 2342 	ldrd	r2, r3, [r3, #264]	; 0x108
+ 8005f52:	f507 61a9 	add.w	r1, r7, #1352	; 0x548
+ 8005f56:	e9c1 2300 	strd	r2, r3, [r1]
             //motor_set_speed(new_speed);
         }
 
         register_access_response.persistent = true;
- 8005f64:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f68:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 8005f6c:	2201      	movs	r2, #1
- 8005f6e:	725a      	strb	r2, [r3, #9]
+ 8005f5a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f5e:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 8005f62:	2201      	movs	r2, #1
+ 8005f64:	725a      	strb	r2, [r3, #9]
         register_access_response._mutable = true;
- 8005f70:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f74:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 8005f78:	2201      	movs	r2, #1
- 8005f7a:	721a      	strb	r2, [r3, #8]
+ 8005f66:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f6a:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 8005f6e:	2201      	movs	r2, #1
+ 8005f70:	721a      	strb	r2, [r3, #8]
         value._tag_ = 12;
- 8005f7c:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f80:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
- 8005f84:	220c      	movs	r2, #12
- 8005f86:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
+ 8005f72:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f76:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
+ 8005f7a:	220c      	movs	r2, #12
+ 8005f7c:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
         uavcan_primitive_array_Real64_1_0 result = {};
- 8005f8a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005f8e:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005f92:	4618      	mov	r0, r3
- 8005f94:	f44f 7384 	mov.w	r3, #264	; 0x108
- 8005f98:	461a      	mov	r2, r3
- 8005f9a:	2100      	movs	r1, #0
- 8005f9c:	f00c fc95 	bl	80128ca <memset>
-        result.value.elements[0] = 11; //motor_get_speed();
- 8005fa0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005fa4:	f5a3 61ab 	sub.w	r1, r3, #1368	; 0x558
- 8005fa8:	f04f 0200 	mov.w	r2, #0
- 8005fac:	4b70      	ldr	r3, [pc, #448]	; (8006170 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a0>)
- 8005fae:	e9c1 2300 	strd	r2, r3, [r1]
+ 8005f80:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f84:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8005f88:	4618      	mov	r0, r3
+ 8005f8a:	f44f 7384 	mov.w	r3, #264	; 0x108
+ 8005f8e:	461a      	mov	r2, r3
+ 8005f90:	2100      	movs	r1, #0
+ 8005f92:	f00c fc9a 	bl	80128ca <memset>
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+ 8005f96:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005f9a:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005f9e:	681b      	ldr	r3, [r3, #0]
+ 8005fa0:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
+ 8005fa4:	4618      	mov	r0, r3
+ 8005fa6:	f7fa fad5 	bl	8000554 <__aeabi_ui2d>
+ 8005faa:	4602      	mov	r2, r0
+ 8005fac:	460b      	mov	r3, r1
+ 8005fae:	f507 61ad 	add.w	r1, r7, #1384	; 0x568
+ 8005fb2:	f5a1 61ab 	sub.w	r1, r1, #1368	; 0x558
+ 8005fb6:	e9c1 2300 	strd	r2, r3, [r1]
         result.value.count = 1;
- 8005fb2:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005fb6:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005fba:	2201      	movs	r2, #1
- 8005fbc:	f8c3 2100 	str.w	r2, [r3, #256]	; 0x100
+ 8005fba:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005fbe:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8005fc2:	2201      	movs	r2, #1
+ 8005fc4:	f8c3 2100 	str.w	r2, [r3, #256]	; 0x100
         value.real64 = result;
- 8005fc0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005fc4:	f5a3 628a 	sub.w	r2, r3, #1104	; 0x450
  8005fc8:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005fcc:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8005fd0:	4610      	mov	r0, r2
- 8005fd2:	4619      	mov	r1, r3
- 8005fd4:	f44f 7384 	mov.w	r3, #264	; 0x108
- 8005fd8:	461a      	mov	r2, r3
- 8005fda:	f00c fd5c 	bl	8012a96 <memcpy>
- 8005fde:	e0dc      	b.n	800619a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3ca>
+ 8005fcc:	f5a3 628a 	sub.w	r2, r3, #1104	; 0x450
+ 8005fd0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005fd4:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8005fd8:	4610      	mov	r0, r2
+ 8005fda:	4619      	mov	r1, r3
+ 8005fdc:	f44f 7384 	mov.w	r3, #264	; 0x108
+ 8005fe0:	461a      	mov	r2, r3
+ 8005fe2:	f00c fd58 	bl	8012a96 <memcpy>
+ 8005fe6:	e0d6      	b.n	8006196 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3c6>
     } else if (memcmp(register_access_request.name.name.elements, motor_current_lim_reg_name, MOTOR_CURRENT_LIM_REG_NAME_LEN) == 0) {
- 8005fe0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005fe4:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8005fe8:	681b      	ldr	r3, [r3, #0]
- 8005fea:	2213      	movs	r2, #19
- 8005fec:	4961      	ldr	r1, [pc, #388]	; (8006174 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a4>)
- 8005fee:	4618      	mov	r0, r3
- 8005ff0:	f00c fc41 	bl	8012876 <memcmp>
- 8005ff4:	4603      	mov	r3, r0
- 8005ff6:	2b00      	cmp	r3, #0
- 8005ff8:	d151      	bne.n	800609e <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x2ce>
+ 8005fe8:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8005fec:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 8005ff0:	681b      	ldr	r3, [r3, #0]
+ 8005ff2:	2213      	movs	r2, #19
+ 8005ff4:	495e      	ldr	r1, [pc, #376]	; (8006170 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a0>)
+ 8005ff6:	4618      	mov	r0, r3
+ 8005ff8:	f00c fc3d 	bl	8012876 <memcmp>
+ 8005ffc:	4603      	mov	r3, r0
+ 8005ffe:	2b00      	cmp	r3, #0
+ 8006000:	d151      	bne.n	80060a6 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x2d6>
         if (register_access_request.value._tag_ == 12) {
- 8005ffa:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8005ffe:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8006002:	681b      	ldr	r3, [r3, #0]
- 8006004:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
- 8006008:	2b0c      	cmp	r3, #12
- 800600a:	d10a      	bne.n	8006022 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x252>
+ 8006002:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8006006:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 800600a:	681b      	ldr	r3, [r3, #0]
+ 800600c:	f893 3310 	ldrb.w	r3, [r3, #784]	; 0x310
+ 8006010:	2b0c      	cmp	r3, #12
+ 8006012:	d10a      	bne.n	800602a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x25a>
             double new_current_lim = register_access_request.value.real64.value.elements[0];
- 800600c:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006010:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 8006014:	681b      	ldr	r3, [r3, #0]
- 8006016:	e9d3 2342 	ldrd	r2, r3, [r3, #264]	; 0x108
- 800601a:	f507 61aa 	add.w	r1, r7, #1360	; 0x550
- 800601e:	e9c1 2300 	strd	r2, r3, [r1]
+ 8006014:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8006018:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 800601c:	681b      	ldr	r3, [r3, #0]
+ 800601e:	e9d3 2342 	ldrd	r2, r3, [r3, #264]	; 0x108
+ 8006022:	f507 61aa 	add.w	r1, r7, #1360	; 0x550
+ 8006026:	e9c1 2300 	strd	r2, r3, [r1]
             if (new_current_lim > 0) {
                 //motor_set_current_lim(new_current_lim);
             }
         }
 
         register_access_response.persistent = true;
- 8006022:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006026:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 800602a:	2201      	movs	r2, #1
- 800602c:	725a      	strb	r2, [r3, #9]
+ 800602a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 800602e:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 8006032:	2201      	movs	r2, #1
+ 8006034:	725a      	strb	r2, [r3, #9]
         register_access_response._mutable = true;
- 800602e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006032:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 8006036:	2201      	movs	r2, #1
- 8006038:	721a      	strb	r2, [r3, #8]
+ 8006036:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 800603a:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 800603e:	2201      	movs	r2, #1
+ 8006040:	721a      	strb	r2, [r3, #8]
         value._tag_ = 12;
- 800603a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 800603e:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
- 8006042:	220c      	movs	r2, #12
- 8006044:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
+ 8006042:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8006046:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
+ 800604a:	220c      	movs	r2, #12
+ 800604c:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
         uavcan_primitive_array_Real64_1_0 result = {};
- 8006048:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 800604c:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8006050:	4618      	mov	r0, r3
- 8006052:	f44f 7384 	mov.w	r3, #264	; 0x108
- 8006056:	461a      	mov	r2, r3
- 8006058:	2100      	movs	r1, #0
- 800605a:	f00c fc36 	bl	80128ca <memset>
+ 8006050:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8006054:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8006058:	4618      	mov	r0, r3
+ 800605a:	f44f 7384 	mov.w	r3, #264	; 0x108
+ 800605e:	461a      	mov	r2, r3
+ 8006060:	2100      	movs	r1, #0
+ 8006062:	f00c fc32 	bl	80128ca <memset>
         result.value.elements[0] = 1; //motor_get_current_lim();
- 800605e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006062:	f5a3 61ab 	sub.w	r1, r3, #1368	; 0x558
- 8006066:	f04f 0200 	mov.w	r2, #0
- 800606a:	4b43      	ldr	r3, [pc, #268]	; (8006178 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a8>)
- 800606c:	e9c1 2300 	strd	r2, r3, [r1]
+ 8006066:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 800606a:	f5a3 61ab 	sub.w	r1, r3, #1368	; 0x558
+ 800606e:	f04f 0200 	mov.w	r2, #0
+ 8006072:	4b40      	ldr	r3, [pc, #256]	; (8006174 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a4>)
+ 8006074:	e9c1 2300 	strd	r2, r3, [r1]
         result.value.count = 1;
- 8006070:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006074:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 8006078:	2201      	movs	r2, #1
- 800607a:	f8c3 2100 	str.w	r2, [r3, #256]	; 0x100
+ 8006078:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 800607c:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8006080:	2201      	movs	r2, #1
+ 8006082:	f8c3 2100 	str.w	r2, [r3, #256]	; 0x100
         value.real64 = result;
- 800607e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006082:	f5a3 628a 	sub.w	r2, r3, #1104	; 0x450
  8006086:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 800608a:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
- 800608e:	4610      	mov	r0, r2
- 8006090:	4619      	mov	r1, r3
- 8006092:	f44f 7384 	mov.w	r3, #264	; 0x108
- 8006096:	461a      	mov	r2, r3
- 8006098:	f00c fcfd 	bl	8012a96 <memcpy>
- 800609c:	e07d      	b.n	800619a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3ca>
+ 800608a:	f5a3 628a 	sub.w	r2, r3, #1104	; 0x450
+ 800608e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8006092:	f5a3 63ab 	sub.w	r3, r3, #1368	; 0x558
+ 8006096:	4610      	mov	r0, r2
+ 8006098:	4619      	mov	r1, r3
+ 800609a:	f44f 7384 	mov.w	r3, #264	; 0x108
+ 800609e:	461a      	mov	r2, r3
+ 80060a0:	f00c fcf9 	bl	8012a96 <memcpy>
+ 80060a4:	e077      	b.n	8006196 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3c6>
     } else if (memcmp(register_access_request.name.name.elements, motor_voltage_reg_name, MOTOR_VOLTAGE_REG_NAME_LEN) == 0) {
- 800609e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 80060a2:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
- 80060a6:	681b      	ldr	r3, [r3, #0]
- 80060a8:	220d      	movs	r2, #13
- 80060aa:	4934      	ldr	r1, [pc, #208]	; (800617c <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3ac>)
- 80060ac:	4618      	mov	r0, r3
- 80060ae:	f00c fbe2 	bl	8012876 <memcmp>
- 80060b2:	4603      	mov	r3, r0
- 80060b4:	2b00      	cmp	r3, #0
- 80060b6:	d163      	bne.n	8006180 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3b0>
-        HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
- 80060b8:	2104      	movs	r1, #4
- 80060ba:	482b      	ldr	r0, [pc, #172]	; (8006168 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x398>)
- 80060bc:	f004 f8fe 	bl	800a2bc <HAL_GPIO_TogglePin>
+ 80060a6:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 80060aa:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
+ 80060ae:	681b      	ldr	r3, [r3, #0]
+ 80060b0:	220d      	movs	r2, #13
+ 80060b2:	4931      	ldr	r1, [pc, #196]	; (8006178 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a8>)
+ 80060b4:	4618      	mov	r0, r3
+ 80060b6:	f00c fbde 	bl	8012876 <memcmp>
+ 80060ba:	4603      	mov	r3, r0
+ 80060bc:	2b00      	cmp	r3, #0
+ 80060be:	d15d      	bne.n	800617c <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3ac>
         if (register_access_request.value._tag_ == 12) {
  80060c0:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
  80060c4:	f5a3 63ac 	sub.w	r3, r3, #1376	; 0x560
@@ -14731,7 +14725,7 @@ void RegisterAccessReader::handler(
  8006124:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
  8006128:	f5a3 61ab 	sub.w	r1, r3, #1368	; 0x558
  800612c:	f04f 0200 	mov.w	r2, #0
- 8006130:	4b11      	ldr	r3, [pc, #68]	; (8006178 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a8>)
+ 8006130:	4b10      	ldr	r3, [pc, #64]	; (8006174 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3a4>)
  8006132:	e9c1 2300 	strd	r2, r3, [r1]
         result.value.count = 1;
  8006136:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
@@ -14748,1423 +14742,1424 @@ void RegisterAccessReader::handler(
  8006158:	f44f 7384 	mov.w	r3, #264	; 0x108
  800615c:	461a      	mov	r2, r3
  800615e:	f00c fc9a 	bl	8012a96 <memcpy>
- 8006162:	e01a      	b.n	800619a <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3ca>
+ 8006162:	e018      	b.n	8006196 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x3c6>
  8006164:	20000000 	.word	0x20000000
  8006168:	48000c00 	.word	0x48000c00
  800616c:	20000020 	.word	0x20000020
- 8006170:	40260000 	.word	0x40260000
- 8006174:	2000000c 	.word	0x2000000c
- 8006178:	3ff00000 	.word	0x3ff00000
- 800617c:	2000002c 	.word	0x2000002c
+ 8006170:	2000000c 	.word	0x2000000c
+ 8006174:	3ff00000 	.word	0x3ff00000
+ 8006178:	2000002c 	.word	0x2000002c
     } else {
         value._tag_ = 0;
- 8006180:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006184:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
- 8006188:	2200      	movs	r2, #0
- 800618a:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
+ 800617c:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 8006180:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
+ 8006184:	2200      	movs	r2, #0
+ 8006186:	f883 2208 	strb.w	r2, [r3, #520]	; 0x208
         value.empty = (uavcan_primitive_Empty_1_0){};
- 800618e:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 8006192:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
- 8006196:	2200      	movs	r2, #0
- 8006198:	701a      	strb	r2, [r3, #0]
+ 800618a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 800618e:	f5a3 638a 	sub.w	r3, r3, #1104	; 0x450
+ 8006192:	2200      	movs	r2, #0
+ 8006194:	701a      	strb	r2, [r3, #0]
     }
     register_access_response.value = value;
- 800619a:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 800619e:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
- 80061a2:	f507 62ad 	add.w	r2, r7, #1384	; 0x568
- 80061a6:	f5a2 628a 	sub.w	r2, r2, #1104	; 0x450
- 80061aa:	3310      	adds	r3, #16
- 80061ac:	4611      	mov	r1, r2
- 80061ae:	f44f 7204 	mov.w	r2, #528	; 0x210
- 80061b2:	4618      	mov	r0, r3
- 80061b4:	f00c fc6f 	bl	8012a96 <memcpy>
+ 8006196:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 800619a:	f5a3 7310 	sub.w	r3, r3, #576	; 0x240
+ 800619e:	f507 62ad 	add.w	r2, r7, #1384	; 0x568
+ 80061a2:	f5a2 628a 	sub.w	r2, r2, #1104	; 0x450
+ 80061a6:	3310      	adds	r3, #16
+ 80061a8:	4611      	mov	r1, r2
+ 80061aa:	f44f 7204 	mov.w	r2, #528	; 0x210
+ 80061ae:	4618      	mov	r0, r3
+ 80061b0:	f00c fc71 	bl	8012a96 <memcpy>
 
     interface->send_response<RegisterAccessResponse>(
- 80061b8:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 80061bc:	f2a3 535c 	subw	r3, r3, #1372	; 0x55c
- 80061c0:	681b      	ldr	r3, [r3, #0]
- 80061c2:	f503 730c 	add.w	r3, r3, #560	; 0x230
- 80061c6:	4618      	mov	r0, r3
- 80061c8:	f000 fbb8 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
- 80061cc:	4604      	mov	r4, r0
- 80061ce:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
- 80061d2:	f2a3 5164 	subw	r1, r3, #1380	; 0x564
- 80061d6:	f507 704a 	add.w	r0, r7, #808	; 0x328
- 80061da:	2304      	movs	r3, #4
- 80061dc:	9304      	str	r3, [sp, #16]
- 80061de:	4a09      	ldr	r2, [pc, #36]	; (8006204 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x434>)
- 80061e0:	f04f 0300 	mov.w	r3, #0
- 80061e4:	e9cd 2302 	strd	r2, r3, [sp, #8]
- 80061e8:	f44f 73c0 	mov.w	r3, #384	; 0x180
- 80061ec:	9300      	str	r3, [sp, #0]
- 80061ee:	680b      	ldr	r3, [r1, #0]
- 80061f0:	4a05      	ldr	r2, [pc, #20]	; (8006208 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x438>)
- 80061f2:	4601      	mov	r1, r0
- 80061f4:	4620      	mov	r0, r4
- 80061f6:	f000 fbf6 	bl	80069e6 <_ZNK15CyphalInterface13send_responseI22RegisterAccessResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>
+ 80061b4:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 80061b8:	f2a3 535c 	subw	r3, r3, #1372	; 0x55c
+ 80061bc:	681b      	ldr	r3, [r3, #0]
+ 80061be:	f503 730c 	add.w	r3, r3, #560	; 0x230
+ 80061c2:	4618      	mov	r0, r3
+ 80061c4:	f000 fb86 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 80061c8:	4604      	mov	r4, r0
+ 80061ca:	f507 63ad 	add.w	r3, r7, #1384	; 0x568
+ 80061ce:	f2a3 5164 	subw	r1, r3, #1380	; 0x564
+ 80061d2:	f507 704a 	add.w	r0, r7, #808	; 0x328
+ 80061d6:	2304      	movs	r3, #4
+ 80061d8:	9304      	str	r3, [sp, #16]
+ 80061da:	4a09      	ldr	r2, [pc, #36]	; (8006200 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x430>)
+ 80061dc:	f04f 0300 	mov.w	r3, #0
+ 80061e0:	e9cd 2302 	strd	r2, r3, [sp, #8]
+ 80061e4:	f44f 73c0 	mov.w	r3, #384	; 0x180
+ 80061e8:	9300      	str	r3, [sp, #0]
+ 80061ea:	680b      	ldr	r3, [r1, #0]
+ 80061ec:	4a05      	ldr	r2, [pc, #20]	; (8006204 <_ZN20RegisterAccessReader7handlerERK34uavcan_register_Access_Request_1_0P16CanardRxTransfer+0x434>)
+ 80061ee:	4601      	mov	r1, r0
+ 80061f0:	4620      	mov	r0, r4
+ 80061f2:	f000 fbf7 	bl	80069e4 <_ZNK15CyphalInterface13send_responseI22RegisterAccessResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>
         &register_access_response,
         register_access_response_buf,
         transfer,
         uavcan_register_Access_1_0_FIXED_PORT_ID_
     );
 }
- 80061fa:	bf00      	nop
- 80061fc:	f207 576c 	addw	r7, r7, #1388	; 0x56c
- 8006200:	46bd      	mov	sp, r7
- 8006202:	bd90      	pop	{r4, r7, pc}
- 8006204:	000f4240 	.word	0x000f4240
- 8006208:	200005bc 	.word	0x200005bc
+ 80061f6:	bf00      	nop
+ 80061f8:	f207 576c 	addw	r7, r7, #1388	; 0x56c
+ 80061fc:	46bd      	mov	sp, r7
+ 80061fe:	bd90      	pop	{r4, r7, pc}
+ 8006200:	000f4240 	.word	0x000f4240
+ 8006204:	200005bc 	.word	0x200005bc
 
-0800620c <heartbeat>:
+08006208 <heartbeat>:
 		AGENT_IMU_PORT,
 		&int_transfer_id
 	);
 }
 
 void heartbeat() {
- 800620c:	b580      	push	{r7, lr}
- 800620e:	b088      	sub	sp, #32
- 8006210:	af06      	add	r7, sp, #24
+ 8006208:	b580      	push	{r7, lr}
+ 800620a:	b088      	sub	sp, #32
+ 800620c:	af06      	add	r7, sp, #24
 	static uint8_t hbeat_buffer[HBeat::buffer_size];
 	static CanardTransferID hbeat_transfer_id = 0;
 	static uint32_t uptime = 0;
     uavcan_node_Heartbeat_1_0 heartbeat_msg = {
- 8006212:	463b      	mov	r3, r7
- 8006214:	2200      	movs	r2, #0
- 8006216:	601a      	str	r2, [r3, #0]
- 8006218:	605a      	str	r2, [r3, #4]
+ 800620e:	463b      	mov	r3, r7
+ 8006210:	2200      	movs	r2, #0
+ 8006212:	601a      	str	r2, [r3, #0]
+ 8006214:	605a      	str	r2, [r3, #4]
         .uptime = uptime,
         .health = {uavcan_node_Health_1_0_NOMINAL},
         .mode = {uavcan_node_Mode_1_0_OPERATIONAL}
     };
- 800621a:	4b0f      	ldr	r3, [pc, #60]	; (8006258 <heartbeat+0x4c>)
- 800621c:	681b      	ldr	r3, [r3, #0]
- 800621e:	603b      	str	r3, [r7, #0]
+ 8006216:	4b0f      	ldr	r3, [pc, #60]	; (8006254 <heartbeat+0x4c>)
+ 8006218:	681b      	ldr	r3, [r3, #0]
+ 800621a:	603b      	str	r3, [r7, #0]
     interface->send_msg<HBeat>(
- 8006220:	480e      	ldr	r0, [pc, #56]	; (800625c <heartbeat+0x50>)
- 8006222:	f000 fb8b 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
- 8006226:	4639      	mov	r1, r7
- 8006228:	2304      	movs	r3, #4
- 800622a:	9304      	str	r3, [sp, #16]
- 800622c:	4a0c      	ldr	r2, [pc, #48]	; (8006260 <heartbeat+0x54>)
- 800622e:	f04f 0300 	mov.w	r3, #0
- 8006232:	e9cd 2302 	strd	r2, r3, [sp, #8]
- 8006236:	4b0b      	ldr	r3, [pc, #44]	; (8006264 <heartbeat+0x58>)
- 8006238:	9300      	str	r3, [sp, #0]
- 800623a:	f641 5355 	movw	r3, #7509	; 0x1d55
- 800623e:	4a0a      	ldr	r2, [pc, #40]	; (8006268 <heartbeat+0x5c>)
- 8006240:	f000 fc1a 	bl	8006a78 <_ZNK15CyphalInterface8send_msgI5HBeatEEvPNT_4TypeEPhtS5_y14CanardPriority>
+ 800621c:	480e      	ldr	r0, [pc, #56]	; (8006258 <heartbeat+0x50>)
+ 800621e:	f000 fb59 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 8006222:	4639      	mov	r1, r7
+ 8006224:	2304      	movs	r3, #4
+ 8006226:	9304      	str	r3, [sp, #16]
+ 8006228:	4a0c      	ldr	r2, [pc, #48]	; (800625c <heartbeat+0x54>)
+ 800622a:	f04f 0300 	mov.w	r3, #0
+ 800622e:	e9cd 2302 	strd	r2, r3, [sp, #8]
+ 8006232:	4b0b      	ldr	r3, [pc, #44]	; (8006260 <heartbeat+0x58>)
+ 8006234:	9300      	str	r3, [sp, #0]
+ 8006236:	f641 5355 	movw	r3, #7509	; 0x1d55
+ 800623a:	4a0a      	ldr	r2, [pc, #40]	; (8006264 <heartbeat+0x5c>)
+ 800623c:	f000 fc1b 	bl	8006a76 <_ZNK15CyphalInterface8send_msgI5HBeatEEvPNT_4TypeEPhtS5_y14CanardPriority>
 		&heartbeat_msg,
 		hbeat_buffer,
 		uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_,
 		&hbeat_transfer_id
 	);
     uptime += 1;
- 8006244:	4b04      	ldr	r3, [pc, #16]	; (8006258 <heartbeat+0x4c>)
- 8006246:	681b      	ldr	r3, [r3, #0]
- 8006248:	3301      	adds	r3, #1
- 800624a:	4a03      	ldr	r2, [pc, #12]	; (8006258 <heartbeat+0x4c>)
- 800624c:	6013      	str	r3, [r2, #0]
+ 8006240:	4b04      	ldr	r3, [pc, #16]	; (8006254 <heartbeat+0x4c>)
+ 8006242:	681b      	ldr	r3, [r3, #0]
+ 8006244:	3301      	adds	r3, #1
+ 8006246:	4a03      	ldr	r2, [pc, #12]	; (8006254 <heartbeat+0x4c>)
+ 8006248:	6013      	str	r3, [r2, #0]
 
 }
- 800624e:	bf00      	nop
- 8006250:	3708      	adds	r7, #8
- 8006252:	46bd      	mov	sp, r7
- 8006254:	bd80      	pop	{r7, pc}
- 8006256:	bf00      	nop
- 8006258:	200006d0 	.word	0x200006d0
- 800625c:	20000448 	.word	0x20000448
- 8006260:	000f4240 	.word	0x000f4240
- 8006264:	200006cf 	.word	0x200006cf
- 8006268:	200006c8 	.word	0x200006c8
+ 800624a:	bf00      	nop
+ 800624c:	3708      	adds	r7, #8
+ 800624e:	46bd      	mov	sp, r7
+ 8006250:	bd80      	pop	{r7, pc}
+ 8006252:	bf00      	nop
+ 8006254:	200006d0 	.word	0x200006d0
+ 8006258:	20000448 	.word	0x20000448
+ 800625c:	000f4240 	.word	0x000f4240
+ 8006260:	200006cf 	.word	0x200006cf
+ 8006264:	200006c8 	.word	0x200006c8
 
-0800626c <setup_cyphal>:
+08006268 <setup_cyphal>:
 
 void setup_cyphal(FDCAN_HandleTypeDef* handler) {
- 800626c:	b5b0      	push	{r4, r5, r7, lr}
- 800626e:	b08e      	sub	sp, #56	; 0x38
- 8006270:	af02      	add	r7, sp, #8
- 8006272:	6078      	str	r0, [r7, #4]
+ 8006268:	b5b0      	push	{r4, r5, r7, lr}
+ 800626a:	b08e      	sub	sp, #56	; 0x38
+ 800626c:	af02      	add	r7, sp, #8
+ 800626e:	6078      	str	r0, [r7, #4]
 	interface = std::shared_ptr<CyphalInterface>(
- 8006274:	4b41      	ldr	r3, [pc, #260]	; (800637c <setup_cyphal+0x110>)
- 8006276:	9300      	str	r3, [sp, #0]
- 8006278:	f44f 73c8 	mov.w	r3, #400	; 0x190
- 800627c:	687a      	ldr	r2, [r7, #4]
- 800627e:	2105      	movs	r1, #5
- 8006280:	483f      	ldr	r0, [pc, #252]	; (8006380 <setup_cyphal+0x114>)
- 8006282:	f000 fc18 	bl	8006ab6 <_ZN15CyphalInterface10create_bssI5G4CAN15SystemAllocatorJEEEPS_PSt4bytehNT_7HandlerEjDpOT1_R13UtilityConfig>
- 8006286:	4602      	mov	r2, r0
- 8006288:	f107 0308 	add.w	r3, r7, #8
- 800628c:	4611      	mov	r1, r2
- 800628e:	4618      	mov	r0, r3
- 8006290:	f000 fc3a 	bl	8006b08 <_ZNSt10shared_ptrI15CyphalInterfaceEC1IS0_vEEPT_>
+ 8006270:	4b41      	ldr	r3, [pc, #260]	; (8006378 <setup_cyphal+0x110>)
+ 8006272:	9300      	str	r3, [sp, #0]
+ 8006274:	f44f 73c8 	mov.w	r3, #400	; 0x190
+ 8006278:	687a      	ldr	r2, [r7, #4]
+ 800627a:	2105      	movs	r1, #5
+ 800627c:	483f      	ldr	r0, [pc, #252]	; (800637c <setup_cyphal+0x114>)
+ 800627e:	f000 fc19 	bl	8006ab4 <_ZN15CyphalInterface10create_bssI5G4CAN15SystemAllocatorJEEEPS_PSt4bytehNT_7HandlerEjDpOT1_R13UtilityConfig>
+ 8006282:	4602      	mov	r2, r0
+ 8006284:	f107 0308 	add.w	r3, r7, #8
+ 8006288:	4611      	mov	r1, r2
+ 800628a:	4618      	mov	r0, r3
+ 800628c:	f000 fc3b 	bl	8006b06 <_ZNSt10shared_ptrI15CyphalInterfaceEC1IS0_vEEPT_>
 		         // memory location, node_id, fdcan handler, messages memory pool, utils ref
 		CyphalInterface::create_bss<G4CAN, SystemAllocator>(buffer, JOINT_N, handler, 400, utilities)
 	);
- 8006294:	f107 0308 	add.w	r3, r7, #8
- 8006298:	4619      	mov	r1, r3
- 800629a:	483a      	ldr	r0, [pc, #232]	; (8006384 <setup_cyphal+0x118>)
- 800629c:	f000 fc43 	bl	8006b26 <_ZNSt10shared_ptrI15CyphalInterfaceEaSEOS1_>
+ 8006290:	f107 0308 	add.w	r3, r7, #8
+ 8006294:	4619      	mov	r1, r3
+ 8006296:	483a      	ldr	r0, [pc, #232]	; (8006380 <setup_cyphal+0x118>)
+ 8006298:	f000 fc44 	bl	8006b24 <_ZNSt10shared_ptrI15CyphalInterfaceEaSEOS1_>
 	interface = std::shared_ptr<CyphalInterface>(
- 80062a0:	f107 0308 	add.w	r3, r7, #8
- 80062a4:	4618      	mov	r0, r3
- 80062a6:	f7ff fc28 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 800629c:	f107 0308 	add.w	r3, r7, #8
+ 80062a0:	4618      	mov	r0, r3
+ 80062a2:	f7ff fc2a 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
 	h_reader = new HBeatReader(interface);
- 80062aa:	f107 0310 	add.w	r3, r7, #16
- 80062ae:	4935      	ldr	r1, [pc, #212]	; (8006384 <setup_cyphal+0x118>)
- 80062b0:	4618      	mov	r0, r3
- 80062b2:	f7ff fc12 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 80062b6:	f107 0510 	add.w	r5, r7, #16
- 80062ba:	f44f 700e 	mov.w	r0, #568	; 0x238
- 80062be:	f00b fa1a 	bl	80116f6 <_Znwj>
- 80062c2:	4603      	mov	r3, r0
- 80062c4:	461c      	mov	r4, r3
- 80062c6:	4629      	mov	r1, r5
- 80062c8:	4620      	mov	r0, r4
- 80062ca:	f7ff fc23 	bl	8005b14 <_ZN11HBeatReaderC1ESt10shared_ptrI15CyphalInterfaceE>
- 80062ce:	4b2e      	ldr	r3, [pc, #184]	; (8006388 <setup_cyphal+0x11c>)
- 80062d0:	601c      	str	r4, [r3, #0]
- 80062d2:	f107 0310 	add.w	r3, r7, #16
- 80062d6:	4618      	mov	r0, r3
- 80062d8:	f7ff fc0f 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 80062a6:	f107 0310 	add.w	r3, r7, #16
+ 80062aa:	4935      	ldr	r1, [pc, #212]	; (8006380 <setup_cyphal+0x118>)
+ 80062ac:	4618      	mov	r0, r3
+ 80062ae:	f7ff fc14 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 80062b2:	f107 0510 	add.w	r5, r7, #16
+ 80062b6:	f44f 700e 	mov.w	r0, #568	; 0x238
+ 80062ba:	f00b fa1c 	bl	80116f6 <_Znwj>
+ 80062be:	4603      	mov	r3, r0
+ 80062c0:	461c      	mov	r4, r3
+ 80062c2:	4629      	mov	r1, r5
+ 80062c4:	4620      	mov	r0, r4
+ 80062c6:	f7ff fc25 	bl	8005b14 <_ZN11HBeatReaderC1ESt10shared_ptrI15CyphalInterfaceE>
+ 80062ca:	4b2e      	ldr	r3, [pc, #184]	; (8006384 <setup_cyphal+0x11c>)
+ 80062cc:	601c      	str	r4, [r3, #0]
+ 80062ce:	f107 0310 	add.w	r3, r7, #16
+ 80062d2:	4618      	mov	r0, r3
+ 80062d4:	f7ff fc11 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
 	js_reader = new JSReader(interface);
- 80062dc:	f107 0318 	add.w	r3, r7, #24
- 80062e0:	4928      	ldr	r1, [pc, #160]	; (8006384 <setup_cyphal+0x118>)
- 80062e2:	4618      	mov	r0, r3
- 80062e4:	f7ff fbf9 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 80062e8:	f107 0518 	add.w	r5, r7, #24
- 80062ec:	f44f 700e 	mov.w	r0, #568	; 0x238
- 80062f0:	f00b fa01 	bl	80116f6 <_Znwj>
- 80062f4:	4603      	mov	r3, r0
- 80062f6:	461c      	mov	r4, r3
- 80062f8:	4629      	mov	r1, r5
- 80062fa:	4620      	mov	r0, r4
- 80062fc:	f7ff fc3a 	bl	8005b74 <_ZN8JSReaderC1ESt10shared_ptrI15CyphalInterfaceE>
- 8006300:	4b22      	ldr	r3, [pc, #136]	; (800638c <setup_cyphal+0x120>)
- 8006302:	601c      	str	r4, [r3, #0]
- 8006304:	f107 0318 	add.w	r3, r7, #24
- 8006308:	4618      	mov	r0, r3
- 800630a:	f7ff fbf6 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 80062d8:	f107 0318 	add.w	r3, r7, #24
+ 80062dc:	4928      	ldr	r1, [pc, #160]	; (8006380 <setup_cyphal+0x118>)
+ 80062de:	4618      	mov	r0, r3
+ 80062e0:	f7ff fbfb 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 80062e4:	f107 0518 	add.w	r5, r7, #24
+ 80062e8:	f44f 700e 	mov.w	r0, #568	; 0x238
+ 80062ec:	f00b fa03 	bl	80116f6 <_Znwj>
+ 80062f0:	4603      	mov	r3, r0
+ 80062f2:	461c      	mov	r4, r3
+ 80062f4:	4629      	mov	r1, r5
+ 80062f6:	4620      	mov	r0, r4
+ 80062f8:	f7ff fc3c 	bl	8005b74 <_ZN8JSReaderC1ESt10shared_ptrI15CyphalInterfaceE>
+ 80062fc:	4b22      	ldr	r3, [pc, #136]	; (8006388 <setup_cyphal+0x120>)
+ 80062fe:	601c      	str	r4, [r3, #0]
+ 8006300:	f107 0318 	add.w	r3, r7, #24
+ 8006304:	4618      	mov	r0, r3
+ 8006306:	f7ff fbf8 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
 	reg_access_service = new RegisterAccessReader(interface);
- 800630e:	f107 0320 	add.w	r3, r7, #32
- 8006312:	491c      	ldr	r1, [pc, #112]	; (8006384 <setup_cyphal+0x118>)
- 8006314:	4618      	mov	r0, r3
- 8006316:	f7ff fbe0 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 800631a:	f107 0520 	add.w	r5, r7, #32
- 800631e:	f44f 700e 	mov.w	r0, #568	; 0x238
- 8006322:	f00b f9e8 	bl	80116f6 <_Znwj>
- 8006326:	4603      	mov	r3, r0
- 8006328:	461c      	mov	r4, r3
- 800632a:	4629      	mov	r1, r5
- 800632c:	4620      	mov	r0, r4
- 800632e:	f7ff fc79 	bl	8005c24 <_ZN20RegisterAccessReaderC1ESt10shared_ptrI15CyphalInterfaceE>
- 8006332:	4b17      	ldr	r3, [pc, #92]	; (8006390 <setup_cyphal+0x124>)
- 8006334:	601c      	str	r4, [r3, #0]
- 8006336:	f107 0320 	add.w	r3, r7, #32
- 800633a:	4618      	mov	r0, r3
- 800633c:	f7ff fbdd 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 800630a:	f107 0320 	add.w	r3, r7, #32
+ 800630e:	491c      	ldr	r1, [pc, #112]	; (8006380 <setup_cyphal+0x118>)
+ 8006310:	4618      	mov	r0, r3
+ 8006312:	f7ff fbe2 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 8006316:	f107 0520 	add.w	r5, r7, #32
+ 800631a:	f44f 700e 	mov.w	r0, #568	; 0x238
+ 800631e:	f00b f9ea 	bl	80116f6 <_Znwj>
+ 8006322:	4603      	mov	r3, r0
+ 8006324:	461c      	mov	r4, r3
+ 8006326:	4629      	mov	r1, r5
+ 8006328:	4620      	mov	r0, r4
+ 800632a:	f7ff fd2d 	bl	8005d88 <_ZN20RegisterAccessReaderC1ESt10shared_ptrI15CyphalInterfaceE>
+ 800632e:	4b17      	ldr	r3, [pc, #92]	; (800638c <setup_cyphal+0x124>)
+ 8006330:	601c      	str	r4, [r3, #0]
+ 8006332:	f107 0320 	add.w	r3, r7, #32
+ 8006336:	4618      	mov	r0, r3
+ 8006338:	f7ff fbdf 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
 	nireader = new NodeInfoReader(interface);
- 8006340:	f107 0328 	add.w	r3, r7, #40	; 0x28
- 8006344:	490f      	ldr	r1, [pc, #60]	; (8006384 <setup_cyphal+0x118>)
- 8006346:	4618      	mov	r0, r3
- 8006348:	f7ff fbc7 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 800634c:	f107 0528 	add.w	r5, r7, #40	; 0x28
- 8006350:	f44f 700e 	mov.w	r0, #568	; 0x238
- 8006354:	f00b f9cf 	bl	80116f6 <_Znwj>
- 8006358:	4603      	mov	r3, r0
- 800635a:	461c      	mov	r4, r3
- 800635c:	4629      	mov	r1, r5
- 800635e:	4620      	mov	r0, r4
- 8006360:	f7ff fc3c 	bl	8005bdc <_ZN14NodeInfoReaderC1ESt10shared_ptrI15CyphalInterfaceE>
- 8006364:	4b0b      	ldr	r3, [pc, #44]	; (8006394 <setup_cyphal+0x128>)
- 8006366:	601c      	str	r4, [r3, #0]
- 8006368:	f107 0328 	add.w	r3, r7, #40	; 0x28
- 800636c:	4618      	mov	r0, r3
- 800636e:	f7ff fbc4 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 800633c:	f107 0328 	add.w	r3, r7, #40	; 0x28
+ 8006340:	490f      	ldr	r1, [pc, #60]	; (8006380 <setup_cyphal+0x118>)
+ 8006342:	4618      	mov	r0, r3
+ 8006344:	f7ff fbc9 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 8006348:	f107 0528 	add.w	r5, r7, #40	; 0x28
+ 800634c:	f44f 700e 	mov.w	r0, #568	; 0x238
+ 8006350:	f00b f9d1 	bl	80116f6 <_Znwj>
+ 8006354:	4603      	mov	r3, r0
+ 8006356:	461c      	mov	r4, r3
+ 8006358:	4629      	mov	r1, r5
+ 800635a:	4620      	mov	r0, r4
+ 800635c:	f7ff fc3e 	bl	8005bdc <_ZN14NodeInfoReaderC1ESt10shared_ptrI15CyphalInterfaceE>
+ 8006360:	4b0b      	ldr	r3, [pc, #44]	; (8006390 <setup_cyphal+0x128>)
+ 8006362:	601c      	str	r4, [r3, #0]
+ 8006364:	f107 0328 	add.w	r3, r7, #40	; 0x28
+ 8006368:	4618      	mov	r0, r3
+ 800636a:	f7ff fbc6 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
 }
- 8006372:	bf00      	nop
- 8006374:	3730      	adds	r7, #48	; 0x30
- 8006376:	46bd      	mov	sp, r7
- 8006378:	bdb0      	pop	{r4, r5, r7, pc}
- 800637a:	bf00      	nop
- 800637c:	20000450 	.word	0x20000450
- 8006380:	200003f0 	.word	0x200003f0
- 8006384:	20000448 	.word	0x20000448
- 8006388:	20000470 	.word	0x20000470
- 800638c:	20000474 	.word	0x20000474
- 8006390:	2000047c 	.word	0x2000047c
- 8006394:	20000478 	.word	0x20000478
+ 800636e:	bf00      	nop
+ 8006370:	3730      	adds	r7, #48	; 0x30
+ 8006372:	46bd      	mov	sp, r7
+ 8006374:	bdb0      	pop	{r4, r5, r7, pc}
+ 8006376:	bf00      	nop
+ 8006378:	20000450 	.word	0x20000450
+ 800637c:	200003f0 	.word	0x200003f0
+ 8006380:	20000448 	.word	0x20000448
+ 8006384:	20000470 	.word	0x20000470
+ 8006388:	20000474 	.word	0x20000474
+ 800638c:	200005b8 	.word	0x200005b8
+ 8006390:	20000478 	.word	0x20000478
 
-08006398 <cyphal_loop>:
+08006394 <cyphal_loop>:
 
 void cyphal_loop() {
- 8006398:	b580      	push	{r7, lr}
- 800639a:	af00      	add	r7, sp, #0
+ 8006394:	b580      	push	{r7, lr}
+ 8006396:	af00      	add	r7, sp, #0
     interface->loop();
- 800639c:	4804      	ldr	r0, [pc, #16]	; (80063b0 <cyphal_loop+0x18>)
- 800639e:	f000 facd 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
- 80063a2:	4603      	mov	r3, r0
- 80063a4:	4618      	mov	r0, r3
- 80063a6:	f008 fbe5 	bl	800eb74 <_ZN15CyphalInterface4loopEv>
+ 8006398:	4804      	ldr	r0, [pc, #16]	; (80063ac <cyphal_loop+0x18>)
+ 800639a:	f000 fa9b 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 800639e:	4603      	mov	r3, r0
+ 80063a0:	4618      	mov	r0, r3
+ 80063a2:	f008 fbe7 	bl	800eb74 <_ZN15CyphalInterface4loopEv>
 }
+ 80063a6:	bf00      	nop
+ 80063a8:	bd80      	pop	{r7, pc}
  80063aa:	bf00      	nop
- 80063ac:	bd80      	pop	{r7, pc}
- 80063ae:	bf00      	nop
- 80063b0:	20000448 	.word	0x20000448
+ 80063ac:	20000448 	.word	0x20000448
 
-080063b4 <cyphal_can_starter>:
+080063b0 <cyphal_can_starter>:
 
 void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 {
- 80063b4:	b580      	push	{r7, lr}
- 80063b6:	b08c      	sub	sp, #48	; 0x30
- 80063b8:	af02      	add	r7, sp, #8
- 80063ba:	6078      	str	r0, [r7, #4]
+ 80063b0:	b580      	push	{r7, lr}
+ 80063b2:	b08c      	sub	sp, #48	; 0x30
+ 80063b4:	af02      	add	r7, sp, #8
+ 80063b6:	6078      	str	r0, [r7, #4]
 
 	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
- 80063bc:	f107 0320 	add.w	r3, r7, #32
- 80063c0:	2105      	movs	r1, #5
- 80063c2:	4618      	mov	r0, r3
- 80063c4:	f00b f948 	bl	8011658 <canardMakeFilterForServices>
+ 80063b8:	f107 0320 	add.w	r3, r7, #32
+ 80063bc:	2105      	movs	r1, #5
+ 80063be:	4618      	mov	r0, r3
+ 80063c0:	f00b f94a 	bl	8011658 <canardMakeFilterForServices>
 	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(1125);//JS_SUB_PORT_ID
- 80063c8:	f107 0318 	add.w	r3, r7, #24
- 80063cc:	f240 4165 	movw	r1, #1125	; 0x465
- 80063d0:	4618      	mov	r0, r3
- 80063d2:	f00b f921 	bl	8011618 <canardMakeFilterForSubject>
+ 80063c4:	f107 0318 	add.w	r3, r7, #24
+ 80063c8:	f240 4165 	movw	r1, #1125	; 0x465
+ 80063cc:	4618      	mov	r0, r3
+ 80063ce:	f00b f923 	bl	8011618 <canardMakeFilterForSubject>
 	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID
- 80063d6:	f107 0310 	add.w	r3, r7, #16
- 80063da:	f641 5155 	movw	r1, #7509	; 0x1d55
- 80063de:	4618      	mov	r0, r3
- 80063e0:	f00b f91a 	bl	8011618 <canardMakeFilterForSubject>
+ 80063d2:	f107 0310 	add.w	r3, r7, #16
+ 80063d6:	f641 5155 	movw	r1, #7509	; 0x1d55
+ 80063da:	4618      	mov	r0, r3
+ 80063dc:	f00b f91c 	bl	8011618 <canardMakeFilterForSubject>
 	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
- 80063e4:	f107 0308 	add.w	r3, r7, #8
- 80063e8:	f107 0218 	add.w	r2, r7, #24
- 80063ec:	f107 0120 	add.w	r1, r7, #32
- 80063f0:	4618      	mov	r0, r3
- 80063f2:	f00b f953 	bl	801169c <canardConsolidateFilters>
+ 80063e0:	f107 0308 	add.w	r3, r7, #8
+ 80063e4:	f107 0218 	add.w	r2, r7, #24
+ 80063e8:	f107 0120 	add.w	r1, r7, #32
+ 80063ec:	4618      	mov	r0, r3
+ 80063ee:	f00b f955 	bl	801169c <canardConsolidateFilters>
 
 	static FDCAN_FilterTypeDef sFilterConfig;
 	static FDCAN_FilterTypeDef hbFilterConfig;
 	static FDCAN_FilterTypeDef niFilterConfig;
 
 	niFilterConfig.IdType = FDCAN_EXTENDED_ID;
- 80063f6:	4b45      	ldr	r3, [pc, #276]	; (800650c <cyphal_can_starter+0x158>)
- 80063f8:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
- 80063fc:	601a      	str	r2, [r3, #0]
+ 80063f2:	4b45      	ldr	r3, [pc, #276]	; (8006508 <cyphal_can_starter+0x158>)
+ 80063f4:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
+ 80063f8:	601a      	str	r2, [r3, #0]
 	niFilterConfig.FilterIndex = 0;
- 80063fe:	4b43      	ldr	r3, [pc, #268]	; (800650c <cyphal_can_starter+0x158>)
- 8006400:	2200      	movs	r2, #0
- 8006402:	605a      	str	r2, [r3, #4]
+ 80063fa:	4b43      	ldr	r3, [pc, #268]	; (8006508 <cyphal_can_starter+0x158>)
+ 80063fc:	2200      	movs	r2, #0
+ 80063fe:	605a      	str	r2, [r3, #4]
 	niFilterConfig.FilterType = FDCAN_FILTER_MASK;
- 8006404:	4b41      	ldr	r3, [pc, #260]	; (800650c <cyphal_can_starter+0x158>)
- 8006406:	2202      	movs	r2, #2
- 8006408:	609a      	str	r2, [r3, #8]
+ 8006400:	4b41      	ldr	r3, [pc, #260]	; (8006508 <cyphal_can_starter+0x158>)
+ 8006402:	2202      	movs	r2, #2
+ 8006404:	609a      	str	r2, [r3, #8]
 	niFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
- 800640a:	4b40      	ldr	r3, [pc, #256]	; (800650c <cyphal_can_starter+0x158>)
- 800640c:	2201      	movs	r2, #1
- 800640e:	60da      	str	r2, [r3, #12]
+ 8006406:	4b40      	ldr	r3, [pc, #256]	; (8006508 <cyphal_can_starter+0x158>)
+ 8006408:	2201      	movs	r2, #1
+ 800640a:	60da      	str	r2, [r3, #12]
 	niFilterConfig.FilterID1 =  cyphal_filter_for_node_id.extended_can_id;
- 8006410:	6a3b      	ldr	r3, [r7, #32]
- 8006412:	4a3e      	ldr	r2, [pc, #248]	; (800650c <cyphal_can_starter+0x158>)
- 8006414:	6113      	str	r3, [r2, #16]
+ 800640c:	6a3b      	ldr	r3, [r7, #32]
+ 800640e:	4a3e      	ldr	r2, [pc, #248]	; (8006508 <cyphal_can_starter+0x158>)
+ 8006410:	6113      	str	r3, [r2, #16]
 	niFilterConfig.FilterID2 =  cyphal_filter_for_node_id.extended_mask;
- 8006416:	6a7b      	ldr	r3, [r7, #36]	; 0x24
- 8006418:	4a3c      	ldr	r2, [pc, #240]	; (800650c <cyphal_can_starter+0x158>)
- 800641a:	6153      	str	r3, [r2, #20]
+ 8006412:	6a7b      	ldr	r3, [r7, #36]	; 0x24
+ 8006414:	4a3c      	ldr	r2, [pc, #240]	; (8006508 <cyphal_can_starter+0x158>)
+ 8006416:	6153      	str	r3, [r2, #20]
 
 	sFilterConfig.IdType = FDCAN_EXTENDED_ID;
- 800641c:	4b3c      	ldr	r3, [pc, #240]	; (8006510 <cyphal_can_starter+0x15c>)
- 800641e:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
- 8006422:	601a      	str	r2, [r3, #0]
+ 8006418:	4b3c      	ldr	r3, [pc, #240]	; (800650c <cyphal_can_starter+0x15c>)
+ 800641a:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
+ 800641e:	601a      	str	r2, [r3, #0]
 	sFilterConfig.FilterIndex = 1;
- 8006424:	4b3a      	ldr	r3, [pc, #232]	; (8006510 <cyphal_can_starter+0x15c>)
- 8006426:	2201      	movs	r2, #1
- 8006428:	605a      	str	r2, [r3, #4]
+ 8006420:	4b3a      	ldr	r3, [pc, #232]	; (800650c <cyphal_can_starter+0x15c>)
+ 8006422:	2201      	movs	r2, #1
+ 8006424:	605a      	str	r2, [r3, #4]
 	sFilterConfig.FilterType = FDCAN_FILTER_MASK;
- 800642a:	4b39      	ldr	r3, [pc, #228]	; (8006510 <cyphal_can_starter+0x15c>)
- 800642c:	2202      	movs	r2, #2
- 800642e:	609a      	str	r2, [r3, #8]
+ 8006426:	4b39      	ldr	r3, [pc, #228]	; (800650c <cyphal_can_starter+0x15c>)
+ 8006428:	2202      	movs	r2, #2
+ 800642a:	609a      	str	r2, [r3, #8]
 	sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
- 8006430:	4b37      	ldr	r3, [pc, #220]	; (8006510 <cyphal_can_starter+0x15c>)
- 8006432:	2201      	movs	r2, #1
- 8006434:	60da      	str	r2, [r3, #12]
+ 800642c:	4b37      	ldr	r3, [pc, #220]	; (800650c <cyphal_can_starter+0x15c>)
+ 800642e:	2201      	movs	r2, #1
+ 8006430:	60da      	str	r2, [r3, #12]
 	sFilterConfig.FilterID1 =  cyphal_filter_for_JS.extended_can_id;
- 8006436:	69bb      	ldr	r3, [r7, #24]
- 8006438:	4a35      	ldr	r2, [pc, #212]	; (8006510 <cyphal_can_starter+0x15c>)
- 800643a:	6113      	str	r3, [r2, #16]
+ 8006432:	69bb      	ldr	r3, [r7, #24]
+ 8006434:	4a35      	ldr	r2, [pc, #212]	; (800650c <cyphal_can_starter+0x15c>)
+ 8006436:	6113      	str	r3, [r2, #16]
 	sFilterConfig.FilterID2 =  cyphal_filter_for_JS.extended_mask;
- 800643c:	69fb      	ldr	r3, [r7, #28]
- 800643e:	4a34      	ldr	r2, [pc, #208]	; (8006510 <cyphal_can_starter+0x15c>)
- 8006440:	6153      	str	r3, [r2, #20]
+ 8006438:	69fb      	ldr	r3, [r7, #28]
+ 800643a:	4a34      	ldr	r2, [pc, #208]	; (800650c <cyphal_can_starter+0x15c>)
+ 800643c:	6153      	str	r3, [r2, #20]
 
 	hbFilterConfig.IdType = FDCAN_EXTENDED_ID;
- 8006442:	4b34      	ldr	r3, [pc, #208]	; (8006514 <cyphal_can_starter+0x160>)
- 8006444:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
- 8006448:	601a      	str	r2, [r3, #0]
+ 800643e:	4b34      	ldr	r3, [pc, #208]	; (8006510 <cyphal_can_starter+0x160>)
+ 8006440:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
+ 8006444:	601a      	str	r2, [r3, #0]
 	hbFilterConfig.FilterIndex = 2;
- 800644a:	4b32      	ldr	r3, [pc, #200]	; (8006514 <cyphal_can_starter+0x160>)
- 800644c:	2202      	movs	r2, #2
- 800644e:	605a      	str	r2, [r3, #4]
+ 8006446:	4b32      	ldr	r3, [pc, #200]	; (8006510 <cyphal_can_starter+0x160>)
+ 8006448:	2202      	movs	r2, #2
+ 800644a:	605a      	str	r2, [r3, #4]
 	hbFilterConfig.FilterType = FDCAN_FILTER_MASK;
- 8006450:	4b30      	ldr	r3, [pc, #192]	; (8006514 <cyphal_can_starter+0x160>)
- 8006452:	2202      	movs	r2, #2
- 8006454:	609a      	str	r2, [r3, #8]
+ 800644c:	4b30      	ldr	r3, [pc, #192]	; (8006510 <cyphal_can_starter+0x160>)
+ 800644e:	2202      	movs	r2, #2
+ 8006450:	609a      	str	r2, [r3, #8]
 	hbFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
- 8006456:	4b2f      	ldr	r3, [pc, #188]	; (8006514 <cyphal_can_starter+0x160>)
- 8006458:	2201      	movs	r2, #1
- 800645a:	60da      	str	r2, [r3, #12]
+ 8006452:	4b2f      	ldr	r3, [pc, #188]	; (8006510 <cyphal_can_starter+0x160>)
+ 8006454:	2201      	movs	r2, #1
+ 8006456:	60da      	str	r2, [r3, #12]
 	hbFilterConfig.FilterID1 =  cyphal_filter_for_HB.extended_can_id;
- 800645c:	693b      	ldr	r3, [r7, #16]
- 800645e:	4a2d      	ldr	r2, [pc, #180]	; (8006514 <cyphal_can_starter+0x160>)
- 8006460:	6113      	str	r3, [r2, #16]
+ 8006458:	693b      	ldr	r3, [r7, #16]
+ 800645a:	4a2d      	ldr	r2, [pc, #180]	; (8006510 <cyphal_can_starter+0x160>)
+ 800645c:	6113      	str	r3, [r2, #16]
 	hbFilterConfig.FilterID2 =  cyphal_filter_for_HB.extended_mask;
- 8006462:	697b      	ldr	r3, [r7, #20]
- 8006464:	4a2b      	ldr	r2, [pc, #172]	; (8006514 <cyphal_can_starter+0x160>)
- 8006466:	6153      	str	r3, [r2, #20]
+ 800645e:	697b      	ldr	r3, [r7, #20]
+ 8006460:	4a2b      	ldr	r2, [pc, #172]	; (8006510 <cyphal_can_starter+0x160>)
+ 8006462:	6153      	str	r3, [r2, #20]
 
 
 
 	if (HAL_FDCAN_ConfigGlobalFilter(hfdcan, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT, FDCAN_REJECT) != HAL_OK)
+ 8006464:	2302      	movs	r3, #2
+ 8006466:	9300      	str	r3, [sp, #0]
  8006468:	2302      	movs	r3, #2
- 800646a:	9300      	str	r3, [sp, #0]
- 800646c:	2302      	movs	r3, #2
- 800646e:	2202      	movs	r2, #2
- 8006470:	2102      	movs	r1, #2
- 8006472:	6878      	ldr	r0, [r7, #4]
- 8006474:	f003 fab6 	bl	80099e4 <HAL_FDCAN_ConfigGlobalFilter>
- 8006478:	4603      	mov	r3, r0
- 800647a:	2b00      	cmp	r3, #0
- 800647c:	bf14      	ite	ne
- 800647e:	2301      	movne	r3, #1
- 8006480:	2300      	moveq	r3, #0
- 8006482:	b2db      	uxtb	r3, r3
- 8006484:	2b00      	cmp	r3, #0
- 8006486:	d001      	beq.n	800648c <cyphal_can_starter+0xd8>
+ 800646a:	2202      	movs	r2, #2
+ 800646c:	2102      	movs	r1, #2
+ 800646e:	6878      	ldr	r0, [r7, #4]
+ 8006470:	f003 fab8 	bl	80099e4 <HAL_FDCAN_ConfigGlobalFilter>
+ 8006474:	4603      	mov	r3, r0
+ 8006476:	2b00      	cmp	r3, #0
+ 8006478:	bf14      	ite	ne
+ 800647a:	2301      	movne	r3, #1
+ 800647c:	2300      	moveq	r3, #0
+ 800647e:	b2db      	uxtb	r3, r3
+ 8006480:	2b00      	cmp	r3, #0
+ 8006482:	d001      	beq.n	8006488 <cyphal_can_starter+0xd8>
 	{
 	  Error_Handler();
- 8006488:	f7fb fca5 	bl	8001dd6 <Error_Handler>
+ 8006484:	f7fb fca7 	bl	8001dd6 <Error_Handler>
 	}
 	if (HAL_FDCAN_ConfigFilter(hfdcan, &niFilterConfig) != HAL_OK) {
- 800648c:	491f      	ldr	r1, [pc, #124]	; (800650c <cyphal_can_starter+0x158>)
- 800648e:	6878      	ldr	r0, [r7, #4]
- 8006490:	f003 fa4e 	bl	8009930 <HAL_FDCAN_ConfigFilter>
- 8006494:	4603      	mov	r3, r0
- 8006496:	2b00      	cmp	r3, #0
- 8006498:	bf14      	ite	ne
- 800649a:	2301      	movne	r3, #1
- 800649c:	2300      	moveq	r3, #0
- 800649e:	b2db      	uxtb	r3, r3
- 80064a0:	2b00      	cmp	r3, #0
- 80064a2:	d001      	beq.n	80064a8 <cyphal_can_starter+0xf4>
+ 8006488:	491f      	ldr	r1, [pc, #124]	; (8006508 <cyphal_can_starter+0x158>)
+ 800648a:	6878      	ldr	r0, [r7, #4]
+ 800648c:	f003 fa50 	bl	8009930 <HAL_FDCAN_ConfigFilter>
+ 8006490:	4603      	mov	r3, r0
+ 8006492:	2b00      	cmp	r3, #0
+ 8006494:	bf14      	ite	ne
+ 8006496:	2301      	movne	r3, #1
+ 8006498:	2300      	moveq	r3, #0
+ 800649a:	b2db      	uxtb	r3, r3
+ 800649c:	2b00      	cmp	r3, #0
+ 800649e:	d001      	beq.n	80064a4 <cyphal_can_starter+0xf4>
 	  Error_Handler();
- 80064a4:	f7fb fc97 	bl	8001dd6 <Error_Handler>
+ 80064a0:	f7fb fc99 	bl	8001dd6 <Error_Handler>
 	}
 //	if (HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK) {
 //	  Error_Handler();
 //	}
 	if (HAL_FDCAN_ConfigFilter(hfdcan, &hbFilterConfig) != HAL_OK) {
- 80064a8:	491a      	ldr	r1, [pc, #104]	; (8006514 <cyphal_can_starter+0x160>)
- 80064aa:	6878      	ldr	r0, [r7, #4]
- 80064ac:	f003 fa40 	bl	8009930 <HAL_FDCAN_ConfigFilter>
- 80064b0:	4603      	mov	r3, r0
- 80064b2:	2b00      	cmp	r3, #0
- 80064b4:	bf14      	ite	ne
- 80064b6:	2301      	movne	r3, #1
- 80064b8:	2300      	moveq	r3, #0
- 80064ba:	b2db      	uxtb	r3, r3
- 80064bc:	2b00      	cmp	r3, #0
- 80064be:	d001      	beq.n	80064c4 <cyphal_can_starter+0x110>
+ 80064a4:	491a      	ldr	r1, [pc, #104]	; (8006510 <cyphal_can_starter+0x160>)
+ 80064a6:	6878      	ldr	r0, [r7, #4]
+ 80064a8:	f003 fa42 	bl	8009930 <HAL_FDCAN_ConfigFilter>
+ 80064ac:	4603      	mov	r3, r0
+ 80064ae:	2b00      	cmp	r3, #0
+ 80064b0:	bf14      	ite	ne
+ 80064b2:	2301      	movne	r3, #1
+ 80064b4:	2300      	moveq	r3, #0
+ 80064b6:	b2db      	uxtb	r3, r3
+ 80064b8:	2b00      	cmp	r3, #0
+ 80064ba:	d001      	beq.n	80064c0 <cyphal_can_starter+0x110>
 	  Error_Handler();
- 80064c0:	f7fb fc89 	bl	8001dd6 <Error_Handler>
+ 80064bc:	f7fb fc8b 	bl	8001dd6 <Error_Handler>
 	}
 
 	if (HAL_FDCAN_ConfigTxDelayCompensation(hfdcan, 5, 0) != HAL_OK) {
- 80064c4:	2200      	movs	r2, #0
- 80064c6:	2105      	movs	r1, #5
- 80064c8:	6878      	ldr	r0, [r7, #4]
- 80064ca:	f003 fabc 	bl	8009a46 <HAL_FDCAN_ConfigTxDelayCompensation>
- 80064ce:	4603      	mov	r3, r0
- 80064d0:	2b00      	cmp	r3, #0
- 80064d2:	bf14      	ite	ne
- 80064d4:	2301      	movne	r3, #1
- 80064d6:	2300      	moveq	r3, #0
- 80064d8:	b2db      	uxtb	r3, r3
- 80064da:	2b00      	cmp	r3, #0
- 80064dc:	d001      	beq.n	80064e2 <cyphal_can_starter+0x12e>
+ 80064c0:	2200      	movs	r2, #0
+ 80064c2:	2105      	movs	r1, #5
+ 80064c4:	6878      	ldr	r0, [r7, #4]
+ 80064c6:	f003 fabe 	bl	8009a46 <HAL_FDCAN_ConfigTxDelayCompensation>
+ 80064ca:	4603      	mov	r3, r0
+ 80064cc:	2b00      	cmp	r3, #0
+ 80064ce:	bf14      	ite	ne
+ 80064d0:	2301      	movne	r3, #1
+ 80064d2:	2300      	moveq	r3, #0
+ 80064d4:	b2db      	uxtb	r3, r3
+ 80064d6:	2b00      	cmp	r3, #0
+ 80064d8:	d001      	beq.n	80064de <cyphal_can_starter+0x12e>
 	  Error_Handler();
- 80064de:	f7fb fc7a 	bl	8001dd6 <Error_Handler>
+ 80064da:	f7fb fc7c 	bl	8001dd6 <Error_Handler>
 	}
 	if (HAL_FDCAN_EnableTxDelayCompensation(hfdcan) != HAL_OK) {
- 80064e2:	6878      	ldr	r0, [r7, #4]
- 80064e4:	f003 fad1 	bl	8009a8a <HAL_FDCAN_EnableTxDelayCompensation>
- 80064e8:	4603      	mov	r3, r0
- 80064ea:	2b00      	cmp	r3, #0
- 80064ec:	bf14      	ite	ne
- 80064ee:	2301      	movne	r3, #1
- 80064f0:	2300      	moveq	r3, #0
- 80064f2:	b2db      	uxtb	r3, r3
- 80064f4:	2b00      	cmp	r3, #0
- 80064f6:	d001      	beq.n	80064fc <cyphal_can_starter+0x148>
+ 80064de:	6878      	ldr	r0, [r7, #4]
+ 80064e0:	f003 fad3 	bl	8009a8a <HAL_FDCAN_EnableTxDelayCompensation>
+ 80064e4:	4603      	mov	r3, r0
+ 80064e6:	2b00      	cmp	r3, #0
+ 80064e8:	bf14      	ite	ne
+ 80064ea:	2301      	movne	r3, #1
+ 80064ec:	2300      	moveq	r3, #0
+ 80064ee:	b2db      	uxtb	r3, r3
+ 80064f0:	2b00      	cmp	r3, #0
+ 80064f2:	d001      	beq.n	80064f8 <cyphal_can_starter+0x148>
 	  Error_Handler();
- 80064f8:	f7fb fc6d 	bl	8001dd6 <Error_Handler>
+ 80064f4:	f7fb fc6f 	bl	8001dd6 <Error_Handler>
 //	if (HAL_FDCAN_ActivateNotification(hfdcan, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0) != HAL_OK)
 //	{
 //	  Error_Handler();
 //	}
 
 	HAL_FDCAN_Start(hfdcan);
- 80064fc:	6878      	ldr	r0, [r7, #4]
- 80064fe:	f003 fae5 	bl	8009acc <HAL_FDCAN_Start>
+ 80064f8:	6878      	ldr	r0, [r7, #4]
+ 80064fa:	f003 fae7 	bl	8009acc <HAL_FDCAN_Start>
 }
- 8006502:	bf00      	nop
- 8006504:	3728      	adds	r7, #40	; 0x28
- 8006506:	46bd      	mov	sp, r7
- 8006508:	bd80      	pop	{r7, pc}
- 800650a:	bf00      	nop
- 800650c:	20000704 	.word	0x20000704
- 8006510:	200006d4 	.word	0x200006d4
- 8006514:	200006ec 	.word	0x200006ec
+ 80064fe:	bf00      	nop
+ 8006500:	3728      	adds	r7, #40	; 0x28
+ 8006502:	46bd      	mov	sp, r7
+ 8006504:	bd80      	pop	{r7, pc}
+ 8006506:	bf00      	nop
+ 8006508:	20000704 	.word	0x20000704
+ 800650c:	200006d4 	.word	0x200006d4
+ 8006510:	200006ec 	.word	0x200006ec
 
-08006518 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_destroyEv>:
+08006514 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_destroyEv>:
       _M_destroy() noexcept
- 8006518:	b580      	push	{r7, lr}
- 800651a:	b082      	sub	sp, #8
- 800651c:	af00      	add	r7, sp, #0
- 800651e:	6078      	str	r0, [r7, #4]
+ 8006514:	b580      	push	{r7, lr}
+ 8006516:	b082      	sub	sp, #8
+ 8006518:	af00      	add	r7, sp, #0
+ 800651a:	6078      	str	r0, [r7, #4]
       { delete this; }
- 8006520:	687b      	ldr	r3, [r7, #4]
- 8006522:	2b00      	cmp	r3, #0
- 8006524:	d005      	beq.n	8006532 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_destroyEv+0x1a>
- 8006526:	687b      	ldr	r3, [r7, #4]
+ 800651c:	687b      	ldr	r3, [r7, #4]
+ 800651e:	2b00      	cmp	r3, #0
+ 8006520:	d005      	beq.n	800652e <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_destroyEv+0x1a>
+ 8006522:	687b      	ldr	r3, [r7, #4]
+ 8006524:	681b      	ldr	r3, [r3, #0]
+ 8006526:	3304      	adds	r3, #4
  8006528:	681b      	ldr	r3, [r3, #0]
- 800652a:	3304      	adds	r3, #4
- 800652c:	681b      	ldr	r3, [r3, #0]
- 800652e:	6878      	ldr	r0, [r7, #4]
- 8006530:	4798      	blx	r3
- 8006532:	bf00      	nop
- 8006534:	3708      	adds	r7, #8
- 8006536:	46bd      	mov	sp, r7
- 8006538:	bd80      	pop	{r7, pc}
+ 800652a:	6878      	ldr	r0, [r7, #4]
+ 800652c:	4798      	blx	r3
+ 800652e:	bf00      	nop
+ 8006530:	3708      	adds	r7, #8
+ 8006532:	46bd      	mov	sp, r7
+ 8006534:	bd80      	pop	{r7, pc}
 
-0800653a <_ZNSt14_Function_baseC1Ev>:
+08006536 <_ZNSt14_Function_baseC1Ev>:
     _Function_base() = default;
- 800653a:	b480      	push	{r7}
- 800653c:	b083      	sub	sp, #12
- 800653e:	af00      	add	r7, sp, #0
- 8006540:	6078      	str	r0, [r7, #4]
- 8006542:	687b      	ldr	r3, [r7, #4]
- 8006544:	461a      	mov	r2, r3
- 8006546:	2300      	movs	r3, #0
- 8006548:	6013      	str	r3, [r2, #0]
- 800654a:	6053      	str	r3, [r2, #4]
- 800654c:	687b      	ldr	r3, [r7, #4]
- 800654e:	2200      	movs	r2, #0
- 8006550:	609a      	str	r2, [r3, #8]
- 8006552:	687b      	ldr	r3, [r7, #4]
- 8006554:	4618      	mov	r0, r3
- 8006556:	370c      	adds	r7, #12
- 8006558:	46bd      	mov	sp, r7
- 800655a:	f85d 7b04 	ldr.w	r7, [sp], #4
- 800655e:	4770      	bx	lr
+ 8006536:	b480      	push	{r7}
+ 8006538:	b083      	sub	sp, #12
+ 800653a:	af00      	add	r7, sp, #0
+ 800653c:	6078      	str	r0, [r7, #4]
+ 800653e:	687b      	ldr	r3, [r7, #4]
+ 8006540:	461a      	mov	r2, r3
+ 8006542:	2300      	movs	r3, #0
+ 8006544:	6013      	str	r3, [r2, #0]
+ 8006546:	6053      	str	r3, [r2, #4]
+ 8006548:	687b      	ldr	r3, [r7, #4]
+ 800654a:	2200      	movs	r2, #0
+ 800654c:	609a      	str	r2, [r3, #8]
+ 800654e:	687b      	ldr	r3, [r7, #4]
+ 8006550:	4618      	mov	r0, r3
+ 8006552:	370c      	adds	r7, #12
+ 8006554:	46bd      	mov	sp, r7
+ 8006556:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800655a:	4770      	bx	lr
 
-08006560 <_ZNSt8functionIFyvEEC1ERKS1_>:
+0800655c <_ZNSt8functionIFyvEEC1ERKS1_>:
        *  @post `bool(*this) == bool(__x)`
        *
        *  The newly-created %function contains a copy of the target of
        *  `__x` (if it has one).
        */
       function(const function& __x)
- 8006560:	b580      	push	{r7, lr}
- 8006562:	b082      	sub	sp, #8
- 8006564:	af00      	add	r7, sp, #0
- 8006566:	6078      	str	r0, [r7, #4]
- 8006568:	6039      	str	r1, [r7, #0]
+ 800655c:	b580      	push	{r7, lr}
+ 800655e:	b082      	sub	sp, #8
+ 8006560:	af00      	add	r7, sp, #0
+ 8006562:	6078      	str	r0, [r7, #4]
+ 8006564:	6039      	str	r1, [r7, #0]
       : _Function_base()
- 800656a:	687b      	ldr	r3, [r7, #4]
- 800656c:	461a      	mov	r2, r3
- 800656e:	2300      	movs	r3, #0
- 8006570:	6013      	str	r3, [r2, #0]
- 8006572:	6053      	str	r3, [r2, #4]
- 8006574:	6093      	str	r3, [r2, #8]
- 8006576:	687b      	ldr	r3, [r7, #4]
- 8006578:	4618      	mov	r0, r3
- 800657a:	f7ff ffde 	bl	800653a <_ZNSt14_Function_baseC1Ev>
- 800657e:	687b      	ldr	r3, [r7, #4]
- 8006580:	2200      	movs	r2, #0
- 8006582:	60da      	str	r2, [r3, #12]
+ 8006566:	687b      	ldr	r3, [r7, #4]
+ 8006568:	461a      	mov	r2, r3
+ 800656a:	2300      	movs	r3, #0
+ 800656c:	6013      	str	r3, [r2, #0]
+ 800656e:	6053      	str	r3, [r2, #4]
+ 8006570:	6093      	str	r3, [r2, #8]
+ 8006572:	687b      	ldr	r3, [r7, #4]
+ 8006574:	4618      	mov	r0, r3
+ 8006576:	f7ff ffde 	bl	8006536 <_ZNSt14_Function_baseC1Ev>
+ 800657a:	687b      	ldr	r3, [r7, #4]
+ 800657c:	2200      	movs	r2, #0
+ 800657e:	60da      	str	r2, [r3, #12]
       {
 	if (static_cast<bool>(__x))
- 8006584:	6838      	ldr	r0, [r7, #0]
- 8006586:	f000 fb01 	bl	8006b8c <_ZNKSt8functionIFyvEEcvbEv>
- 800658a:	4603      	mov	r3, r0
- 800658c:	2b00      	cmp	r3, #0
- 800658e:	d00d      	beq.n	80065ac <_ZNSt8functionIFyvEEC1ERKS1_+0x4c>
+ 8006580:	6838      	ldr	r0, [r7, #0]
+ 8006582:	f000 fb03 	bl	8006b8c <_ZNKSt8functionIFyvEEcvbEv>
+ 8006586:	4603      	mov	r3, r0
+ 8006588:	2b00      	cmp	r3, #0
+ 800658a:	d00d      	beq.n	80065a8 <_ZNSt8functionIFyvEEC1ERKS1_+0x4c>
 	  {
 	    __x._M_manager(_M_functor, __x._M_functor, __clone_functor);
- 8006590:	683b      	ldr	r3, [r7, #0]
- 8006592:	689b      	ldr	r3, [r3, #8]
- 8006594:	6878      	ldr	r0, [r7, #4]
- 8006596:	6839      	ldr	r1, [r7, #0]
- 8006598:	2202      	movs	r2, #2
- 800659a:	4798      	blx	r3
+ 800658c:	683b      	ldr	r3, [r7, #0]
+ 800658e:	689b      	ldr	r3, [r3, #8]
+ 8006590:	6878      	ldr	r0, [r7, #4]
+ 8006592:	6839      	ldr	r1, [r7, #0]
+ 8006594:	2202      	movs	r2, #2
+ 8006596:	4798      	blx	r3
 	    _M_invoker = __x._M_invoker;
- 800659c:	683b      	ldr	r3, [r7, #0]
- 800659e:	68da      	ldr	r2, [r3, #12]
- 80065a0:	687b      	ldr	r3, [r7, #4]
- 80065a2:	60da      	str	r2, [r3, #12]
+ 8006598:	683b      	ldr	r3, [r7, #0]
+ 800659a:	68da      	ldr	r2, [r3, #12]
+ 800659c:	687b      	ldr	r3, [r7, #4]
+ 800659e:	60da      	str	r2, [r3, #12]
 	    _M_manager = __x._M_manager;
- 80065a4:	683b      	ldr	r3, [r7, #0]
- 80065a6:	689a      	ldr	r2, [r3, #8]
- 80065a8:	687b      	ldr	r3, [r7, #4]
- 80065aa:	609a      	str	r2, [r3, #8]
+ 80065a0:	683b      	ldr	r3, [r7, #0]
+ 80065a2:	689a      	ldr	r2, [r3, #8]
+ 80065a4:	687b      	ldr	r3, [r7, #4]
+ 80065a6:	609a      	str	r2, [r3, #8]
 	  }
       }
- 80065ac:	687b      	ldr	r3, [r7, #4]
- 80065ae:	4618      	mov	r0, r3
- 80065b0:	3708      	adds	r7, #8
- 80065b2:	46bd      	mov	sp, r7
- 80065b4:	bd80      	pop	{r7, pc}
+ 80065a8:	687b      	ldr	r3, [r7, #4]
+ 80065aa:	4618      	mov	r0, r3
+ 80065ac:	3708      	adds	r7, #8
+ 80065ae:	46bd      	mov	sp, r7
+ 80065b0:	bd80      	pop	{r7, pc}
 
-080065b6 <_ZNSt8functionIFvvEEC1ERKS1_>:
+080065b2 <_ZNSt8functionIFvvEEC1ERKS1_>:
       function(const function& __x)
- 80065b6:	b580      	push	{r7, lr}
- 80065b8:	b082      	sub	sp, #8
- 80065ba:	af00      	add	r7, sp, #0
- 80065bc:	6078      	str	r0, [r7, #4]
- 80065be:	6039      	str	r1, [r7, #0]
+ 80065b2:	b580      	push	{r7, lr}
+ 80065b4:	b082      	sub	sp, #8
+ 80065b6:	af00      	add	r7, sp, #0
+ 80065b8:	6078      	str	r0, [r7, #4]
+ 80065ba:	6039      	str	r1, [r7, #0]
       : _Function_base()
- 80065c0:	687b      	ldr	r3, [r7, #4]
- 80065c2:	461a      	mov	r2, r3
- 80065c4:	2300      	movs	r3, #0
- 80065c6:	6013      	str	r3, [r2, #0]
- 80065c8:	6053      	str	r3, [r2, #4]
- 80065ca:	6093      	str	r3, [r2, #8]
- 80065cc:	687b      	ldr	r3, [r7, #4]
- 80065ce:	4618      	mov	r0, r3
- 80065d0:	f7ff ffb3 	bl	800653a <_ZNSt14_Function_baseC1Ev>
- 80065d4:	687b      	ldr	r3, [r7, #4]
- 80065d6:	2200      	movs	r2, #0
- 80065d8:	60da      	str	r2, [r3, #12]
+ 80065bc:	687b      	ldr	r3, [r7, #4]
+ 80065be:	461a      	mov	r2, r3
+ 80065c0:	2300      	movs	r3, #0
+ 80065c2:	6013      	str	r3, [r2, #0]
+ 80065c4:	6053      	str	r3, [r2, #4]
+ 80065c6:	6093      	str	r3, [r2, #8]
+ 80065c8:	687b      	ldr	r3, [r7, #4]
+ 80065ca:	4618      	mov	r0, r3
+ 80065cc:	f7ff ffb3 	bl	8006536 <_ZNSt14_Function_baseC1Ev>
+ 80065d0:	687b      	ldr	r3, [r7, #4]
+ 80065d2:	2200      	movs	r2, #0
+ 80065d4:	60da      	str	r2, [r3, #12]
 	if (static_cast<bool>(__x))
- 80065da:	6838      	ldr	r0, [r7, #0]
- 80065dc:	f000 fae6 	bl	8006bac <_ZNKSt8functionIFvvEEcvbEv>
- 80065e0:	4603      	mov	r3, r0
- 80065e2:	2b00      	cmp	r3, #0
- 80065e4:	d00d      	beq.n	8006602 <_ZNSt8functionIFvvEEC1ERKS1_+0x4c>
+ 80065d6:	6838      	ldr	r0, [r7, #0]
+ 80065d8:	f000 fae8 	bl	8006bac <_ZNKSt8functionIFvvEEcvbEv>
+ 80065dc:	4603      	mov	r3, r0
+ 80065de:	2b00      	cmp	r3, #0
+ 80065e0:	d00d      	beq.n	80065fe <_ZNSt8functionIFvvEEC1ERKS1_+0x4c>
 	    __x._M_manager(_M_functor, __x._M_functor, __clone_functor);
- 80065e6:	683b      	ldr	r3, [r7, #0]
- 80065e8:	689b      	ldr	r3, [r3, #8]
- 80065ea:	6878      	ldr	r0, [r7, #4]
- 80065ec:	6839      	ldr	r1, [r7, #0]
- 80065ee:	2202      	movs	r2, #2
- 80065f0:	4798      	blx	r3
+ 80065e2:	683b      	ldr	r3, [r7, #0]
+ 80065e4:	689b      	ldr	r3, [r3, #8]
+ 80065e6:	6878      	ldr	r0, [r7, #4]
+ 80065e8:	6839      	ldr	r1, [r7, #0]
+ 80065ea:	2202      	movs	r2, #2
+ 80065ec:	4798      	blx	r3
 	    _M_invoker = __x._M_invoker;
- 80065f2:	683b      	ldr	r3, [r7, #0]
- 80065f4:	68da      	ldr	r2, [r3, #12]
- 80065f6:	687b      	ldr	r3, [r7, #4]
- 80065f8:	60da      	str	r2, [r3, #12]
+ 80065ee:	683b      	ldr	r3, [r7, #0]
+ 80065f0:	68da      	ldr	r2, [r3, #12]
+ 80065f2:	687b      	ldr	r3, [r7, #4]
+ 80065f4:	60da      	str	r2, [r3, #12]
 	    _M_manager = __x._M_manager;
- 80065fa:	683b      	ldr	r3, [r7, #0]
- 80065fc:	689a      	ldr	r2, [r3, #8]
- 80065fe:	687b      	ldr	r3, [r7, #4]
- 8006600:	609a      	str	r2, [r3, #8]
+ 80065f6:	683b      	ldr	r3, [r7, #0]
+ 80065f8:	689a      	ldr	r2, [r3, #8]
+ 80065fa:	687b      	ldr	r3, [r7, #4]
+ 80065fc:	609a      	str	r2, [r3, #8]
       }
- 8006602:	687b      	ldr	r3, [r7, #4]
- 8006604:	4618      	mov	r0, r3
- 8006606:	3708      	adds	r7, #8
- 8006608:	46bd      	mov	sp, r7
- 800660a:	bd80      	pop	{r7, pc}
+ 80065fe:	687b      	ldr	r3, [r7, #4]
+ 8006600:	4618      	mov	r0, r3
+ 8006602:	3708      	adds	r7, #8
+ 8006604:	46bd      	mov	sp, r7
+ 8006606:	bd80      	pop	{r7, pc}
 
-0800660c <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>:
+08006608 <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>:
       const deleter_type&
       get_deleter() const noexcept
       { return _M_t._M_deleter(); }
 
       /// Return @c true if the stored pointer is not null.
       explicit operator bool() const noexcept
- 800660c:	b580      	push	{r7, lr}
- 800660e:	b082      	sub	sp, #8
- 8006610:	af00      	add	r7, sp, #0
- 8006612:	6078      	str	r0, [r7, #4]
+ 8006608:	b580      	push	{r7, lr}
+ 800660a:	b082      	sub	sp, #8
+ 800660c:	af00      	add	r7, sp, #0
+ 800660e:	6078      	str	r0, [r7, #4]
       { return get() == pointer() ? false : true; }
- 8006614:	6878      	ldr	r0, [r7, #4]
- 8006616:	f000 fad9 	bl	8006bcc <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EE3getEv>
- 800661a:	4603      	mov	r3, r0
- 800661c:	2b00      	cmp	r3, #0
- 800661e:	bf14      	ite	ne
- 8006620:	2301      	movne	r3, #1
- 8006622:	2300      	moveq	r3, #0
- 8006624:	b2db      	uxtb	r3, r3
- 8006626:	4618      	mov	r0, r3
- 8006628:	3708      	adds	r7, #8
- 800662a:	46bd      	mov	sp, r7
- 800662c:	bd80      	pop	{r7, pc}
+ 8006610:	6878      	ldr	r0, [r7, #4]
+ 8006612:	f000 fadb 	bl	8006bcc <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EE3getEv>
+ 8006616:	4603      	mov	r3, r0
+ 8006618:	2b00      	cmp	r3, #0
+ 800661a:	bf14      	ite	ne
+ 800661c:	2301      	movne	r3, #1
+ 800661e:	2300      	moveq	r3, #0
+ 8006620:	b2db      	uxtb	r3, r3
+ 8006622:	4618      	mov	r0, r3
+ 8006624:	3708      	adds	r7, #8
+ 8006626:	46bd      	mov	sp, r7
+ 8006628:	bd80      	pop	{r7, pc}
 
-0800662e <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEptEv>:
+0800662a <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEptEv>:
       operator->() const noexcept
- 800662e:	b580      	push	{r7, lr}
- 8006630:	b082      	sub	sp, #8
- 8006632:	af00      	add	r7, sp, #0
- 8006634:	6078      	str	r0, [r7, #4]
+ 800662a:	b580      	push	{r7, lr}
+ 800662c:	b082      	sub	sp, #8
+ 800662e:	af00      	add	r7, sp, #0
+ 8006630:	6078      	str	r0, [r7, #4]
 	return get();
- 8006636:	6878      	ldr	r0, [r7, #4]
- 8006638:	f000 fac8 	bl	8006bcc <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EE3getEv>
- 800663c:	4603      	mov	r3, r0
+ 8006632:	6878      	ldr	r0, [r7, #4]
+ 8006634:	f000 faca 	bl	8006bcc <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EE3getEv>
+ 8006638:	4603      	mov	r3, r0
       }
- 800663e:	4618      	mov	r0, r3
- 8006640:	3708      	adds	r7, #8
- 8006642:	46bd      	mov	sp, r7
- 8006644:	bd80      	pop	{r7, pc}
+ 800663a:	4618      	mov	r0, r3
+ 800663c:	3708      	adds	r7, #8
+ 800663e:	46bd      	mov	sp, r7
+ 8006640:	bd80      	pop	{r7, pc}
 
-08006646 <_ZNSt15__uniq_ptr_dataI19AbstractCANProviderSt14default_deleteIS0_ELb1ELb1EECI1St15__uniq_ptr_implIS0_S2_EEPS0_>:
+08006642 <_ZNSt15__uniq_ptr_dataI19AbstractCANProviderSt14default_deleteIS0_ELb1ELb1EECI1St15__uniq_ptr_implIS0_S2_EEPS0_>:
       using __uniq_ptr_impl<_Tp, _Dp>::__uniq_ptr_impl;
- 8006646:	b580      	push	{r7, lr}
- 8006648:	b082      	sub	sp, #8
- 800664a:	af00      	add	r7, sp, #0
- 800664c:	6078      	str	r0, [r7, #4]
- 800664e:	6039      	str	r1, [r7, #0]
- 8006650:	687b      	ldr	r3, [r7, #4]
- 8006652:	683a      	ldr	r2, [r7, #0]
- 8006654:	4611      	mov	r1, r2
- 8006656:	4618      	mov	r0, r3
- 8006658:	f000 fac5 	bl	8006be6 <_ZNSt15__uniq_ptr_implI19AbstractCANProviderSt14default_deleteIS0_EEC1EPS0_>
- 800665c:	687b      	ldr	r3, [r7, #4]
- 800665e:	4618      	mov	r0, r3
- 8006660:	3708      	adds	r7, #8
- 8006662:	46bd      	mov	sp, r7
- 8006664:	bd80      	pop	{r7, pc}
+ 8006642:	b580      	push	{r7, lr}
+ 8006644:	b082      	sub	sp, #8
+ 8006646:	af00      	add	r7, sp, #0
+ 8006648:	6078      	str	r0, [r7, #4]
+ 800664a:	6039      	str	r1, [r7, #0]
+ 800664c:	687b      	ldr	r3, [r7, #4]
+ 800664e:	683a      	ldr	r2, [r7, #0]
+ 8006650:	4611      	mov	r1, r2
+ 8006652:	4618      	mov	r0, r3
+ 8006654:	f000 fac7 	bl	8006be6 <_ZNSt15__uniq_ptr_implI19AbstractCANProviderSt14default_deleteIS0_EEC1EPS0_>
+ 8006658:	687b      	ldr	r3, [r7, #4]
+ 800665a:	4618      	mov	r0, r3
+ 800665c:	3708      	adds	r7, #8
+ 800665e:	46bd      	mov	sp, r7
+ 8006660:	bd80      	pop	{r7, pc}
 
-08006666 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EEC1IS2_vEEPS0_>:
+08006662 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EEC1IS2_vEEPS0_>:
 	unique_ptr(pointer __p) noexcept
- 8006666:	b580      	push	{r7, lr}
- 8006668:	b082      	sub	sp, #8
- 800666a:	af00      	add	r7, sp, #0
- 800666c:	6078      	str	r0, [r7, #4]
- 800666e:	6039      	str	r1, [r7, #0]
+ 8006662:	b580      	push	{r7, lr}
+ 8006664:	b082      	sub	sp, #8
+ 8006666:	af00      	add	r7, sp, #0
+ 8006668:	6078      	str	r0, [r7, #4]
+ 800666a:	6039      	str	r1, [r7, #0]
 	: _M_t(__p)
- 8006670:	687b      	ldr	r3, [r7, #4]
- 8006672:	6839      	ldr	r1, [r7, #0]
- 8006674:	4618      	mov	r0, r3
- 8006676:	f7ff ffe6 	bl	8006646 <_ZNSt15__uniq_ptr_dataI19AbstractCANProviderSt14default_deleteIS0_ELb1ELb1EECI1St15__uniq_ptr_implIS0_S2_EEPS0_>
+ 800666c:	687b      	ldr	r3, [r7, #4]
+ 800666e:	6839      	ldr	r1, [r7, #0]
+ 8006670:	4618      	mov	r0, r3
+ 8006672:	f7ff ffe6 	bl	8006642 <_ZNSt15__uniq_ptr_dataI19AbstractCANProviderSt14default_deleteIS0_ELb1ELb1EECI1St15__uniq_ptr_implIS0_S2_EEPS0_>
         { }
- 800667a:	687b      	ldr	r3, [r7, #4]
- 800667c:	4618      	mov	r0, r3
- 800667e:	3708      	adds	r7, #8
- 8006680:	46bd      	mov	sp, r7
- 8006682:	bd80      	pop	{r7, pc}
+ 8006676:	687b      	ldr	r3, [r7, #4]
+ 8006678:	4618      	mov	r0, r3
+ 800667a:	3708      	adds	r7, #8
+ 800667c:	46bd      	mov	sp, r7
+ 800667e:	bd80      	pop	{r7, pc}
 
-08006684 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EED1Ev>:
+08006680 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EED1Ev>:
       ~unique_ptr() noexcept
- 8006684:	b590      	push	{r4, r7, lr}
- 8006686:	b085      	sub	sp, #20
- 8006688:	af00      	add	r7, sp, #0
- 800668a:	6078      	str	r0, [r7, #4]
+ 8006680:	b590      	push	{r4, r7, lr}
+ 8006682:	b085      	sub	sp, #20
+ 8006684:	af00      	add	r7, sp, #0
+ 8006686:	6078      	str	r0, [r7, #4]
 	auto& __ptr = _M_t._M_ptr();
- 800668c:	687b      	ldr	r3, [r7, #4]
- 800668e:	4618      	mov	r0, r3
- 8006690:	f000 fabd 	bl	8006c0e <_ZNSt15__uniq_ptr_implI19AbstractCANProviderSt14default_deleteIS0_EE6_M_ptrEv>
- 8006694:	60f8      	str	r0, [r7, #12]
+ 8006688:	687b      	ldr	r3, [r7, #4]
+ 800668a:	4618      	mov	r0, r3
+ 800668c:	f000 fabf 	bl	8006c0e <_ZNSt15__uniq_ptr_implI19AbstractCANProviderSt14default_deleteIS0_EE6_M_ptrEv>
+ 8006690:	60f8      	str	r0, [r7, #12]
 	if (__ptr != nullptr)
- 8006696:	68fb      	ldr	r3, [r7, #12]
- 8006698:	681b      	ldr	r3, [r3, #0]
- 800669a:	2b00      	cmp	r3, #0
- 800669c:	d00c      	beq.n	80066b8 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EED1Ev+0x34>
+ 8006692:	68fb      	ldr	r3, [r7, #12]
+ 8006694:	681b      	ldr	r3, [r3, #0]
+ 8006696:	2b00      	cmp	r3, #0
+ 8006698:	d00c      	beq.n	80066b4 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EED1Ev+0x34>
 	  get_deleter()(std::move(__ptr));
- 800669e:	6878      	ldr	r0, [r7, #4]
- 80066a0:	f000 fac2 	bl	8006c28 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EE11get_deleterEv>
- 80066a4:	4604      	mov	r4, r0
- 80066a6:	68f8      	ldr	r0, [r7, #12]
- 80066a8:	f000 facb 	bl	8006c42 <_ZSt4moveIRP19AbstractCANProviderEONSt16remove_referenceIT_E4typeEOS4_>
- 80066ac:	4603      	mov	r3, r0
- 80066ae:	681b      	ldr	r3, [r3, #0]
- 80066b0:	4619      	mov	r1, r3
- 80066b2:	4620      	mov	r0, r4
- 80066b4:	f000 fad0 	bl	8006c58 <_ZNKSt14default_deleteI19AbstractCANProviderEclEPS0_>
+ 800669a:	6878      	ldr	r0, [r7, #4]
+ 800669c:	f000 fac4 	bl	8006c28 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EE11get_deleterEv>
+ 80066a0:	4604      	mov	r4, r0
+ 80066a2:	68f8      	ldr	r0, [r7, #12]
+ 80066a4:	f000 facd 	bl	8006c42 <_ZSt4moveIRP19AbstractCANProviderEONSt16remove_referenceIT_E4typeEOS4_>
+ 80066a8:	4603      	mov	r3, r0
+ 80066aa:	681b      	ldr	r3, [r3, #0]
+ 80066ac:	4619      	mov	r1, r3
+ 80066ae:	4620      	mov	r0, r4
+ 80066b0:	f000 fad2 	bl	8006c58 <_ZNKSt14default_deleteI19AbstractCANProviderEclEPS0_>
 	__ptr = pointer();
- 80066b8:	68fb      	ldr	r3, [r7, #12]
- 80066ba:	2200      	movs	r2, #0
- 80066bc:	601a      	str	r2, [r3, #0]
+ 80066b4:	68fb      	ldr	r3, [r7, #12]
+ 80066b6:	2200      	movs	r2, #0
+ 80066b8:	601a      	str	r2, [r3, #0]
       }
- 80066be:	687b      	ldr	r3, [r7, #4]
- 80066c0:	4618      	mov	r0, r3
- 80066c2:	3714      	adds	r7, #20
- 80066c4:	46bd      	mov	sp, r7
- 80066c6:	bd90      	pop	{r4, r7, pc}
+ 80066ba:	687b      	ldr	r3, [r7, #4]
+ 80066bc:	4618      	mov	r0, r3
+ 80066be:	3714      	adds	r7, #20
+ 80066c0:	46bd      	mov	sp, r7
+ 80066c2:	bd90      	pop	{r4, r7, pc}
 
-080066c8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>:
+080066c4 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev>:
       ~__shared_count() noexcept
- 80066c8:	b580      	push	{r7, lr}
- 80066ca:	b082      	sub	sp, #8
- 80066cc:	af00      	add	r7, sp, #0
- 80066ce:	6078      	str	r0, [r7, #4]
+ 80066c4:	b580      	push	{r7, lr}
+ 80066c6:	b082      	sub	sp, #8
+ 80066c8:	af00      	add	r7, sp, #0
+ 80066ca:	6078      	str	r0, [r7, #4]
 	if (_M_pi != nullptr)
- 80066d0:	687b      	ldr	r3, [r7, #4]
- 80066d2:	681b      	ldr	r3, [r3, #0]
- 80066d4:	2b00      	cmp	r3, #0
- 80066d6:	d004      	beq.n	80066e2 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x1a>
+ 80066cc:	687b      	ldr	r3, [r7, #4]
+ 80066ce:	681b      	ldr	r3, [r3, #0]
+ 80066d0:	2b00      	cmp	r3, #0
+ 80066d2:	d004      	beq.n	80066de <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EED1Ev+0x1a>
 	  _M_pi->_M_release();
- 80066d8:	687b      	ldr	r3, [r7, #4]
- 80066da:	681b      	ldr	r3, [r3, #0]
- 80066dc:	4618      	mov	r0, r3
- 80066de:	f7fb fb9a 	bl	8001e16 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_releaseEv>
+ 80066d4:	687b      	ldr	r3, [r7, #4]
+ 80066d6:	681b      	ldr	r3, [r3, #0]
+ 80066d8:	4618      	mov	r0, r3
+ 80066da:	f7fb fb9c 	bl	8001e16 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE10_M_releaseEv>
       }
- 80066e2:	687b      	ldr	r3, [r7, #4]
- 80066e4:	4618      	mov	r0, r3
- 80066e6:	3708      	adds	r7, #8
- 80066e8:	46bd      	mov	sp, r7
- 80066ea:	bd80      	pop	{r7, pc}
+ 80066de:	687b      	ldr	r3, [r7, #4]
+ 80066e0:	4618      	mov	r0, r3
+ 80066e2:	3708      	adds	r7, #8
+ 80066e4:	46bd      	mov	sp, r7
+ 80066e6:	bd80      	pop	{r7, pc}
 
-080066ec <_ZNSt8functionIFyvEEC1IRS0_vEEOT_>:
+080066e8 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_>:
        */
       // _GLIBCXX_RESOLVE_LIB_DEFECTS
       // 2774. std::function construction vs assignment
       template<typename _Functor,
 	       typename _Constraints = _Requires<_Callable<_Functor>>>
 	function(_Functor&& __f)
- 80066ec:	b590      	push	{r4, r7, lr}
- 80066ee:	b083      	sub	sp, #12
- 80066f0:	af00      	add	r7, sp, #0
- 80066f2:	6078      	str	r0, [r7, #4]
- 80066f4:	6039      	str	r1, [r7, #0]
+ 80066e8:	b590      	push	{r4, r7, lr}
+ 80066ea:	b083      	sub	sp, #12
+ 80066ec:	af00      	add	r7, sp, #0
+ 80066ee:	6078      	str	r0, [r7, #4]
+ 80066f0:	6039      	str	r1, [r7, #0]
 	noexcept(_Handler<_Functor>::template _S_nothrow_init<_Functor>())
 	: _Function_base()
- 80066f6:	687b      	ldr	r3, [r7, #4]
- 80066f8:	461a      	mov	r2, r3
- 80066fa:	2300      	movs	r3, #0
- 80066fc:	6013      	str	r3, [r2, #0]
- 80066fe:	6053      	str	r3, [r2, #4]
- 8006700:	6093      	str	r3, [r2, #8]
- 8006702:	687b      	ldr	r3, [r7, #4]
- 8006704:	4618      	mov	r0, r3
- 8006706:	f7ff ff18 	bl	800653a <_ZNSt14_Function_baseC1Ev>
- 800670a:	687b      	ldr	r3, [r7, #4]
- 800670c:	2200      	movs	r2, #0
- 800670e:	60da      	str	r2, [r3, #12]
+ 80066f2:	687b      	ldr	r3, [r7, #4]
+ 80066f4:	461a      	mov	r2, r3
+ 80066f6:	2300      	movs	r3, #0
+ 80066f8:	6013      	str	r3, [r2, #0]
+ 80066fa:	6053      	str	r3, [r2, #4]
+ 80066fc:	6093      	str	r3, [r2, #8]
+ 80066fe:	687b      	ldr	r3, [r7, #4]
+ 8006700:	4618      	mov	r0, r3
+ 8006702:	f7ff ff18 	bl	8006536 <_ZNSt14_Function_baseC1Ev>
+ 8006706:	687b      	ldr	r3, [r7, #4]
+ 8006708:	2200      	movs	r2, #0
+ 800670a:	60da      	str	r2, [r3, #12]
 	      "std::function target must be constructible from the "
 	      "constructor argument");
 
 	  using _My_handler = _Handler<_Functor>;
 
 	  if (_My_handler::_M_not_empty_function(__f))
- 8006710:	6838      	ldr	r0, [r7, #0]
- 8006712:	f000 fab2 	bl	8006c7a <_ZNSt14_Function_base13_Base_managerIPFyvEE21_M_not_empty_functionIS1_EEbPT_>
- 8006716:	4603      	mov	r3, r0
- 8006718:	2b00      	cmp	r3, #0
- 800671a:	d00e      	beq.n	800673a <_ZNSt8functionIFyvEEC1IRS0_vEEOT_+0x4e>
+ 800670c:	6838      	ldr	r0, [r7, #0]
+ 800670e:	f000 fab4 	bl	8006c7a <_ZNSt14_Function_base13_Base_managerIPFyvEE21_M_not_empty_functionIS1_EEbPT_>
+ 8006712:	4603      	mov	r3, r0
+ 8006714:	2b00      	cmp	r3, #0
+ 8006716:	d00e      	beq.n	8006736 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_+0x4e>
 	    {
 	      _My_handler::_M_init_functor(_M_functor,
- 800671c:	687c      	ldr	r4, [r7, #4]
- 800671e:	6838      	ldr	r0, [r7, #0]
- 8006720:	f000 fabb 	bl	8006c9a <_ZSt7forwardIRFyvEEOT_RNSt16remove_referenceIS2_E4typeE>
- 8006724:	4603      	mov	r3, r0
- 8006726:	4619      	mov	r1, r3
- 8006728:	4620      	mov	r0, r4
- 800672a:	f000 fac1 	bl	8006cb0 <_ZNSt14_Function_base13_Base_managerIPFyvEE15_M_init_functorIRS1_EEvRSt9_Any_dataOT_>
+ 8006718:	687c      	ldr	r4, [r7, #4]
+ 800671a:	6838      	ldr	r0, [r7, #0]
+ 800671c:	f000 fabd 	bl	8006c9a <_ZSt7forwardIRFyvEEOT_RNSt16remove_referenceIS2_E4typeE>
+ 8006720:	4603      	mov	r3, r0
+ 8006722:	4619      	mov	r1, r3
+ 8006724:	4620      	mov	r0, r4
+ 8006726:	f000 fac3 	bl	8006cb0 <_ZNSt14_Function_base13_Base_managerIPFyvEE15_M_init_functorIRS1_EEvRSt9_Any_dataOT_>
 					   std::forward<_Functor>(__f));
 	      _M_invoker = &_My_handler::_M_invoke;
- 800672e:	687b      	ldr	r3, [r7, #4]
- 8006730:	4a04      	ldr	r2, [pc, #16]	; (8006744 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_+0x58>)
- 8006732:	60da      	str	r2, [r3, #12]
+ 800672a:	687b      	ldr	r3, [r7, #4]
+ 800672c:	4a04      	ldr	r2, [pc, #16]	; (8006740 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_+0x58>)
+ 800672e:	60da      	str	r2, [r3, #12]
 	      _M_manager = &_My_handler::_M_manager;
- 8006734:	687b      	ldr	r3, [r7, #4]
- 8006736:	4a04      	ldr	r2, [pc, #16]	; (8006748 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_+0x5c>)
- 8006738:	609a      	str	r2, [r3, #8]
+ 8006730:	687b      	ldr	r3, [r7, #4]
+ 8006732:	4a04      	ldr	r2, [pc, #16]	; (8006744 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_+0x5c>)
+ 8006734:	609a      	str	r2, [r3, #8]
 	    }
 	}
- 800673a:	687b      	ldr	r3, [r7, #4]
- 800673c:	4618      	mov	r0, r3
- 800673e:	370c      	adds	r7, #12
- 8006740:	46bd      	mov	sp, r7
- 8006742:	bd90      	pop	{r4, r7, pc}
- 8006744:	08006cd5 	.word	0x08006cd5
- 8006748:	08006cf9 	.word	0x08006cf9
+ 8006736:	687b      	ldr	r3, [r7, #4]
+ 8006738:	4618      	mov	r0, r3
+ 800673a:	370c      	adds	r7, #12
+ 800673c:	46bd      	mov	sp, r7
+ 800673e:	bd90      	pop	{r4, r7, pc}
+ 8006740:	08006cd5 	.word	0x08006cd5
+ 8006744:	08006cf9 	.word	0x08006cf9
 
-0800674c <_ZNSt8functionIFvvEEC1IRS0_vEEOT_>:
+08006748 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_>:
 	function(_Functor&& __f)
- 800674c:	b590      	push	{r4, r7, lr}
- 800674e:	b083      	sub	sp, #12
- 8006750:	af00      	add	r7, sp, #0
- 8006752:	6078      	str	r0, [r7, #4]
- 8006754:	6039      	str	r1, [r7, #0]
+ 8006748:	b590      	push	{r4, r7, lr}
+ 800674a:	b083      	sub	sp, #12
+ 800674c:	af00      	add	r7, sp, #0
+ 800674e:	6078      	str	r0, [r7, #4]
+ 8006750:	6039      	str	r1, [r7, #0]
 	: _Function_base()
- 8006756:	687b      	ldr	r3, [r7, #4]
- 8006758:	461a      	mov	r2, r3
- 800675a:	2300      	movs	r3, #0
- 800675c:	6013      	str	r3, [r2, #0]
- 800675e:	6053      	str	r3, [r2, #4]
- 8006760:	6093      	str	r3, [r2, #8]
- 8006762:	687b      	ldr	r3, [r7, #4]
- 8006764:	4618      	mov	r0, r3
- 8006766:	f7ff fee8 	bl	800653a <_ZNSt14_Function_baseC1Ev>
- 800676a:	687b      	ldr	r3, [r7, #4]
- 800676c:	2200      	movs	r2, #0
- 800676e:	60da      	str	r2, [r3, #12]
+ 8006752:	687b      	ldr	r3, [r7, #4]
+ 8006754:	461a      	mov	r2, r3
+ 8006756:	2300      	movs	r3, #0
+ 8006758:	6013      	str	r3, [r2, #0]
+ 800675a:	6053      	str	r3, [r2, #4]
+ 800675c:	6093      	str	r3, [r2, #8]
+ 800675e:	687b      	ldr	r3, [r7, #4]
+ 8006760:	4618      	mov	r0, r3
+ 8006762:	f7ff fee8 	bl	8006536 <_ZNSt14_Function_baseC1Ev>
+ 8006766:	687b      	ldr	r3, [r7, #4]
+ 8006768:	2200      	movs	r2, #0
+ 800676a:	60da      	str	r2, [r3, #12]
 	  if (_My_handler::_M_not_empty_function(__f))
- 8006770:	6838      	ldr	r0, [r7, #0]
- 8006772:	f000 fae0 	bl	8006d36 <_ZNSt14_Function_base13_Base_managerIPFvvEE21_M_not_empty_functionIS1_EEbPT_>
- 8006776:	4603      	mov	r3, r0
- 8006778:	2b00      	cmp	r3, #0
- 800677a:	d00e      	beq.n	800679a <_ZNSt8functionIFvvEEC1IRS0_vEEOT_+0x4e>
+ 800676c:	6838      	ldr	r0, [r7, #0]
+ 800676e:	f000 fae2 	bl	8006d36 <_ZNSt14_Function_base13_Base_managerIPFvvEE21_M_not_empty_functionIS1_EEbPT_>
+ 8006772:	4603      	mov	r3, r0
+ 8006774:	2b00      	cmp	r3, #0
+ 8006776:	d00e      	beq.n	8006796 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_+0x4e>
 	      _My_handler::_M_init_functor(_M_functor,
- 800677c:	687c      	ldr	r4, [r7, #4]
- 800677e:	6838      	ldr	r0, [r7, #0]
- 8006780:	f000 fae9 	bl	8006d56 <_ZSt7forwardIRFvvEEOT_RNSt16remove_referenceIS2_E4typeE>
- 8006784:	4603      	mov	r3, r0
- 8006786:	4619      	mov	r1, r3
- 8006788:	4620      	mov	r0, r4
- 800678a:	f000 faef 	bl	8006d6c <_ZNSt14_Function_base13_Base_managerIPFvvEE15_M_init_functorIRS1_EEvRSt9_Any_dataOT_>
+ 8006778:	687c      	ldr	r4, [r7, #4]
+ 800677a:	6838      	ldr	r0, [r7, #0]
+ 800677c:	f000 faeb 	bl	8006d56 <_ZSt7forwardIRFvvEEOT_RNSt16remove_referenceIS2_E4typeE>
+ 8006780:	4603      	mov	r3, r0
+ 8006782:	4619      	mov	r1, r3
+ 8006784:	4620      	mov	r0, r4
+ 8006786:	f000 faf1 	bl	8006d6c <_ZNSt14_Function_base13_Base_managerIPFvvEE15_M_init_functorIRS1_EEvRSt9_Any_dataOT_>
 	      _M_invoker = &_My_handler::_M_invoke;
- 800678e:	687b      	ldr	r3, [r7, #4]
- 8006790:	4a04      	ldr	r2, [pc, #16]	; (80067a4 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_+0x58>)
- 8006792:	60da      	str	r2, [r3, #12]
+ 800678a:	687b      	ldr	r3, [r7, #4]
+ 800678c:	4a04      	ldr	r2, [pc, #16]	; (80067a0 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_+0x58>)
+ 800678e:	60da      	str	r2, [r3, #12]
 	      _M_manager = &_My_handler::_M_manager;
- 8006794:	687b      	ldr	r3, [r7, #4]
- 8006796:	4a04      	ldr	r2, [pc, #16]	; (80067a8 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_+0x5c>)
- 8006798:	609a      	str	r2, [r3, #8]
+ 8006790:	687b      	ldr	r3, [r7, #4]
+ 8006792:	4a04      	ldr	r2, [pc, #16]	; (80067a4 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_+0x5c>)
+ 8006794:	609a      	str	r2, [r3, #8]
 	}
- 800679a:	687b      	ldr	r3, [r7, #4]
- 800679c:	4618      	mov	r0, r3
- 800679e:	370c      	adds	r7, #12
- 80067a0:	46bd      	mov	sp, r7
- 80067a2:	bd90      	pop	{r4, r7, pc}
- 80067a4:	08006d91 	.word	0x08006d91
- 80067a8:	08006daf 	.word	0x08006daf
+ 8006796:	687b      	ldr	r3, [r7, #4]
+ 8006798:	4618      	mov	r0, r3
+ 800679a:	370c      	adds	r7, #12
+ 800679c:	46bd      	mov	sp, r7
+ 800679e:	bd90      	pop	{r4, r7, pc}
+ 80067a0:	08006d91 	.word	0x08006d91
+ 80067a4:	08006daf 	.word	0x08006daf
 
-080067ac <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_>:
+080067a8 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_>:
       __shared_count(const __shared_count& __r) noexcept
- 80067ac:	b580      	push	{r7, lr}
- 80067ae:	b082      	sub	sp, #8
- 80067b0:	af00      	add	r7, sp, #0
- 80067b2:	6078      	str	r0, [r7, #4]
- 80067b4:	6039      	str	r1, [r7, #0]
+ 80067a8:	b580      	push	{r7, lr}
+ 80067aa:	b082      	sub	sp, #8
+ 80067ac:	af00      	add	r7, sp, #0
+ 80067ae:	6078      	str	r0, [r7, #4]
+ 80067b0:	6039      	str	r1, [r7, #0]
       : _M_pi(__r._M_pi)
- 80067b6:	683b      	ldr	r3, [r7, #0]
- 80067b8:	681a      	ldr	r2, [r3, #0]
- 80067ba:	687b      	ldr	r3, [r7, #4]
- 80067bc:	601a      	str	r2, [r3, #0]
+ 80067b2:	683b      	ldr	r3, [r7, #0]
+ 80067b4:	681a      	ldr	r2, [r3, #0]
+ 80067b6:	687b      	ldr	r3, [r7, #4]
+ 80067b8:	601a      	str	r2, [r3, #0]
 	if (_M_pi != nullptr)
- 80067be:	687b      	ldr	r3, [r7, #4]
- 80067c0:	681b      	ldr	r3, [r3, #0]
- 80067c2:	2b00      	cmp	r3, #0
- 80067c4:	d004      	beq.n	80067d0 <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_+0x24>
+ 80067ba:	687b      	ldr	r3, [r7, #4]
+ 80067bc:	681b      	ldr	r3, [r3, #0]
+ 80067be:	2b00      	cmp	r3, #0
+ 80067c0:	d004      	beq.n	80067cc <_ZNSt14__shared_countILN9__gnu_cxx12_Lock_policyE0EEC1ERKS2_+0x24>
 	  _M_pi->_M_add_ref_copy();
- 80067c6:	687b      	ldr	r3, [r7, #4]
- 80067c8:	681b      	ldr	r3, [r3, #0]
- 80067ca:	4618      	mov	r0, r3
- 80067cc:	f7fb fb14 	bl	8001df8 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE15_M_add_ref_copyEv>
+ 80067c2:	687b      	ldr	r3, [r7, #4]
+ 80067c4:	681b      	ldr	r3, [r3, #0]
+ 80067c6:	4618      	mov	r0, r3
+ 80067c8:	f7fb fb16 	bl	8001df8 <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EE15_M_add_ref_copyEv>
       }
- 80067d0:	687b      	ldr	r3, [r7, #4]
- 80067d2:	4618      	mov	r0, r3
- 80067d4:	3708      	adds	r7, #8
- 80067d6:	46bd      	mov	sp, r7
- 80067d8:	bd80      	pop	{r7, pc}
+ 80067cc:	687b      	ldr	r3, [r7, #4]
+ 80067ce:	4618      	mov	r0, r3
+ 80067d0:	3708      	adds	r7, #8
+ 80067d2:	46bd      	mov	sp, r7
+ 80067d4:	bd80      	pop	{r7, pc}
 
-080067da <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt>:
+080067d6 <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt>:
         interface->subscribe(port_id, T::extent, kind, &sub);
     }
 
     virtual void handler(const Type&, CanardRxTransfer*) = 0;
 public:
     AbstractSubscription(InterfacePtr interface, CanardPortID port_id)
- 80067da:	b580      	push	{r7, lr}
- 80067dc:	b086      	sub	sp, #24
- 80067de:	af00      	add	r7, sp, #0
- 80067e0:	60f8      	str	r0, [r7, #12]
- 80067e2:	60b9      	str	r1, [r7, #8]
- 80067e4:	4613      	mov	r3, r2
- 80067e6:	80fb      	strh	r3, [r7, #6]
+ 80067d6:	b580      	push	{r7, lr}
+ 80067d8:	b086      	sub	sp, #24
+ 80067da:	af00      	add	r7, sp, #0
+ 80067dc:	60f8      	str	r0, [r7, #12]
+ 80067de:	60b9      	str	r1, [r7, #8]
+ 80067e0:	4613      	mov	r3, r2
+ 80067e2:	80fb      	strh	r3, [r7, #6]
         : AbstractSubscription(interface, port_id, CanardTransferKindMessage) {};
- 80067e8:	f107 0310 	add.w	r3, r7, #16
- 80067ec:	68b9      	ldr	r1, [r7, #8]
- 80067ee:	4618      	mov	r0, r3
- 80067f0:	f7ff f973 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 80067f4:	88fa      	ldrh	r2, [r7, #6]
- 80067f6:	f107 0110 	add.w	r1, r7, #16
- 80067fa:	2300      	movs	r3, #0
- 80067fc:	68f8      	ldr	r0, [r7, #12]
- 80067fe:	f000 faf5 	bl	8006dec <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
- 8006802:	f107 0310 	add.w	r3, r7, #16
- 8006806:	4618      	mov	r0, r3
- 8006808:	f7ff f977 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
- 800680c:	68fb      	ldr	r3, [r7, #12]
- 800680e:	4618      	mov	r0, r3
- 8006810:	3718      	adds	r7, #24
- 8006812:	46bd      	mov	sp, r7
- 8006814:	bd80      	pop	{r7, pc}
+ 80067e4:	f107 0310 	add.w	r3, r7, #16
+ 80067e8:	68b9      	ldr	r1, [r7, #8]
+ 80067ea:	4618      	mov	r0, r3
+ 80067ec:	f7ff f975 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 80067f0:	88fa      	ldrh	r2, [r7, #6]
+ 80067f2:	f107 0110 	add.w	r1, r7, #16
+ 80067f6:	2300      	movs	r3, #0
+ 80067f8:	68f8      	ldr	r0, [r7, #12]
+ 80067fa:	f000 faf7 	bl	8006dec <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
+ 80067fe:	f107 0310 	add.w	r3, r7, #16
+ 8006802:	4618      	mov	r0, r3
+ 8006804:	f7ff f979 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 8006808:	68fb      	ldr	r3, [r7, #12]
+ 800680a:	4618      	mov	r0, r3
+ 800680c:	3718      	adds	r7, #24
+ 800680e:	46bd      	mov	sp, r7
+ 8006810:	bd80      	pop	{r7, pc}
 
-08006816 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt>:
+08006812 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt>:
     AbstractSubscription(InterfacePtr interface, CanardPortID port_id)
- 8006816:	b580      	push	{r7, lr}
- 8006818:	b086      	sub	sp, #24
- 800681a:	af00      	add	r7, sp, #0
- 800681c:	60f8      	str	r0, [r7, #12]
- 800681e:	60b9      	str	r1, [r7, #8]
- 8006820:	4613      	mov	r3, r2
- 8006822:	80fb      	strh	r3, [r7, #6]
+ 8006812:	b580      	push	{r7, lr}
+ 8006814:	b086      	sub	sp, #24
+ 8006816:	af00      	add	r7, sp, #0
+ 8006818:	60f8      	str	r0, [r7, #12]
+ 800681a:	60b9      	str	r1, [r7, #8]
+ 800681c:	4613      	mov	r3, r2
+ 800681e:	80fb      	strh	r3, [r7, #6]
         : AbstractSubscription(interface, port_id, CanardTransferKindMessage) {};
- 8006824:	f107 0310 	add.w	r3, r7, #16
- 8006828:	68b9      	ldr	r1, [r7, #8]
- 800682a:	4618      	mov	r0, r3
- 800682c:	f7ff f955 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
- 8006830:	88fa      	ldrh	r2, [r7, #6]
- 8006832:	f107 0110 	add.w	r1, r7, #16
- 8006836:	2300      	movs	r3, #0
- 8006838:	68f8      	ldr	r0, [r7, #12]
- 800683a:	f000 fb09 	bl	8006e50 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
- 800683e:	f107 0310 	add.w	r3, r7, #16
- 8006842:	4618      	mov	r0, r3
- 8006844:	f7ff f959 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
- 8006848:	68fb      	ldr	r3, [r7, #12]
- 800684a:	4618      	mov	r0, r3
- 800684c:	3718      	adds	r7, #24
- 800684e:	46bd      	mov	sp, r7
- 8006850:	bd80      	pop	{r7, pc}
+ 8006820:	f107 0310 	add.w	r3, r7, #16
+ 8006824:	68b9      	ldr	r1, [r7, #8]
+ 8006826:	4618      	mov	r0, r3
+ 8006828:	f7ff f957 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 800682c:	88fa      	ldrh	r2, [r7, #6]
+ 800682e:	f107 0110 	add.w	r1, r7, #16
+ 8006832:	2300      	movs	r3, #0
+ 8006834:	68f8      	ldr	r0, [r7, #12]
+ 8006836:	f000 fb0b 	bl	8006e50 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>
+ 800683a:	f107 0310 	add.w	r3, r7, #16
+ 800683e:	4618      	mov	r0, r3
+ 8006840:	f7ff f95b 	bl	8005afa <_ZNSt10shared_ptrI15CyphalInterfaceED1Ev>
+ 8006844:	68fb      	ldr	r3, [r7, #12]
+ 8006846:	4618      	mov	r0, r3
+ 8006848:	3718      	adds	r7, #24
+ 800684a:	46bd      	mov	sp, r7
+ 800684c:	bd80      	pop	{r7, pc}
 	...
 
-08006854 <_ZN9IListenerIP16CanardRxTransferEC1Ev>:
+08006850 <_ZN9IListenerIP16CanardRxTransferEC1Ev>:
 #pragma once
 
 template <typename T>
 class IListener {
- 8006854:	b480      	push	{r7}
- 8006856:	b083      	sub	sp, #12
- 8006858:	af00      	add	r7, sp, #0
- 800685a:	6078      	str	r0, [r7, #4]
- 800685c:	4a04      	ldr	r2, [pc, #16]	; (8006870 <_ZN9IListenerIP16CanardRxTransferEC1Ev+0x1c>)
+ 8006850:	b480      	push	{r7}
+ 8006852:	b083      	sub	sp, #12
+ 8006854:	af00      	add	r7, sp, #0
+ 8006856:	6078      	str	r0, [r7, #4]
+ 8006858:	4a04      	ldr	r2, [pc, #16]	; (800686c <_ZN9IListenerIP16CanardRxTransferEC1Ev+0x1c>)
+ 800685a:	687b      	ldr	r3, [r7, #4]
+ 800685c:	601a      	str	r2, [r3, #0]
  800685e:	687b      	ldr	r3, [r7, #4]
- 8006860:	601a      	str	r2, [r3, #0]
- 8006862:	687b      	ldr	r3, [r7, #4]
- 8006864:	4618      	mov	r0, r3
- 8006866:	370c      	adds	r7, #12
- 8006868:	46bd      	mov	sp, r7
- 800686a:	f85d 7b04 	ldr.w	r7, [sp], #4
- 800686e:	4770      	bx	lr
- 8006870:	08016a60 	.word	0x08016a60
+ 8006860:	4618      	mov	r0, r3
+ 8006862:	370c      	adds	r7, #12
+ 8006864:	46bd      	mov	sp, r7
+ 8006866:	f85d 7b04 	ldr.w	r7, [sp], #4
+ 800686a:	4770      	bx	lr
+ 800686c:	08016a60 	.word	0x08016a60
 
-08006874 <_ZN20AbstractSubscriptionI15NodeInfoRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>:
+08006870 <_ZN20AbstractSubscriptionI15NodeInfoRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>:
     AbstractSubscription(
- 8006874:	b580      	push	{r7, lr}
- 8006876:	b084      	sub	sp, #16
- 8006878:	af00      	add	r7, sp, #0
- 800687a:	60f8      	str	r0, [r7, #12]
- 800687c:	60b9      	str	r1, [r7, #8]
- 800687e:	4611      	mov	r1, r2
- 8006880:	461a      	mov	r2, r3
- 8006882:	460b      	mov	r3, r1
- 8006884:	80fb      	strh	r3, [r7, #6]
- 8006886:	4613      	mov	r3, r2
- 8006888:	717b      	strb	r3, [r7, #5]
+ 8006870:	b580      	push	{r7, lr}
+ 8006872:	b084      	sub	sp, #16
+ 8006874:	af00      	add	r7, sp, #0
+ 8006876:	60f8      	str	r0, [r7, #12]
+ 8006878:	60b9      	str	r1, [r7, #8]
+ 800687a:	4611      	mov	r1, r2
+ 800687c:	461a      	mov	r2, r3
+ 800687e:	460b      	mov	r3, r1
+ 8006880:	80fb      	strh	r3, [r7, #6]
+ 8006882:	4613      	mov	r3, r2
+ 8006884:	717b      	strb	r3, [r7, #5]
         InterfacePtr interface,
         CanardPortID port_id,
         CanardTransferKind kind
     ): interface(interface), kind(kind) {
- 800688a:	68fb      	ldr	r3, [r7, #12]
- 800688c:	4618      	mov	r0, r3
- 800688e:	f7ff ffe1 	bl	8006854 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
- 8006892:	4a10      	ldr	r2, [pc, #64]	; (80068d4 <_ZN20AbstractSubscriptionI15NodeInfoRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind+0x60>)
+ 8006886:	68fb      	ldr	r3, [r7, #12]
+ 8006888:	4618      	mov	r0, r3
+ 800688a:	f7ff ffe1 	bl	8006850 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
+ 800688e:	4a10      	ldr	r2, [pc, #64]	; (80068d0 <_ZN20AbstractSubscriptionI15NodeInfoRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind+0x60>)
+ 8006890:	68fb      	ldr	r3, [r7, #12]
+ 8006892:	601a      	str	r2, [r3, #0]
  8006894:	68fb      	ldr	r3, [r7, #12]
- 8006896:	601a      	str	r2, [r3, #0]
- 8006898:	68fb      	ldr	r3, [r7, #12]
- 800689a:	797a      	ldrb	r2, [r7, #5]
- 800689c:	711a      	strb	r2, [r3, #4]
- 800689e:	68fb      	ldr	r3, [r7, #12]
- 80068a0:	3308      	adds	r3, #8
- 80068a2:	f44f 720a 	mov.w	r2, #552	; 0x228
- 80068a6:	2100      	movs	r1, #0
- 80068a8:	4618      	mov	r0, r3
- 80068aa:	f00c f80e 	bl	80128ca <memset>
- 80068ae:	68fb      	ldr	r3, [r7, #12]
- 80068b0:	f503 730c 	add.w	r3, r3, #560	; 0x230
- 80068b4:	68b9      	ldr	r1, [r7, #8]
- 80068b6:	4618      	mov	r0, r3
- 80068b8:	f7ff f90f 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+ 8006896:	797a      	ldrb	r2, [r7, #5]
+ 8006898:	711a      	strb	r2, [r3, #4]
+ 800689a:	68fb      	ldr	r3, [r7, #12]
+ 800689c:	3308      	adds	r3, #8
+ 800689e:	f44f 720a 	mov.w	r2, #552	; 0x228
+ 80068a2:	2100      	movs	r1, #0
+ 80068a4:	4618      	mov	r0, r3
+ 80068a6:	f00c f810 	bl	80128ca <memset>
+ 80068aa:	68fb      	ldr	r3, [r7, #12]
+ 80068ac:	f503 730c 	add.w	r3, r3, #560	; 0x230
+ 80068b0:	68b9      	ldr	r1, [r7, #8]
+ 80068b2:	4618      	mov	r0, r3
+ 80068b4:	f7ff f911 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
         subscribe(port_id, kind);
- 80068bc:	797a      	ldrb	r2, [r7, #5]
- 80068be:	88fb      	ldrh	r3, [r7, #6]
- 80068c0:	4619      	mov	r1, r3
- 80068c2:	68f8      	ldr	r0, [r7, #12]
- 80068c4:	f000 faf6 	bl	8006eb4 <_ZN20AbstractSubscriptionI15NodeInfoRequestE9subscribeEt18CanardTransferKind>
+ 80068b8:	797a      	ldrb	r2, [r7, #5]
+ 80068ba:	88fb      	ldrh	r3, [r7, #6]
+ 80068bc:	4619      	mov	r1, r3
+ 80068be:	68f8      	ldr	r0, [r7, #12]
+ 80068c0:	f000 faf8 	bl	8006eb4 <_ZN20AbstractSubscriptionI15NodeInfoRequestE9subscribeEt18CanardTransferKind>
     };
- 80068c8:	68fb      	ldr	r3, [r7, #12]
- 80068ca:	4618      	mov	r0, r3
- 80068cc:	3710      	adds	r7, #16
- 80068ce:	46bd      	mov	sp, r7
- 80068d0:	bd80      	pop	{r7, pc}
- 80068d2:	bf00      	nop
- 80068d4:	08016a10 	.word	0x08016a10
+ 80068c4:	68fb      	ldr	r3, [r7, #12]
+ 80068c6:	4618      	mov	r0, r3
+ 80068c8:	3710      	adds	r7, #16
+ 80068ca:	46bd      	mov	sp, r7
+ 80068cc:	bd80      	pop	{r7, pc}
+ 80068ce:	bf00      	nop
+ 80068d0:	08016a10 	.word	0x08016a10
 
-080068d8 <_ZN20AbstractSubscriptionI21RegisterAccessRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>:
-    AbstractSubscription(
- 80068d8:	b580      	push	{r7, lr}
- 80068da:	b084      	sub	sp, #16
- 80068dc:	af00      	add	r7, sp, #0
- 80068de:	60f8      	str	r0, [r7, #12]
- 80068e0:	60b9      	str	r1, [r7, #8]
- 80068e2:	4611      	mov	r1, r2
- 80068e4:	461a      	mov	r2, r3
- 80068e6:	460b      	mov	r3, r1
- 80068e8:	80fb      	strh	r3, [r7, #6]
- 80068ea:	4613      	mov	r3, r2
- 80068ec:	717b      	strb	r3, [r7, #5]
-    ): interface(interface), kind(kind) {
- 80068ee:	68fb      	ldr	r3, [r7, #12]
- 80068f0:	4618      	mov	r0, r3
- 80068f2:	f7ff ffaf 	bl	8006854 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
- 80068f6:	4a10      	ldr	r2, [pc, #64]	; (8006938 <_ZN20AbstractSubscriptionI21RegisterAccessRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind+0x60>)
- 80068f8:	68fb      	ldr	r3, [r7, #12]
- 80068fa:	601a      	str	r2, [r3, #0]
- 80068fc:	68fb      	ldr	r3, [r7, #12]
- 80068fe:	797a      	ldrb	r2, [r7, #5]
- 8006900:	711a      	strb	r2, [r3, #4]
- 8006902:	68fb      	ldr	r3, [r7, #12]
- 8006904:	3308      	adds	r3, #8
- 8006906:	f44f 720a 	mov.w	r2, #552	; 0x228
- 800690a:	2100      	movs	r1, #0
- 800690c:	4618      	mov	r0, r3
- 800690e:	f00b ffdc 	bl	80128ca <memset>
- 8006912:	68fb      	ldr	r3, [r7, #12]
- 8006914:	f503 730c 	add.w	r3, r3, #560	; 0x230
- 8006918:	68b9      	ldr	r1, [r7, #8]
- 800691a:	4618      	mov	r0, r3
- 800691c:	f7ff f8dd 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
-        subscribe(port_id, kind);
- 8006920:	797a      	ldrb	r2, [r7, #5]
- 8006922:	88fb      	ldrh	r3, [r7, #6]
- 8006924:	4619      	mov	r1, r3
- 8006926:	68f8      	ldr	r0, [r7, #12]
- 8006928:	f000 fae2 	bl	8006ef0 <_ZN20AbstractSubscriptionI21RegisterAccessRequestE9subscribeEt18CanardTransferKind>
-    };
- 800692c:	68fb      	ldr	r3, [r7, #12]
- 800692e:	4618      	mov	r0, r3
- 8006930:	3710      	adds	r7, #16
- 8006932:	46bd      	mov	sp, r7
- 8006934:	bd80      	pop	{r7, pc}
- 8006936:	bf00      	nop
- 8006938:	080169f0 	.word	0x080169f0
-
-0800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>:
+080068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>:
       operator->() const noexcept
- 800693c:	b580      	push	{r7, lr}
- 800693e:	b082      	sub	sp, #8
- 8006940:	af00      	add	r7, sp, #0
- 8006942:	6078      	str	r0, [r7, #4]
+ 80068d4:	b580      	push	{r7, lr}
+ 80068d6:	b082      	sub	sp, #8
+ 80068d8:	af00      	add	r7, sp, #0
+ 80068da:	6078      	str	r0, [r7, #4]
 	return _M_get();
- 8006944:	6878      	ldr	r0, [r7, #4]
- 8006946:	f000 faf2 	bl	8006f2e <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EE6_M_getEv>
- 800694a:	4603      	mov	r3, r0
+ 80068dc:	6878      	ldr	r0, [r7, #4]
+ 80068de:	f000 fb07 	bl	8006ef0 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EE6_M_getEv>
+ 80068e2:	4603      	mov	r3, r0
       }
- 800694c:	4618      	mov	r0, r3
- 800694e:	3708      	adds	r7, #8
- 8006950:	46bd      	mov	sp, r7
- 8006952:	bd80      	pop	{r7, pc}
+ 80068e4:	4618      	mov	r0, r3
+ 80068e6:	3708      	adds	r7, #8
+ 80068e8:	46bd      	mov	sp, r7
+ 80068ea:	bd80      	pop	{r7, pc}
 
-08006954 <_ZNK15CyphalInterface13send_responseI16NodeInfoResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>:
+080068ec <_ZNK15CyphalInterface13send_responseI16NodeInfoResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>:
         timeout_delta
     );
 }
 
 template <typename TypeAlias>
 inline void CyphalInterface::send_response(
- 8006954:	b5b0      	push	{r4, r5, r7, lr}
- 8006956:	b08c      	sub	sp, #48	; 0x30
- 8006958:	af04      	add	r7, sp, #16
- 800695a:	60f8      	str	r0, [r7, #12]
- 800695c:	60b9      	str	r1, [r7, #8]
- 800695e:	607a      	str	r2, [r7, #4]
- 8006960:	603b      	str	r3, [r7, #0]
+ 80068ec:	b5b0      	push	{r4, r5, r7, lr}
+ 80068ee:	b08c      	sub	sp, #48	; 0x30
+ 80068f0:	af04      	add	r7, sp, #16
+ 80068f2:	60f8      	str	r0, [r7, #12]
+ 80068f4:	60b9      	str	r1, [r7, #8]
+ 80068f6:	607a      	str	r2, [r7, #4]
+ 80068f8:	603b      	str	r3, [r7, #0]
     CanardRxTransfer *transfer,
     CanardPortID port,
     uint64_t timeout_delta,
     CanardPriority priority
 ) const {
     size_t cyphal_buf_size = TypeAlias::buffer_size;
- 8006962:	f240 1339 	movw	r3, #313	; 0x139
- 8006966:	61fb      	str	r3, [r7, #28]
+ 80068fa:	f240 1339 	movw	r3, #313	; 0x139
+ 80068fe:	61fb      	str	r3, [r7, #28]
     if (TypeAlias::serializer(obj, buffer, &cyphal_buf_size) < 0) {
- 8006968:	f107 031c 	add.w	r3, r7, #28
- 800696c:	461a      	mov	r2, r3
- 800696e:	6879      	ldr	r1, [r7, #4]
- 8006970:	68b8      	ldr	r0, [r7, #8]
- 8006972:	f7fe fee7 	bl	8005744 <uavcan_node_GetInfo_Response_1_0_serialize_>
- 8006976:	4603      	mov	r3, r0
- 8006978:	b2db      	uxtb	r3, r3
- 800697a:	09db      	lsrs	r3, r3, #7
- 800697c:	b2db      	uxtb	r3, r3
- 800697e:	2b00      	cmp	r3, #0
- 8006980:	d005      	beq.n	800698e <_ZNK15CyphalInterface13send_responseI16NodeInfoResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority+0x3a>
+ 8006900:	f107 031c 	add.w	r3, r7, #28
+ 8006904:	461a      	mov	r2, r3
+ 8006906:	6879      	ldr	r1, [r7, #4]
+ 8006908:	68b8      	ldr	r0, [r7, #8]
+ 800690a:	f7fe ff1b 	bl	8005744 <uavcan_node_GetInfo_Response_1_0_serialize_>
+ 800690e:	4603      	mov	r3, r0
+ 8006910:	b2db      	uxtb	r3, r3
+ 8006912:	09db      	lsrs	r3, r3, #7
+ 8006914:	b2db      	uxtb	r3, r3
+ 8006916:	2b00      	cmp	r3, #0
+ 8006918:	d005      	beq.n	8006926 <_ZNK15CyphalInterface13send_responseI16NodeInfoResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority+0x3a>
         utilities.error_handler();
- 8006982:	68fb      	ldr	r3, [r7, #12]
- 8006984:	685b      	ldr	r3, [r3, #4]
- 8006986:	3310      	adds	r3, #16
- 8006988:	4618      	mov	r0, r3
- 800698a:	f000 fadc 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 800691a:	68fb      	ldr	r3, [r7, #12]
+ 800691c:	685b      	ldr	r3, [r3, #4]
+ 800691e:	3310      	adds	r3, #16
+ 8006920:	4618      	mov	r0, r3
+ 8006922:	f000 faf1 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     }
     const CanardTransferMetadata cyphal_transfer_metadata = {
- 800698e:	f107 0314 	add.w	r3, r7, #20
- 8006992:	2200      	movs	r2, #0
- 8006994:	601a      	str	r2, [r3, #0]
- 8006996:	809a      	strh	r2, [r3, #4]
- 8006998:	2301      	movs	r3, #1
- 800699a:	757b      	strb	r3, [r7, #21]
- 800699c:	f897 3040 	ldrb.w	r3, [r7, #64]	; 0x40
- 80069a0:	753b      	strb	r3, [r7, #20]
- 80069a2:	8e3b      	ldrh	r3, [r7, #48]	; 0x30
- 80069a4:	82fb      	strh	r3, [r7, #22]
+ 8006926:	f107 0314 	add.w	r3, r7, #20
+ 800692a:	2200      	movs	r2, #0
+ 800692c:	601a      	str	r2, [r3, #0]
+ 800692e:	809a      	strh	r2, [r3, #4]
+ 8006930:	2301      	movs	r3, #1
+ 8006932:	757b      	strb	r3, [r7, #21]
+ 8006934:	f897 3040 	ldrb.w	r3, [r7, #64]	; 0x40
+ 8006938:	753b      	strb	r3, [r7, #20]
+ 800693a:	8e3b      	ldrh	r3, [r7, #48]	; 0x30
+ 800693c:	82fb      	strh	r3, [r7, #22]
             .priority = priority,
             .transfer_kind = CanardTransferKindResponse,
             .port_id = port,
             .remote_node_id = transfer->metadata.remote_node_id,
- 80069a6:	683b      	ldr	r3, [r7, #0]
- 80069a8:	791b      	ldrb	r3, [r3, #4]
+ 800693e:	683b      	ldr	r3, [r7, #0]
+ 8006940:	791b      	ldrb	r3, [r3, #4]
     const CanardTransferMetadata cyphal_transfer_metadata = {
- 80069aa:	763b      	strb	r3, [r7, #24]
+ 8006942:	763b      	strb	r3, [r7, #24]
             .transfer_id = transfer->metadata.transfer_id,
- 80069ac:	683b      	ldr	r3, [r7, #0]
- 80069ae:	795b      	ldrb	r3, [r3, #5]
+ 8006944:	683b      	ldr	r3, [r7, #0]
+ 8006946:	795b      	ldrb	r3, [r3, #5]
     const CanardTransferMetadata cyphal_transfer_metadata = {
- 80069b0:	767b      	strb	r3, [r7, #25]
+ 8006948:	767b      	strb	r3, [r7, #25]
     };
     push(
         utilities.micros_64() + timeout_delta,
- 80069b2:	68fb      	ldr	r3, [r7, #12]
- 80069b4:	685b      	ldr	r3, [r3, #4]
- 80069b6:	4618      	mov	r0, r3
- 80069b8:	f000 fadb 	bl	8006f72 <_ZNKSt8functionIFyvEEclEv>
+ 800694a:	68fb      	ldr	r3, [r7, #12]
+ 800694c:	685b      	ldr	r3, [r3, #4]
+ 800694e:	4618      	mov	r0, r3
+ 8006950:	f000 faf0 	bl	8006f34 <_ZNKSt8functionIFyvEEclEv>
     push(
- 80069bc:	e9d7 230e 	ldrd	r2, r3, [r7, #56]	; 0x38
- 80069c0:	1884      	adds	r4, r0, r2
- 80069c2:	eb41 0503 	adc.w	r5, r1, r3
- 80069c6:	69fb      	ldr	r3, [r7, #28]
- 80069c8:	687a      	ldr	r2, [r7, #4]
- 80069ca:	9202      	str	r2, [sp, #8]
- 80069cc:	9301      	str	r3, [sp, #4]
- 80069ce:	f107 0314 	add.w	r3, r7, #20
- 80069d2:	9300      	str	r3, [sp, #0]
- 80069d4:	4622      	mov	r2, r4
- 80069d6:	462b      	mov	r3, r5
- 80069d8:	68f8      	ldr	r0, [r7, #12]
- 80069da:	f008 f85d 	bl	800ea98 <_ZNK15CyphalInterface4pushEyPK22CanardTransferMetadatajPKv>
+ 8006954:	e9d7 230e 	ldrd	r2, r3, [r7, #56]	; 0x38
+ 8006958:	1884      	adds	r4, r0, r2
+ 800695a:	eb41 0503 	adc.w	r5, r1, r3
+ 800695e:	69fb      	ldr	r3, [r7, #28]
+ 8006960:	687a      	ldr	r2, [r7, #4]
+ 8006962:	9202      	str	r2, [sp, #8]
+ 8006964:	9301      	str	r3, [sp, #4]
+ 8006966:	f107 0314 	add.w	r3, r7, #20
+ 800696a:	9300      	str	r3, [sp, #0]
+ 800696c:	4622      	mov	r2, r4
+ 800696e:	462b      	mov	r3, r5
+ 8006970:	68f8      	ldr	r0, [r7, #12]
+ 8006972:	f008 f891 	bl	800ea98 <_ZNK15CyphalInterface4pushEyPK22CanardTransferMetadatajPKv>
         &cyphal_transfer_metadata,
         cyphal_buf_size,
         buffer
     );
 }
+ 8006976:	bf00      	nop
+ 8006978:	3720      	adds	r7, #32
+ 800697a:	46bd      	mov	sp, r7
+ 800697c:	bdb0      	pop	{r4, r5, r7, pc}
+	...
+
+08006980 <_ZN20AbstractSubscriptionI21RegisterAccessRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind>:
+    AbstractSubscription(
+ 8006980:	b580      	push	{r7, lr}
+ 8006982:	b084      	sub	sp, #16
+ 8006984:	af00      	add	r7, sp, #0
+ 8006986:	60f8      	str	r0, [r7, #12]
+ 8006988:	60b9      	str	r1, [r7, #8]
+ 800698a:	4611      	mov	r1, r2
+ 800698c:	461a      	mov	r2, r3
+ 800698e:	460b      	mov	r3, r1
+ 8006990:	80fb      	strh	r3, [r7, #6]
+ 8006992:	4613      	mov	r3, r2
+ 8006994:	717b      	strb	r3, [r7, #5]
+    ): interface(interface), kind(kind) {
+ 8006996:	68fb      	ldr	r3, [r7, #12]
+ 8006998:	4618      	mov	r0, r3
+ 800699a:	f7ff ff59 	bl	8006850 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
+ 800699e:	4a10      	ldr	r2, [pc, #64]	; (80069e0 <_ZN20AbstractSubscriptionI21RegisterAccessRequestEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind+0x60>)
+ 80069a0:	68fb      	ldr	r3, [r7, #12]
+ 80069a2:	601a      	str	r2, [r3, #0]
+ 80069a4:	68fb      	ldr	r3, [r7, #12]
+ 80069a6:	797a      	ldrb	r2, [r7, #5]
+ 80069a8:	711a      	strb	r2, [r3, #4]
+ 80069aa:	68fb      	ldr	r3, [r7, #12]
+ 80069ac:	3308      	adds	r3, #8
+ 80069ae:	f44f 720a 	mov.w	r2, #552	; 0x228
+ 80069b2:	2100      	movs	r1, #0
+ 80069b4:	4618      	mov	r0, r3
+ 80069b6:	f00b ff88 	bl	80128ca <memset>
+ 80069ba:	68fb      	ldr	r3, [r7, #12]
+ 80069bc:	f503 730c 	add.w	r3, r3, #560	; 0x230
+ 80069c0:	68b9      	ldr	r1, [r7, #8]
+ 80069c2:	4618      	mov	r0, r3
+ 80069c4:	f7ff f889 	bl	8005ada <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
+        subscribe(port_id, kind);
+ 80069c8:	797a      	ldrb	r2, [r7, #5]
+ 80069ca:	88fb      	ldrh	r3, [r7, #6]
+ 80069cc:	4619      	mov	r1, r3
+ 80069ce:	68f8      	ldr	r0, [r7, #12]
+ 80069d0:	f000 fac9 	bl	8006f66 <_ZN20AbstractSubscriptionI21RegisterAccessRequestE9subscribeEt18CanardTransferKind>
+    };
+ 80069d4:	68fb      	ldr	r3, [r7, #12]
+ 80069d6:	4618      	mov	r0, r3
+ 80069d8:	3710      	adds	r7, #16
+ 80069da:	46bd      	mov	sp, r7
+ 80069dc:	bd80      	pop	{r7, pc}
  80069de:	bf00      	nop
- 80069e0:	3720      	adds	r7, #32
- 80069e2:	46bd      	mov	sp, r7
- 80069e4:	bdb0      	pop	{r4, r5, r7, pc}
+ 80069e0:	080169f0 	.word	0x080169f0
 
-080069e6 <_ZNK15CyphalInterface13send_responseI22RegisterAccessResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>:
+080069e4 <_ZNK15CyphalInterface13send_responseI22RegisterAccessResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority>:
 inline void CyphalInterface::send_response(
- 80069e6:	b5b0      	push	{r4, r5, r7, lr}
- 80069e8:	b08c      	sub	sp, #48	; 0x30
- 80069ea:	af04      	add	r7, sp, #16
- 80069ec:	60f8      	str	r0, [r7, #12]
- 80069ee:	60b9      	str	r1, [r7, #8]
- 80069f0:	607a      	str	r2, [r7, #4]
- 80069f2:	603b      	str	r3, [r7, #0]
+ 80069e4:	b5b0      	push	{r4, r5, r7, lr}
+ 80069e6:	b08c      	sub	sp, #48	; 0x30
+ 80069e8:	af04      	add	r7, sp, #16
+ 80069ea:	60f8      	str	r0, [r7, #12]
+ 80069ec:	60b9      	str	r1, [r7, #8]
+ 80069ee:	607a      	str	r2, [r7, #4]
+ 80069f0:	603b      	str	r3, [r7, #0]
     size_t cyphal_buf_size = TypeAlias::buffer_size;
- 80069f4:	f240 130b 	movw	r3, #267	; 0x10b
- 80069f8:	61fb      	str	r3, [r7, #28]
+ 80069f2:	f240 130b 	movw	r3, #267	; 0x10b
+ 80069f6:	61fb      	str	r3, [r7, #28]
     if (TypeAlias::serializer(obj, buffer, &cyphal_buf_size) < 0) {
- 80069fa:	f107 031c 	add.w	r3, r7, #28
- 80069fe:	461a      	mov	r2, r3
- 8006a00:	6879      	ldr	r1, [r7, #4]
- 8006a02:	68b8      	ldr	r0, [r7, #8]
- 8006a04:	f7fe fd0c 	bl	8005420 <uavcan_register_Access_Response_1_0_serialize_>
- 8006a08:	4603      	mov	r3, r0
- 8006a0a:	b2db      	uxtb	r3, r3
- 8006a0c:	09db      	lsrs	r3, r3, #7
- 8006a0e:	b2db      	uxtb	r3, r3
- 8006a10:	2b00      	cmp	r3, #0
- 8006a12:	d005      	beq.n	8006a20 <_ZNK15CyphalInterface13send_responseI22RegisterAccessResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority+0x3a>
+ 80069f8:	f107 031c 	add.w	r3, r7, #28
+ 80069fc:	461a      	mov	r2, r3
+ 80069fe:	6879      	ldr	r1, [r7, #4]
+ 8006a00:	68b8      	ldr	r0, [r7, #8]
+ 8006a02:	f7fe fd0d 	bl	8005420 <uavcan_register_Access_Response_1_0_serialize_>
+ 8006a06:	4603      	mov	r3, r0
+ 8006a08:	b2db      	uxtb	r3, r3
+ 8006a0a:	09db      	lsrs	r3, r3, #7
+ 8006a0c:	b2db      	uxtb	r3, r3
+ 8006a0e:	2b00      	cmp	r3, #0
+ 8006a10:	d005      	beq.n	8006a1e <_ZNK15CyphalInterface13send_responseI22RegisterAccessResponseEEvPNT_4TypeEPhP16CanardRxTransferty14CanardPriority+0x3a>
         utilities.error_handler();
- 8006a14:	68fb      	ldr	r3, [r7, #12]
- 8006a16:	685b      	ldr	r3, [r3, #4]
- 8006a18:	3310      	adds	r3, #16
- 8006a1a:	4618      	mov	r0, r3
- 8006a1c:	f000 fa93 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 8006a12:	68fb      	ldr	r3, [r7, #12]
+ 8006a14:	685b      	ldr	r3, [r3, #4]
+ 8006a16:	3310      	adds	r3, #16
+ 8006a18:	4618      	mov	r0, r3
+ 8006a1a:	f000 fa75 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     const CanardTransferMetadata cyphal_transfer_metadata = {
- 8006a20:	f107 0314 	add.w	r3, r7, #20
- 8006a24:	2200      	movs	r2, #0
- 8006a26:	601a      	str	r2, [r3, #0]
- 8006a28:	809a      	strh	r2, [r3, #4]
- 8006a2a:	2301      	movs	r3, #1
- 8006a2c:	757b      	strb	r3, [r7, #21]
- 8006a2e:	f897 3040 	ldrb.w	r3, [r7, #64]	; 0x40
- 8006a32:	753b      	strb	r3, [r7, #20]
- 8006a34:	8e3b      	ldrh	r3, [r7, #48]	; 0x30
- 8006a36:	82fb      	strh	r3, [r7, #22]
+ 8006a1e:	f107 0314 	add.w	r3, r7, #20
+ 8006a22:	2200      	movs	r2, #0
+ 8006a24:	601a      	str	r2, [r3, #0]
+ 8006a26:	809a      	strh	r2, [r3, #4]
+ 8006a28:	2301      	movs	r3, #1
+ 8006a2a:	757b      	strb	r3, [r7, #21]
+ 8006a2c:	f897 3040 	ldrb.w	r3, [r7, #64]	; 0x40
+ 8006a30:	753b      	strb	r3, [r7, #20]
+ 8006a32:	8e3b      	ldrh	r3, [r7, #48]	; 0x30
+ 8006a34:	82fb      	strh	r3, [r7, #22]
             .remote_node_id = transfer->metadata.remote_node_id,
- 8006a38:	683b      	ldr	r3, [r7, #0]
- 8006a3a:	791b      	ldrb	r3, [r3, #4]
+ 8006a36:	683b      	ldr	r3, [r7, #0]
+ 8006a38:	791b      	ldrb	r3, [r3, #4]
     const CanardTransferMetadata cyphal_transfer_metadata = {
- 8006a3c:	763b      	strb	r3, [r7, #24]
+ 8006a3a:	763b      	strb	r3, [r7, #24]
             .transfer_id = transfer->metadata.transfer_id,
- 8006a3e:	683b      	ldr	r3, [r7, #0]
- 8006a40:	795b      	ldrb	r3, [r3, #5]
+ 8006a3c:	683b      	ldr	r3, [r7, #0]
+ 8006a3e:	795b      	ldrb	r3, [r3, #5]
     const CanardTransferMetadata cyphal_transfer_metadata = {
- 8006a42:	767b      	strb	r3, [r7, #25]
+ 8006a40:	767b      	strb	r3, [r7, #25]
         utilities.micros_64() + timeout_delta,
- 8006a44:	68fb      	ldr	r3, [r7, #12]
- 8006a46:	685b      	ldr	r3, [r3, #4]
- 8006a48:	4618      	mov	r0, r3
- 8006a4a:	f000 fa92 	bl	8006f72 <_ZNKSt8functionIFyvEEclEv>
+ 8006a42:	68fb      	ldr	r3, [r7, #12]
+ 8006a44:	685b      	ldr	r3, [r3, #4]
+ 8006a46:	4618      	mov	r0, r3
+ 8006a48:	f000 fa74 	bl	8006f34 <_ZNKSt8functionIFyvEEclEv>
     push(
- 8006a4e:	e9d7 230e 	ldrd	r2, r3, [r7, #56]	; 0x38
- 8006a52:	1884      	adds	r4, r0, r2
- 8006a54:	eb41 0503 	adc.w	r5, r1, r3
- 8006a58:	69fb      	ldr	r3, [r7, #28]
- 8006a5a:	687a      	ldr	r2, [r7, #4]
- 8006a5c:	9202      	str	r2, [sp, #8]
- 8006a5e:	9301      	str	r3, [sp, #4]
- 8006a60:	f107 0314 	add.w	r3, r7, #20
- 8006a64:	9300      	str	r3, [sp, #0]
- 8006a66:	4622      	mov	r2, r4
- 8006a68:	462b      	mov	r3, r5
- 8006a6a:	68f8      	ldr	r0, [r7, #12]
- 8006a6c:	f008 f814 	bl	800ea98 <_ZNK15CyphalInterface4pushEyPK22CanardTransferMetadatajPKv>
+ 8006a4c:	e9d7 230e 	ldrd	r2, r3, [r7, #56]	; 0x38
+ 8006a50:	1884      	adds	r4, r0, r2
+ 8006a52:	eb41 0503 	adc.w	r5, r1, r3
+ 8006a56:	69fb      	ldr	r3, [r7, #28]
+ 8006a58:	687a      	ldr	r2, [r7, #4]
+ 8006a5a:	9202      	str	r2, [sp, #8]
+ 8006a5c:	9301      	str	r3, [sp, #4]
+ 8006a5e:	f107 0314 	add.w	r3, r7, #20
+ 8006a62:	9300      	str	r3, [sp, #0]
+ 8006a64:	4622      	mov	r2, r4
+ 8006a66:	462b      	mov	r3, r5
+ 8006a68:	68f8      	ldr	r0, [r7, #12]
+ 8006a6a:	f008 f815 	bl	800ea98 <_ZNK15CyphalInterface4pushEyPK22CanardTransferMetadatajPKv>
 }
- 8006a70:	bf00      	nop
- 8006a72:	3720      	adds	r7, #32
- 8006a74:	46bd      	mov	sp, r7
- 8006a76:	bdb0      	pop	{r4, r5, r7, pc}
+ 8006a6e:	bf00      	nop
+ 8006a70:	3720      	adds	r7, #32
+ 8006a72:	46bd      	mov	sp, r7
+ 8006a74:	bdb0      	pop	{r4, r5, r7, pc}
 
-08006a78 <_ZNK15CyphalInterface8send_msgI5HBeatEEvPNT_4TypeEPhtS5_y14CanardPriority>:
+08006a76 <_ZNK15CyphalInterface8send_msgI5HBeatEEvPNT_4TypeEPhtS5_y14CanardPriority>:
 inline void CyphalInterface::send_msg(
- 8006a78:	b580      	push	{r7, lr}
- 8006a7a:	b08a      	sub	sp, #40	; 0x28
- 8006a7c:	af06      	add	r7, sp, #24
- 8006a7e:	60f8      	str	r0, [r7, #12]
- 8006a80:	60b9      	str	r1, [r7, #8]
- 8006a82:	607a      	str	r2, [r7, #4]
- 8006a84:	807b      	strh	r3, [r7, #2]
+ 8006a76:	b580      	push	{r7, lr}
+ 8006a78:	b08a      	sub	sp, #40	; 0x28
+ 8006a7a:	af06      	add	r7, sp, #24
+ 8006a7c:	60f8      	str	r0, [r7, #12]
+ 8006a7e:	60b9      	str	r1, [r7, #8]
+ 8006a80:	607a      	str	r2, [r7, #4]
+ 8006a82:	807b      	strh	r3, [r7, #2]
     send<TypeAlias>(
- 8006a86:	8879      	ldrh	r1, [r7, #2]
- 8006a88:	e9d7 2308 	ldrd	r2, r3, [r7, #32]
- 8006a8c:	e9cd 2304 	strd	r2, r3, [sp, #16]
- 8006a90:	23ff      	movs	r3, #255	; 0xff
- 8006a92:	9303      	str	r3, [sp, #12]
- 8006a94:	2300      	movs	r3, #0
- 8006a96:	9302      	str	r3, [sp, #8]
- 8006a98:	f897 3028 	ldrb.w	r3, [r7, #40]	; 0x28
- 8006a9c:	9301      	str	r3, [sp, #4]
- 8006a9e:	69bb      	ldr	r3, [r7, #24]
- 8006aa0:	9300      	str	r3, [sp, #0]
- 8006aa2:	460b      	mov	r3, r1
- 8006aa4:	687a      	ldr	r2, [r7, #4]
- 8006aa6:	68b9      	ldr	r1, [r7, #8]
- 8006aa8:	68f8      	ldr	r0, [r7, #12]
- 8006aaa:	f000 fa7b 	bl	8006fa4 <_ZNK15CyphalInterface4sendI5HBeatEEvPNT_4TypeEPhtS5_14CanardPriority18CanardTransferKindhy>
+ 8006a84:	8879      	ldrh	r1, [r7, #2]
+ 8006a86:	e9d7 2308 	ldrd	r2, r3, [r7, #32]
+ 8006a8a:	e9cd 2304 	strd	r2, r3, [sp, #16]
+ 8006a8e:	23ff      	movs	r3, #255	; 0xff
+ 8006a90:	9303      	str	r3, [sp, #12]
+ 8006a92:	2300      	movs	r3, #0
+ 8006a94:	9302      	str	r3, [sp, #8]
+ 8006a96:	f897 3028 	ldrb.w	r3, [r7, #40]	; 0x28
+ 8006a9a:	9301      	str	r3, [sp, #4]
+ 8006a9c:	69bb      	ldr	r3, [r7, #24]
+ 8006a9e:	9300      	str	r3, [sp, #0]
+ 8006aa0:	460b      	mov	r3, r1
+ 8006aa2:	687a      	ldr	r2, [r7, #4]
+ 8006aa4:	68b9      	ldr	r1, [r7, #8]
+ 8006aa6:	68f8      	ldr	r0, [r7, #12]
+ 8006aa8:	f000 fa7c 	bl	8006fa4 <_ZNK15CyphalInterface4sendI5HBeatEEvPNT_4TypeEPhtS5_14CanardPriority18CanardTransferKindhy>
 }
- 8006aae:	bf00      	nop
- 8006ab0:	3710      	adds	r7, #16
- 8006ab2:	46bd      	mov	sp, r7
- 8006ab4:	bd80      	pop	{r7, pc}
+ 8006aac:	bf00      	nop
+ 8006aae:	3710      	adds	r7, #16
+ 8006ab0:	46bd      	mov	sp, r7
+ 8006ab2:	bd80      	pop	{r7, pc}
 
-08006ab6 <_ZN15CyphalInterface10create_bssI5G4CAN15SystemAllocatorJEEEPS_PSt4bytehNT_7HandlerEjDpOT1_R13UtilityConfig>:
+08006ab4 <_ZN15CyphalInterface10create_bssI5G4CAN15SystemAllocatorJEEEPS_PSt4bytehNT_7HandlerEjDpOT1_R13UtilityConfig>:
     template <typename Provider, class Allocator, class... Args> static CyphalInterface* create_bss(
- 8006ab6:	b590      	push	{r4, r7, lr}
- 8006ab8:	b08b      	sub	sp, #44	; 0x2c
- 8006aba:	af02      	add	r7, sp, #8
- 8006abc:	60f8      	str	r0, [r7, #12]
- 8006abe:	607a      	str	r2, [r7, #4]
- 8006ac0:	603b      	str	r3, [r7, #0]
- 8006ac2:	460b      	mov	r3, r1
- 8006ac4:	72fb      	strb	r3, [r7, #11]
+ 8006ab4:	b590      	push	{r4, r7, lr}
+ 8006ab6:	b08b      	sub	sp, #44	; 0x2c
+ 8006ab8:	af02      	add	r7, sp, #8
+ 8006aba:	60f8      	str	r0, [r7, #12]
+ 8006abc:	607a      	str	r2, [r7, #4]
+ 8006abe:	603b      	str	r3, [r7, #0]
+ 8006ac0:	460b      	mov	r3, r1
+ 8006ac2:	72fb      	strb	r3, [r7, #11]
         typename Provider::Handler handler,
         size_t queue_len,
         Args&&... args,
         UtilityConfig& config
     ) {
         std::byte** inout_buffer = &buffer;
- 8006ac6:	f107 030c 	add.w	r3, r7, #12
- 8006aca:	61fb      	str	r3, [r7, #28]
+ 8006ac4:	f107 030c 	add.w	r3, r7, #12
+ 8006ac8:	61fb      	str	r3, [r7, #28]
         AbstractCANProvider* provider  = Provider::template create_bss<Allocator>(inout_buffer, handler, node_id, queue_len, args..., config);
- 8006acc:	7afa      	ldrb	r2, [r7, #11]
- 8006ace:	6b3b      	ldr	r3, [r7, #48]	; 0x30
- 8006ad0:	9300      	str	r3, [sp, #0]
- 8006ad2:	683b      	ldr	r3, [r7, #0]
- 8006ad4:	6879      	ldr	r1, [r7, #4]
- 8006ad6:	69f8      	ldr	r0, [r7, #28]
- 8006ad8:	f000 faae 	bl	8007038 <_ZN5G4CAN10create_bssI15SystemAllocatorJEEEPS_PPSt4byteP19FDCAN_HandleTypeDefhjDpOT0_R13UtilityConfig>
- 8006adc:	61b8      	str	r0, [r7, #24]
+ 8006aca:	7afa      	ldrb	r2, [r7, #11]
+ 8006acc:	6b3b      	ldr	r3, [r7, #48]	; 0x30
+ 8006ace:	9300      	str	r3, [sp, #0]
+ 8006ad0:	683b      	ldr	r3, [r7, #0]
+ 8006ad2:	6879      	ldr	r1, [r7, #4]
+ 8006ad4:	69f8      	ldr	r0, [r7, #28]
+ 8006ad6:	f000 faaf 	bl	8007038 <_ZN5G4CAN10create_bssI15SystemAllocatorJEEEPS_PPSt4byteP19FDCAN_HandleTypeDefhjDpOT0_R13UtilityConfig>
+ 8006ada:	61b8      	str	r0, [r7, #24]
 
         std::byte* interface_ptr = *inout_buffer;
- 8006ade:	69fb      	ldr	r3, [r7, #28]
- 8006ae0:	681b      	ldr	r3, [r3, #0]
- 8006ae2:	617b      	str	r3, [r7, #20]
+ 8006adc:	69fb      	ldr	r3, [r7, #28]
+ 8006ade:	681b      	ldr	r3, [r3, #0]
+ 8006ae0:	617b      	str	r3, [r7, #20]
         auto interface = new (interface_ptr) CyphalInterface(node_id, config, provider);
- 8006ae4:	697b      	ldr	r3, [r7, #20]
- 8006ae6:	4619      	mov	r1, r3
- 8006ae8:	200c      	movs	r0, #12
- 8006aea:	f7fb f979 	bl	8001de0 <_ZnwjPv>
- 8006aee:	4604      	mov	r4, r0
- 8006af0:	7af9      	ldrb	r1, [r7, #11]
- 8006af2:	69bb      	ldr	r3, [r7, #24]
- 8006af4:	6b3a      	ldr	r2, [r7, #48]	; 0x30
- 8006af6:	4620      	mov	r0, r4
- 8006af8:	f7fb faa4 	bl	8002044 <_ZN15CyphalInterfaceC1EhR13UtilityConfigP19AbstractCANProvider>
- 8006afc:	613c      	str	r4, [r7, #16]
+ 8006ae2:	697b      	ldr	r3, [r7, #20]
+ 8006ae4:	4619      	mov	r1, r3
+ 8006ae6:	200c      	movs	r0, #12
+ 8006ae8:	f7fb f97a 	bl	8001de0 <_ZnwjPv>
+ 8006aec:	4604      	mov	r4, r0
+ 8006aee:	7af9      	ldrb	r1, [r7, #11]
+ 8006af0:	69bb      	ldr	r3, [r7, #24]
+ 8006af2:	6b3a      	ldr	r2, [r7, #48]	; 0x30
+ 8006af4:	4620      	mov	r0, r4
+ 8006af6:	f7fb faa5 	bl	8002044 <_ZN15CyphalInterfaceC1EhR13UtilityConfigP19AbstractCANProvider>
+ 8006afa:	613c      	str	r4, [r7, #16]
 
         return interface;
- 8006afe:	693b      	ldr	r3, [r7, #16]
+ 8006afc:	693b      	ldr	r3, [r7, #16]
     }
- 8006b00:	4618      	mov	r0, r3
- 8006b02:	3724      	adds	r7, #36	; 0x24
- 8006b04:	46bd      	mov	sp, r7
- 8006b06:	bd90      	pop	{r4, r7, pc}
+ 8006afe:	4618      	mov	r0, r3
+ 8006b00:	3724      	adds	r7, #36	; 0x24
+ 8006b02:	46bd      	mov	sp, r7
+ 8006b04:	bd90      	pop	{r4, r7, pc}
 
-08006b08 <_ZNSt10shared_ptrI15CyphalInterfaceEC1IS0_vEEPT_>:
+08006b06 <_ZNSt10shared_ptrI15CyphalInterfaceEC1IS0_vEEPT_>:
        *  @post   use_count() == 1 && get() == __p
        *  @throw  std::bad_alloc, in which case @c delete @a __p is called.
        */
       template<typename _Yp, typename = _Constructible<_Yp*>>
 	explicit
 	shared_ptr(_Yp* __p) : __shared_ptr<_Tp>(__p) { }
- 8006b08:	b580      	push	{r7, lr}
- 8006b0a:	b082      	sub	sp, #8
- 8006b0c:	af00      	add	r7, sp, #0
- 8006b0e:	6078      	str	r0, [r7, #4]
- 8006b10:	6039      	str	r1, [r7, #0]
- 8006b12:	687b      	ldr	r3, [r7, #4]
- 8006b14:	6839      	ldr	r1, [r7, #0]
- 8006b16:	4618      	mov	r0, r3
- 8006b18:	f000 fadc 	bl	80070d4 <_ZNSt12__shared_ptrI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0EEC1IS0_vEEPT_>
- 8006b1c:	687b      	ldr	r3, [r7, #4]
- 8006b1e:	4618      	mov	r0, r3
- 8006b20:	3708      	adds	r7, #8
- 8006b22:	46bd      	mov	sp, r7
- 8006b24:	bd80      	pop	{r7, pc}
+ 8006b06:	b580      	push	{r7, lr}
+ 8006b08:	b082      	sub	sp, #8
+ 8006b0a:	af00      	add	r7, sp, #0
+ 8006b0c:	6078      	str	r0, [r7, #4]
+ 8006b0e:	6039      	str	r1, [r7, #0]
+ 8006b10:	687b      	ldr	r3, [r7, #4]
+ 8006b12:	6839      	ldr	r1, [r7, #0]
+ 8006b14:	4618      	mov	r0, r3
+ 8006b16:	f000 fadd 	bl	80070d4 <_ZNSt12__shared_ptrI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0EEC1IS0_vEEPT_>
+ 8006b1a:	687b      	ldr	r3, [r7, #4]
+ 8006b1c:	4618      	mov	r0, r3
+ 8006b1e:	3708      	adds	r7, #8
+ 8006b20:	46bd      	mov	sp, r7
+ 8006b22:	bd80      	pop	{r7, pc}
 
-08006b26 <_ZNSt10shared_ptrI15CyphalInterfaceEaSEOS1_>:
+08006b24 <_ZNSt10shared_ptrI15CyphalInterfaceEaSEOS1_>:
 	}
 #pragma GCC diagnostic pop
 #endif
 
       shared_ptr&
       operator=(shared_ptr&& __r) noexcept
- 8006b26:	b590      	push	{r4, r7, lr}
- 8006b28:	b083      	sub	sp, #12
- 8006b2a:	af00      	add	r7, sp, #0
- 8006b2c:	6078      	str	r0, [r7, #4]
- 8006b2e:	6039      	str	r1, [r7, #0]
+ 8006b24:	b590      	push	{r4, r7, lr}
+ 8006b26:	b083      	sub	sp, #12
+ 8006b28:	af00      	add	r7, sp, #0
+ 8006b2a:	6078      	str	r0, [r7, #4]
+ 8006b2c:	6039      	str	r1, [r7, #0]
       {
 	this->__shared_ptr<_Tp>::operator=(std::move(__r));
- 8006b30:	687c      	ldr	r4, [r7, #4]
- 8006b32:	6838      	ldr	r0, [r7, #0]
- 8006b34:	f000 fae6 	bl	8007104 <_ZSt4moveIRSt10shared_ptrI15CyphalInterfaceEEONSt16remove_referenceIT_E4typeEOS5_>
- 8006b38:	4603      	mov	r3, r0
- 8006b3a:	4619      	mov	r1, r3
- 8006b3c:	4620      	mov	r0, r4
- 8006b3e:	f000 faec 	bl	800711a <_ZNSt12__shared_ptrI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0EEaSEOS3_>
+ 8006b2e:	687c      	ldr	r4, [r7, #4]
+ 8006b30:	6838      	ldr	r0, [r7, #0]
+ 8006b32:	f000 fae7 	bl	8007104 <_ZSt4moveIRSt10shared_ptrI15CyphalInterfaceEEONSt16remove_referenceIT_E4typeEOS5_>
+ 8006b36:	4603      	mov	r3, r0
+ 8006b38:	4619      	mov	r1, r3
+ 8006b3a:	4620      	mov	r0, r4
+ 8006b3c:	f000 faed 	bl	800711a <_ZNSt12__shared_ptrI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0EEaSEOS3_>
 	return *this;
- 8006b42:	687b      	ldr	r3, [r7, #4]
+ 8006b40:	687b      	ldr	r3, [r7, #4]
       }
- 8006b44:	4618      	mov	r0, r3
- 8006b46:	370c      	adds	r7, #12
- 8006b48:	46bd      	mov	sp, r7
- 8006b4a:	bd90      	pop	{r4, r7, pc}
+ 8006b42:	4618      	mov	r0, r3
+ 8006b44:	370c      	adds	r7, #12
+ 8006b46:	46bd      	mov	sp, r7
+ 8006b48:	bd90      	pop	{r4, r7, pc}
+	...
 
 08006b4c <_ZNSt16_Sp_counted_baseILN9__gnu_cxx12_Lock_policyE0EED1Ev>:
       ~_Sp_counted_base() noexcept
@@ -16590,7 +16585,7 @@ inline void CyphalInterface::send_msg(
     ): interface(interface), kind(kind) {
  8006e02:	68fb      	ldr	r3, [r7, #12]
  8006e04:	4618      	mov	r0, r3
- 8006e06:	f7ff fd25 	bl	8006854 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
+ 8006e06:	f7ff fd23 	bl	8006850 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
  8006e0a:	4a10      	ldr	r2, [pc, #64]	; (8006e4c <_ZN20AbstractSubscriptionI5HBeatEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind+0x60>)
  8006e0c:	68fb      	ldr	r3, [r7, #12]
  8006e0e:	601a      	str	r2, [r3, #0]
@@ -16639,7 +16634,7 @@ inline void CyphalInterface::send_msg(
     ): interface(interface), kind(kind) {
  8006e66:	68fb      	ldr	r3, [r7, #12]
  8006e68:	4618      	mov	r0, r3
- 8006e6a:	f7ff fcf3 	bl	8006854 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
+ 8006e6a:	f7ff fcf1 	bl	8006850 <_ZN9IListenerIP16CanardRxTransferEC1Ev>
  8006e6e:	4a10      	ldr	r2, [pc, #64]	; (8006eb0 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt18CanardTransferKind+0x60>)
  8006e70:	68fb      	ldr	r3, [r7, #12]
  8006e72:	601a      	str	r2, [r3, #0]
@@ -16690,7 +16685,7 @@ inline void CyphalInterface::send_msg(
  8006eca:	687b      	ldr	r3, [r7, #4]
  8006ecc:	f503 730c 	add.w	r3, r3, #560	; 0x230
  8006ed0:	4618      	mov	r0, r3
- 8006ed2:	f7ff fd33 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 8006ed2:	f7ff fcff 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  8006ed6:	687b      	ldr	r3, [r7, #4]
  8006ed8:	3308      	adds	r3, #8
  8006eda:	787a      	ldrb	r2, [r7, #1]
@@ -16705,113 +16700,113 @@ inline void CyphalInterface::send_msg(
  8006eec:	46bd      	mov	sp, r7
  8006eee:	bd80      	pop	{r7, pc}
 
-08006ef0 <_ZN20AbstractSubscriptionI21RegisterAccessRequestE9subscribeEt18CanardTransferKind>:
-    void subscribe(CanardPortID port_id, CanardTransferKind kind) {
- 8006ef0:	b580      	push	{r7, lr}
- 8006ef2:	b084      	sub	sp, #16
- 8006ef4:	af02      	add	r7, sp, #8
- 8006ef6:	6078      	str	r0, [r7, #4]
- 8006ef8:	460b      	mov	r3, r1
- 8006efa:	807b      	strh	r3, [r7, #2]
- 8006efc:	4613      	mov	r3, r2
- 8006efe:	707b      	strb	r3, [r7, #1]
-        sub.user_reference = reinterpret_cast<void*>(this);
- 8006f00:	687b      	ldr	r3, [r7, #4]
- 8006f02:	687a      	ldr	r2, [r7, #4]
- 8006f04:	629a      	str	r2, [r3, #40]	; 0x28
-        interface->subscribe(port_id, T::extent, kind, &sub);
- 8006f06:	687b      	ldr	r3, [r7, #4]
- 8006f08:	f503 730c 	add.w	r3, r3, #560	; 0x230
- 8006f0c:	4618      	mov	r0, r3
- 8006f0e:	f7ff fd15 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
- 8006f12:	687b      	ldr	r3, [r7, #4]
- 8006f14:	3308      	adds	r3, #8
- 8006f16:	787a      	ldrb	r2, [r7, #1]
- 8006f18:	8879      	ldrh	r1, [r7, #2]
- 8006f1a:	9300      	str	r3, [sp, #0]
- 8006f1c:	4613      	mov	r3, r2
- 8006f1e:	f240 2203 	movw	r2, #515	; 0x203
- 8006f22:	f007 fdf3 	bl	800eb0c <_ZNK15CyphalInterface9subscribeEtj18CanardTransferKindP20CanardRxSubscription>
-    }
- 8006f26:	bf00      	nop
- 8006f28:	3708      	adds	r7, #8
- 8006f2a:	46bd      	mov	sp, r7
- 8006f2c:	bd80      	pop	{r7, pc}
-
-08006f2e <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EE6_M_getEv>:
+08006ef0 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EE6_M_getEv>:
       _M_get() const noexcept
- 8006f2e:	b580      	push	{r7, lr}
- 8006f30:	b082      	sub	sp, #8
- 8006f32:	af00      	add	r7, sp, #0
- 8006f34:	6078      	str	r0, [r7, #4]
+ 8006ef0:	b580      	push	{r7, lr}
+ 8006ef2:	b082      	sub	sp, #8
+ 8006ef4:	af00      	add	r7, sp, #0
+ 8006ef6:	6078      	str	r0, [r7, #4]
       { return static_cast<const __shared_ptr<_Tp, _Lp>*>(this)->get(); }
- 8006f36:	6878      	ldr	r0, [r7, #4]
- 8006f38:	f000 fa7e 	bl	8007438 <_ZNKSt12__shared_ptrI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0EE3getEv>
- 8006f3c:	4603      	mov	r3, r0
- 8006f3e:	4618      	mov	r0, r3
- 8006f40:	3708      	adds	r7, #8
- 8006f42:	46bd      	mov	sp, r7
- 8006f44:	bd80      	pop	{r7, pc}
+ 8006ef8:	6878      	ldr	r0, [r7, #4]
+ 8006efa:	f000 fa9d 	bl	8007438 <_ZNKSt12__shared_ptrI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0EE3getEv>
+ 8006efe:	4603      	mov	r3, r0
+ 8006f00:	4618      	mov	r0, r3
+ 8006f02:	3708      	adds	r7, #8
+ 8006f04:	46bd      	mov	sp, r7
+ 8006f06:	bd80      	pop	{r7, pc}
 
-08006f46 <_ZNKSt8functionIFvvEEclEv>:
+08006f08 <_ZNKSt8functionIFvvEEclEv>:
        *
        *  The function call operator invokes the target function object
        *  stored by @c this.
        */
       _Res
       operator()(_ArgTypes... __args) const
- 8006f46:	b580      	push	{r7, lr}
- 8006f48:	b082      	sub	sp, #8
- 8006f4a:	af00      	add	r7, sp, #0
- 8006f4c:	6078      	str	r0, [r7, #4]
+ 8006f08:	b580      	push	{r7, lr}
+ 8006f0a:	b082      	sub	sp, #8
+ 8006f0c:	af00      	add	r7, sp, #0
+ 8006f0e:	6078      	str	r0, [r7, #4]
       {
 	if (_M_empty())
- 8006f4e:	687b      	ldr	r3, [r7, #4]
- 8006f50:	4618      	mov	r0, r3
- 8006f52:	f7fa ffb9 	bl	8001ec8 <_ZNKSt14_Function_base8_M_emptyEv>
- 8006f56:	4603      	mov	r3, r0
- 8006f58:	2b00      	cmp	r3, #0
- 8006f5a:	d001      	beq.n	8006f60 <_ZNKSt8functionIFvvEEclEv+0x1a>
+ 8006f10:	687b      	ldr	r3, [r7, #4]
+ 8006f12:	4618      	mov	r0, r3
+ 8006f14:	f7fa ffd8 	bl	8001ec8 <_ZNKSt14_Function_base8_M_emptyEv>
+ 8006f18:	4603      	mov	r3, r0
+ 8006f1a:	2b00      	cmp	r3, #0
+ 8006f1c:	d001      	beq.n	8006f22 <_ZNKSt8functionIFvvEEclEv+0x1a>
 	  __throw_bad_function_call();
- 8006f5c:	f00a fbdc 	bl	8011718 <_ZSt25__throw_bad_function_callv>
+ 8006f1e:	f00a fbfb 	bl	8011718 <_ZSt25__throw_bad_function_callv>
 	return _M_invoker(_M_functor, std::forward<_ArgTypes>(__args)...);
- 8006f60:	687b      	ldr	r3, [r7, #4]
- 8006f62:	68db      	ldr	r3, [r3, #12]
- 8006f64:	687a      	ldr	r2, [r7, #4]
- 8006f66:	4610      	mov	r0, r2
- 8006f68:	4798      	blx	r3
- 8006f6a:	bf00      	nop
+ 8006f22:	687b      	ldr	r3, [r7, #4]
+ 8006f24:	68db      	ldr	r3, [r3, #12]
+ 8006f26:	687a      	ldr	r2, [r7, #4]
+ 8006f28:	4610      	mov	r0, r2
+ 8006f2a:	4798      	blx	r3
+ 8006f2c:	bf00      	nop
       }
- 8006f6c:	3708      	adds	r7, #8
- 8006f6e:	46bd      	mov	sp, r7
- 8006f70:	bd80      	pop	{r7, pc}
+ 8006f2e:	3708      	adds	r7, #8
+ 8006f30:	46bd      	mov	sp, r7
+ 8006f32:	bd80      	pop	{r7, pc}
 
-08006f72 <_ZNKSt8functionIFyvEEclEv>:
+08006f34 <_ZNKSt8functionIFyvEEclEv>:
       operator()(_ArgTypes... __args) const
- 8006f72:	b580      	push	{r7, lr}
- 8006f74:	b082      	sub	sp, #8
- 8006f76:	af00      	add	r7, sp, #0
- 8006f78:	6078      	str	r0, [r7, #4]
+ 8006f34:	b580      	push	{r7, lr}
+ 8006f36:	b082      	sub	sp, #8
+ 8006f38:	af00      	add	r7, sp, #0
+ 8006f3a:	6078      	str	r0, [r7, #4]
 	if (_M_empty())
- 8006f7a:	687b      	ldr	r3, [r7, #4]
- 8006f7c:	4618      	mov	r0, r3
- 8006f7e:	f7fa ffa3 	bl	8001ec8 <_ZNKSt14_Function_base8_M_emptyEv>
- 8006f82:	4603      	mov	r3, r0
- 8006f84:	2b00      	cmp	r3, #0
- 8006f86:	d001      	beq.n	8006f8c <_ZNKSt8functionIFyvEEclEv+0x1a>
+ 8006f3c:	687b      	ldr	r3, [r7, #4]
+ 8006f3e:	4618      	mov	r0, r3
+ 8006f40:	f7fa ffc2 	bl	8001ec8 <_ZNKSt14_Function_base8_M_emptyEv>
+ 8006f44:	4603      	mov	r3, r0
+ 8006f46:	2b00      	cmp	r3, #0
+ 8006f48:	d001      	beq.n	8006f4e <_ZNKSt8functionIFyvEEclEv+0x1a>
 	  __throw_bad_function_call();
- 8006f88:	f00a fbc6 	bl	8011718 <_ZSt25__throw_bad_function_callv>
+ 8006f4a:	f00a fbe5 	bl	8011718 <_ZSt25__throw_bad_function_callv>
 	return _M_invoker(_M_functor, std::forward<_ArgTypes>(__args)...);
- 8006f8c:	687b      	ldr	r3, [r7, #4]
- 8006f8e:	68db      	ldr	r3, [r3, #12]
- 8006f90:	687a      	ldr	r2, [r7, #4]
- 8006f92:	4610      	mov	r0, r2
- 8006f94:	4798      	blx	r3
- 8006f96:	4602      	mov	r2, r0
- 8006f98:	460b      	mov	r3, r1
+ 8006f4e:	687b      	ldr	r3, [r7, #4]
+ 8006f50:	68db      	ldr	r3, [r3, #12]
+ 8006f52:	687a      	ldr	r2, [r7, #4]
+ 8006f54:	4610      	mov	r0, r2
+ 8006f56:	4798      	blx	r3
+ 8006f58:	4602      	mov	r2, r0
+ 8006f5a:	460b      	mov	r3, r1
       }
- 8006f9a:	4610      	mov	r0, r2
- 8006f9c:	4619      	mov	r1, r3
+ 8006f5c:	4610      	mov	r0, r2
+ 8006f5e:	4619      	mov	r1, r3
+ 8006f60:	3708      	adds	r7, #8
+ 8006f62:	46bd      	mov	sp, r7
+ 8006f64:	bd80      	pop	{r7, pc}
+
+08006f66 <_ZN20AbstractSubscriptionI21RegisterAccessRequestE9subscribeEt18CanardTransferKind>:
+    void subscribe(CanardPortID port_id, CanardTransferKind kind) {
+ 8006f66:	b580      	push	{r7, lr}
+ 8006f68:	b084      	sub	sp, #16
+ 8006f6a:	af02      	add	r7, sp, #8
+ 8006f6c:	6078      	str	r0, [r7, #4]
+ 8006f6e:	460b      	mov	r3, r1
+ 8006f70:	807b      	strh	r3, [r7, #2]
+ 8006f72:	4613      	mov	r3, r2
+ 8006f74:	707b      	strb	r3, [r7, #1]
+        sub.user_reference = reinterpret_cast<void*>(this);
+ 8006f76:	687b      	ldr	r3, [r7, #4]
+ 8006f78:	687a      	ldr	r2, [r7, #4]
+ 8006f7a:	629a      	str	r2, [r3, #40]	; 0x28
+        interface->subscribe(port_id, T::extent, kind, &sub);
+ 8006f7c:	687b      	ldr	r3, [r7, #4]
+ 8006f7e:	f503 730c 	add.w	r3, r3, #560	; 0x230
+ 8006f82:	4618      	mov	r0, r3
+ 8006f84:	f7ff fca6 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 8006f88:	687b      	ldr	r3, [r7, #4]
+ 8006f8a:	3308      	adds	r3, #8
+ 8006f8c:	787a      	ldrb	r2, [r7, #1]
+ 8006f8e:	8879      	ldrh	r1, [r7, #2]
+ 8006f90:	9300      	str	r3, [sp, #0]
+ 8006f92:	4613      	mov	r3, r2
+ 8006f94:	f240 2203 	movw	r2, #515	; 0x203
+ 8006f98:	f007 fdb8 	bl	800eb0c <_ZNK15CyphalInterface9subscribeEtj18CanardTransferKindP20CanardRxSubscription>
+    }
+ 8006f9c:	bf00      	nop
  8006f9e:	3708      	adds	r7, #8
  8006fa0:	46bd      	mov	sp, r7
  8006fa2:	bd80      	pop	{r7, pc}
@@ -16845,7 +16840,7 @@ inline void CyphalInterface::send(
  8006fd2:	685b      	ldr	r3, [r3, #4]
  8006fd4:	3310      	adds	r3, #16
  8006fd6:	4618      	mov	r0, r3
- 8006fd8:	f7ff ffb5 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 8006fd8:	f7ff ff96 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     const CanardTransferMetadata cyphal_transfer_metadata = {
  8006fdc:	f897 3034 	ldrb.w	r3, [r7, #52]	; 0x34
  8006fe0:	753b      	strb	r3, [r7, #20]
@@ -16862,7 +16857,7 @@ inline void CyphalInterface::send(
  8006ff8:	68fb      	ldr	r3, [r7, #12]
  8006ffa:	685b      	ldr	r3, [r3, #4]
  8006ffc:	4618      	mov	r0, r3
- 8006ffe:	f7ff ffb8 	bl	8006f72 <_ZNKSt8functionIFyvEEclEv>
+ 8006ffe:	f7ff ff99 	bl	8006f34 <_ZNKSt8functionIFyvEEclEv>
     push(
  8007002:	e9d7 2310 	ldrd	r2, r3, [r7, #64]	; 0x40
  8007006:	1884      	adds	r4, r0, r2
@@ -17447,7 +17442,7 @@ public:
  80073d6:	687b      	ldr	r3, [r7, #4]
  80073d8:	f503 730c 	add.w	r3, r3, #560	; 0x230
  80073dc:	4618      	mov	r0, r3
- 80073de:	f7ff faad 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 80073de:	f7ff fa79 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  80073e2:	687b      	ldr	r3, [r7, #4]
  80073e4:	3308      	adds	r3, #8
  80073e6:	787a      	ldrb	r2, [r7, #1]
@@ -17480,7 +17475,7 @@ public:
  8007412:	687b      	ldr	r3, [r7, #4]
  8007414:	f503 730c 	add.w	r3, r3, #560	; 0x230
  8007418:	4618      	mov	r0, r3
- 800741a:	f7ff fa8f 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 800741a:	f7ff fa5b 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  800741e:	687b      	ldr	r3, [r7, #4]
  8007420:	3308      	adds	r3, #8
  8007422:	787a      	ldrb	r2, [r7, #1]
@@ -17530,7 +17525,7 @@ public:
 
         if (_alloc_ptr) {
  8007460:	481a      	ldr	r0, [pc, #104]	; (80074cc <_ZN19AbstractCANProvider5setupI15SystemAllocatorEEvPT_h+0x7c>)
- 8007462:	f7ff f8d3 	bl	800660c <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>
+ 8007462:	f7ff f8d1 	bl	8006608 <_ZNKSt10unique_ptrI17AbstractAllocatorSt14default_deleteIS0_EEcvbEv>
  8007466:	4603      	mov	r3, r0
  8007468:	2b00      	cmp	r3, #0
  800746a:	d005      	beq.n	8007478 <_ZN19AbstractCANProvider5setupI15SystemAllocatorEEvPT_h+0x28>
@@ -17542,7 +17537,7 @@ public:
  800746e:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
  8007470:	3310      	adds	r3, #16
  8007472:	4618      	mov	r0, r3
- 8007474:	f7ff fd67 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 8007474:	f7ff fd48 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
         }
         _alloc_ptr = std::unique_ptr<T>(ptr);
  8007478:	f107 0334 	add.w	r3, r7, #52	; 0x34
@@ -18099,7 +18094,7 @@ class CyphalInterface {
  8007820:	687b      	ldr	r3, [r7, #4]
  8007822:	3308      	adds	r3, #8
  8007824:	4618      	mov	r0, r3
- 8007826:	f7fe ff2d 	bl	8006684 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EED1Ev>
+ 8007826:	f7fe ff2b 	bl	8006680 <_ZNSt10unique_ptrI19AbstractCANProviderSt14default_deleteIS0_EED1Ev>
  800782a:	687b      	ldr	r3, [r7, #4]
  800782c:	4618      	mov	r0, r3
  800782e:	3708      	adds	r7, #8
@@ -19246,11 +19241,11 @@ UtilityConfig utilities(micros_64, error_handler);
  8007f9a:	f107 0308 	add.w	r3, r7, #8
  8007f9e:	4917      	ldr	r1, [pc, #92]	; (8007ffc <_Z41__static_initialization_and_destruction_0ii+0x7c>)
  8007fa0:	4618      	mov	r0, r3
- 8007fa2:	f7fe fba3 	bl	80066ec <_ZNSt8functionIFyvEEC1IRS0_vEEOT_>
+ 8007fa2:	f7fe fba1 	bl	80066e8 <_ZNSt8functionIFyvEEC1IRS0_vEEOT_>
  8007fa6:	f107 0318 	add.w	r3, r7, #24
  8007faa:	4915      	ldr	r1, [pc, #84]	; (8008000 <_Z41__static_initialization_and_destruction_0ii+0x80>)
  8007fac:	4618      	mov	r0, r3
- 8007fae:	f7fe fbcd 	bl	800674c <_ZNSt8functionIFvvEEC1IRS0_vEEOT_>
+ 8007fae:	f7fe fbcb 	bl	8006748 <_ZNSt8functionIFvvEEC1IRS0_vEEOT_>
  8007fb2:	f107 0218 	add.w	r2, r7, #24
  8007fb6:	f107 0308 	add.w	r3, r7, #8
  8007fba:	4619      	mov	r1, r3
@@ -19361,7 +19356,7 @@ std::shared_ptr<CyphalInterface> interface;
  800808a:	681b      	ldr	r3, [r3, #0]
  800808c:	f503 730c 	add.w	r3, r3, #560	; 0x230
  8008090:	4618      	mov	r0, r3
- 8008092:	f7fe fc53 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 8008092:	f7fe fc1f 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  8008096:	f507 7348 	add.w	r3, r7, #800	; 0x320
  800809a:	f5a3 7348 	sub.w	r3, r3, #800	; 0x320
  800809e:	f107 0108 	add.w	r1, r7, #8
@@ -19399,7 +19394,7 @@ std::shared_ptr<CyphalInterface> interface;
  80080e6:	687b      	ldr	r3, [r7, #4]
  80080e8:	f503 730c 	add.w	r3, r3, #560	; 0x230
  80080ec:	4618      	mov	r0, r3
- 80080ee:	f7fe fc25 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 80080ee:	f7fe fbf1 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  80080f2:	f107 030c 	add.w	r3, r7, #12
  80080f6:	683a      	ldr	r2, [r7, #0]
  80080f8:	4619      	mov	r1, r3
@@ -19430,7 +19425,7 @@ std::shared_ptr<CyphalInterface> interface;
  8008122:	687b      	ldr	r3, [r7, #4]
  8008124:	f503 730c 	add.w	r3, r3, #560	; 0x230
  8008128:	4618      	mov	r0, r3
- 800812a:	f7fe fc07 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 800812a:	f7fe fbd3 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  800812e:	f107 030c 	add.w	r3, r7, #12
  8008132:	683a      	ldr	r2, [r7, #0]
  8008134:	4619      	mov	r1, r3
@@ -19461,7 +19456,7 @@ std::shared_ptr<CyphalInterface> interface;
  800815e:	687b      	ldr	r3, [r7, #4]
  8008160:	f503 730c 	add.w	r3, r3, #560	; 0x230
  8008164:	4618      	mov	r0, r3
- 8008166:	f7fe fbe9 	bl	800693c <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
+ 8008166:	f7fe fbb5 	bl	80068d4 <_ZNKSt19__shared_ptr_accessI15CyphalInterfaceLN9__gnu_cxx12_Lock_policyE0ELb0ELb0EEptEv>
  800816a:	f107 0308 	add.w	r3, r7, #8
  800816e:	683a      	ldr	r2, [r7, #0]
  8008170:	4619      	mov	r1, r3
@@ -19518,7 +19513,7 @@ inline void CyphalInterface::deserialize_transfer(
  80081c0:	685b      	ldr	r3, [r3, #4]
  80081c2:	3310      	adds	r3, #16
  80081c4:	4618      	mov	r0, r3
- 80081c6:	f7fe febe 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 80081c6:	f7fe fe9f 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     }
 }
  80081ca:	bf00      	nop
@@ -19555,7 +19550,7 @@ inline void CyphalInterface::deserialize_transfer(
  8008200:	685b      	ldr	r3, [r3, #4]
  8008202:	3310      	adds	r3, #16
  8008204:	4618      	mov	r0, r3
- 8008206:	f7fe fe9e 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 8008206:	f7fe fe7f 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
 }
  800820a:	bf00      	nop
  800820c:	3718      	adds	r7, #24
@@ -19591,7 +19586,7 @@ inline void CyphalInterface::deserialize_transfer(
  8008240:	685b      	ldr	r3, [r3, #4]
  8008242:	3310      	adds	r3, #16
  8008244:	4618      	mov	r0, r3
- 8008246:	f7fe fe7e 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 8008246:	f7fe fe5f 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
 }
  800824a:	bf00      	nop
  800824c:	3718      	adds	r7, #24
@@ -19627,7 +19622,7 @@ inline void CyphalInterface::deserialize_transfer(
  8008280:	685b      	ldr	r3, [r3, #4]
  8008282:	3310      	adds	r3, #16
  8008284:	4618      	mov	r0, r3
- 8008286:	f7fe fe5e 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 8008286:	f7fe fe3f 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
 }
  800828a:	bf00      	nop
  800828c:	3718      	adds	r7, #24
@@ -38029,7 +38024,7 @@ void* SystemAllocator::allocate(CanardInstance* const ins, const size_t amount) 
  800ea26:	685b      	ldr	r3, [r3, #4]
  800ea28:	3310      	adds	r3, #16
  800ea2a:	4618      	mov	r0, r3
- 800ea2c:	f7f8 fa8b 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 800ea2c:	f7f8 fa6c 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     }
     return mem;
  800ea30:	697b      	ldr	r3, [r7, #20]
@@ -38149,7 +38144,7 @@ void CyphalInterface::push(
  800eae6:	685b      	ldr	r3, [r3, #4]
  800eae8:	3310      	adds	r3, #16
  800eaea:	4618      	mov	r0, r3
- 800eaec:	f7f8 fa2b 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 800eaec:	f7f8 fa0c 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
 #endif
         return;
  800eaf0:	e008      	b.n	800eb04 <_ZNK15CyphalInterface4pushEyPK22CanardTransferMetadatajPKv+0x6c>
@@ -38163,7 +38158,7 @@ void CyphalInterface::push(
  800eafa:	685b      	ldr	r3, [r3, #4]
  800eafc:	3310      	adds	r3, #16
  800eafe:	4618      	mov	r0, r3
- 800eb00:	f7f8 fa21 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 800eb00:	f7f8 fa02 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     }
 }
  800eb04:	371c      	adds	r7, #28
@@ -38227,7 +38222,7 @@ void CyphalInterface::subscribe(
  800eb5c:	685b      	ldr	r3, [r3, #4]
  800eb5e:	3310      	adds	r3, #16
  800eb60:	4618      	mov	r0, r3
- 800eb62:	f7f8 f9f0 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 800eb62:	f7f8 f9d1 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     }
 }
  800eb66:	bf00      	nop
@@ -38630,7 +38625,7 @@ bool G4CAN::read_frame(CanardFrame* rxf) {
  800ede2:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
  800ede4:	3310      	adds	r3, #16
  800ede6:	4618      	mov	r0, r3
- 800ede8:	f7f8 f8ad 	bl	8006f46 <_ZNKSt8functionIFvvEEclEv>
+ 800ede8:	f7f8 f88e 	bl	8006f08 <_ZNKSt8functionIFvvEEclEv>
     }
 
     rxf->extended_can_id = RxHeader.Identifier;
@@ -38851,7 +38846,7 @@ void AbstractCANProvider::process_canard_rx(CanardFrame* frame) {
  800ef54:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
     const int8_t accept_result = canardRxAccept(
  800ef56:	4618      	mov	r0, r3
- 800ef58:	f7f8 f80b 	bl	8006f72 <_ZNKSt8functionIFyvEEclEv>
+ 800ef58:	f7f7 ffec 	bl	8006f34 <_ZNKSt8functionIFyvEEclEv>
  800ef5c:	4602      	mov	r2, r0
  800ef5e:	460b      	mov	r3, r1
  800ef60:	f107 010c 	add.w	r1, r7, #12
@@ -38953,7 +38948,7 @@ void AbstractCANProvider::process_canard_tx() {
  800effa:	687b      	ldr	r3, [r7, #4]
  800effc:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
  800effe:	4618      	mov	r0, r3
- 800f000:	f7f7 ffb7 	bl	8006f72 <_ZNKSt8functionIFyvEEclEv>
+ 800f000:	f7f7 ff98 	bl	8006f34 <_ZNKSt8functionIFyvEEclEv>
  800f004:	4602      	mov	r2, r0
  800f006:	460b      	mov	r3, r1
  800f008:	42a2      	cmp	r2, r4

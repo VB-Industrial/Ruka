@@ -104,16 +104,16 @@ C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externalt
 ../Core/Src/main_impl.cpp:69:2:JSReader::JSReader(InterfacePtr)	1
 ../Core/Src/main_impl.cpp:73:10:virtual void JSReader::handler(const reg_udral_physics_kinematics_rotation_Planar_0_1&, CanardRxTransfer*)	1
 ../Core/Src/main_impl.cpp:96:5:NodeInfoReader::NodeInfoReader(InterfacePtr)	1
-../Core/Src/main_impl.cpp:110:5:RegisterAccessReader::RegisterAccessReader(InterfacePtr)	1
-../Core/Src/main_impl.cpp:135:6:virtual void NodeInfoReader::handler(const uavcan_node_GetInfo_Request_1_0&, CanardRxTransfer*)	1
-../Core/Src/main_impl.cpp:192:6:virtual void RegisterAccessReader::handler(const uavcan_register_Access_Request_1_0&, CanardRxTransfer*)	10
-../Core/Src/main_impl.cpp:281:6:virtual void RegisterListReader::handler(const uavcan_register_List_Request_1_0&, CanardRxTransfer*)	6
-../Core/Src/main_impl.cpp:322:6:void send_JS(float*, float*, float*)	1
-../Core/Src/main_impl.cpp:339:6:void send_IMU(float*, float*, float*, float*, float*, float*, float*, float*, float*, float*)	1
-../Core/Src/main_impl.cpp:368:6:void heartbeat()	1
-../Core/Src/main_impl.cpp:387:6:void setup_cyphal(FDCAN_HandleTypeDef*)	1
-../Core/Src/main_impl.cpp:398:6:void cyphal_loop()	1
-../Core/Src/main_impl.cpp:402:6:void cyphal_can_starter(FDCAN_HandleTypeDef*)	6
+../Core/Src/main_impl.cpp:106:6:virtual void NodeInfoReader::handler(const uavcan_node_GetInfo_Request_1_0&, CanardRxTransfer*)	1
+../Core/Src/main_impl.cpp:167:5:RegisterAccessReader::RegisterAccessReader(InterfacePtr)	1
+../Core/Src/main_impl.cpp:188:6:virtual void RegisterAccessReader::handler(const uavcan_register_Access_Request_1_0&, CanardRxTransfer*)	9
+../Core/Src/main_impl.cpp:277:6:virtual void RegisterListReader::handler(const uavcan_register_List_Request_1_0&, CanardRxTransfer*)	6
+../Core/Src/main_impl.cpp:318:6:void send_JS(float*, float*, float*)	1
+../Core/Src/main_impl.cpp:335:6:void send_IMU(float*, float*, float*, float*, float*, float*, float*, float*, float*, float*)	1
+../Core/Src/main_impl.cpp:364:6:void heartbeat()	1
+../Core/Src/main_impl.cpp:383:6:void setup_cyphal(FDCAN_HandleTypeDef*)	1
+../Core/Src/main_impl.cpp:394:6:void cyphal_loop()	1
+../Core/Src/main_impl.cpp:398:6:void cyphal_can_starter(FDCAN_HandleTypeDef*)	6
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:140:7:void std::_Sp_counted_base<_Lp>::_M_destroy() [with __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_single]	2
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\std_function.h:239:5:constexpr std::_Function_base::_Function_base()	1
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\std_function.h:386:7:)>&) [with _Res = long long unsigned int; _ArgTypes = {}]	2
@@ -131,9 +131,9 @@ C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externalt
 ../Drivers/libcyphal/cyphal/subscriptions/subscription.h:36:5:AbstractSubscription<T>::AbstractSubscription(InterfacePtr, CanardPortID) [with T = JS_msg]	1
 ../Drivers/libcyphal/cyphal/interfaces.h:4:7:constexpr IListener<CanardRxTransfer*>::IListener()	1
 ../Drivers/libcyphal/cyphal/subscriptions/subscription.h:38:5:AbstractSubscription<T>::AbstractSubscription(InterfacePtr, CanardPortID, CanardTransferKind) [with T = NodeInfoRequest]	1
-../Drivers/libcyphal/cyphal/subscriptions/subscription.h:38:5:AbstractSubscription<T>::AbstractSubscription(InterfacePtr, CanardPortID, CanardTransferKind) [with T = RegisterAccessRequest]	1
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:984:7:std::__shared_ptr_access<_Tp, _Lp, <anonymous>, <anonymous> >::element_type* std::__shared_ptr_access<_Tp, _Lp, <anonymous>, <anonymous> >::operator->() const [with _Tp = CyphalInterface; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_single; bool <anonymous> = false; bool <anonymous> = false]	1
 ../Drivers/libcyphal/cyphal/cyphal.tpp:54:13:void CyphalInterface::send_response(typename TypeAlias::Type*, uint8_t*, CanardRxTransfer*, CanardPortID, uint64_t, CanardPriority) const [with TypeAlias = NodeInfoResponse]	2
+../Drivers/libcyphal/cyphal/subscriptions/subscription.h:38:5:AbstractSubscription<T>::AbstractSubscription(InterfacePtr, CanardPortID, CanardTransferKind) [with T = RegisterAccessRequest]	1
 ../Drivers/libcyphal/cyphal/cyphal.tpp:54:13:void CyphalInterface::send_response(typename TypeAlias::Type*, uint8_t*, CanardRxTransfer*, CanardPortID, uint64_t, CanardPriority) const [with TypeAlias = RegisterAccessResponse]	2
 ../Drivers/libcyphal/cyphal/cyphal.tpp:54:13:void CyphalInterface::send_response(typename TypeAlias::Type*, uint8_t*, CanardRxTransfer*, CanardPortID, uint64_t, CanardPriority) const [with TypeAlias = RegisterListResponse]	2
 ../Drivers/libcyphal/cyphal/cyphal.tpp:33:13:void CyphalInterface::send_msg(typename TypeAlias::Type*, uint8_t*, CanardPortID, CanardTransferID*, uint64_t, CanardPriority) const [with TypeAlias = JS_msg]	1
@@ -165,10 +165,10 @@ C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externalt
 ../Drivers/libcyphal/cyphal/subscriptions/subscription.h:38:5:AbstractSubscription<T>::AbstractSubscription(InterfacePtr, CanardPortID, CanardTransferKind) [with T = HBeat]	1
 ../Drivers/libcyphal/cyphal/subscriptions/subscription.h:38:5:AbstractSubscription<T>::AbstractSubscription(InterfacePtr, CanardPortID, CanardTransferKind) [with T = JS_msg]	1
 ../Drivers/libcyphal/cyphal/subscriptions/subscription.h:29:10:void AbstractSubscription<T>::subscribe(CanardPortID, CanardTransferKind) [with T = NodeInfoRequest]	1
-../Drivers/libcyphal/cyphal/subscriptions/subscription.h:29:10:void AbstractSubscription<T>::subscribe(CanardPortID, CanardTransferKind) [with T = RegisterAccessRequest]	1
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:992:7:std::__shared_ptr_access<_Tp, _Lp, <anonymous>, <anonymous> >::element_type* std::__shared_ptr_access<_Tp, _Lp, <anonymous>, <anonymous> >::_M_get() const [with _Tp = CyphalInterface; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_single; bool <anonymous> = false; bool <anonymous> = false]	1
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\std_function.h:586:7:) const [with _Res = void; _ArgTypes = {}]	1
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\std_function.h:586:7:) const [with _Res = long long unsigned int; _ArgTypes = {}]	1
+../Drivers/libcyphal/cyphal/subscriptions/subscription.h:29:10:void AbstractSubscription<T>::subscribe(CanardPortID, CanardTransferKind) [with T = RegisterAccessRequest]	1
 ../Drivers/libcyphal/cyphal/cyphal.tpp:2:13:void CyphalInterface::send(typename TypeAlias::Type*, uint8_t*, CanardPortID, CanardTransferID*, CanardPriority, CanardTransferKind, CanardNodeID, uint64_t) const [with TypeAlias = JS_msg]	2
 ../Drivers/libcyphal/cyphal/cyphal.tpp:2:13:void CyphalInterface::send(typename TypeAlias::Type*, uint8_t*, CanardPortID, CanardTransferID*, CanardPriority, CanardTransferKind, CanardNodeID, uint64_t) const [with TypeAlias = State]	2
 ../Drivers/libcyphal/cyphal/cyphal.tpp:2:13:void CyphalInterface::send(typename TypeAlias::Type*, uint8_t*, CanardPortID, CanardTransferID*, CanardPriority, CanardTransferKind, CanardNodeID, uint64_t) const [with TypeAlias = HBeat]	2
@@ -285,7 +285,7 @@ C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externalt
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:339:11:std::_Sp_counted_ptr<CyphalInterface*, __gnu_cxx::_S_single>::~_Sp_counted_ptr()	1
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:339:11:virtual std::_Sp_counted_ptr<CyphalInterface*, __gnu_cxx::_S_single>::~_Sp_counted_ptr()	1
 ../Drivers/libcyphal/cyphal/definitions.h:30:8:UtilityConfig::~UtilityConfig()	1
-../Core/Src/main_impl.cpp:465:1:void __static_initialization_and_destruction_0(int, int)	5
+../Core/Src/main_impl.cpp:461:1:void __static_initialization_and_destruction_0(int, int)	5
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:347:7:void std::_Sp_counted_ptr<_Ptr, _Lp>::_M_dispose() [with _Ptr = CyphalInterface*; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_single]	2
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:351:7:void std::_Sp_counted_ptr<_Ptr, _Lp>::_M_destroy() [with _Ptr = CyphalInterface*; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_single]	2
 C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.11.3.rel1.win32_1.1.100.202309141235\tools\arm-none-eabi\include\c++\11.3.1\bits\shared_ptr_base.h:355:7:void* std::_Sp_counted_ptr<_Ptr, _Lp>::_M_get_deleter(const std::type_info&) [with _Ptr = CyphalInterface*; __gnu_cxx::_Lock_policy _Lp = __gnu_cxx::_S_single]	1
@@ -299,5 +299,5 @@ C:\ST\STM32CubeIDE_1.9.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externalt
 ../Drivers/libcyphal/cyphal/cyphal.tpp:104:13:void CyphalInterface::deserialize_transfer(typename TypeAlias::Type*, CanardRxTransfer*) const [with TypeAlias = RegisterListRequest]	2
 ../Drivers/libcyphal/cyphal/cyphal.tpp:104:13:void CyphalInterface::deserialize_transfer(typename TypeAlias::Type*, CanardRxTransfer*) const [with TypeAlias = JS_msg]	2
 ../Drivers/libcyphal/cyphal/cyphal.tpp:104:13:void CyphalInterface::deserialize_transfer(typename TypeAlias::Type*, CanardRxTransfer*) const [with TypeAlias = HBeat]	2
-../Core/Src/main_impl.cpp:465:1:cpp)	1
-../Core/Src/main_impl.cpp:465:1:cpp)	1
+../Core/Src/main_impl.cpp:461:1:cpp)	1
+../Core/Src/main_impl.cpp:461:1:cpp)	1

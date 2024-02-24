@@ -103,35 +103,6 @@ public:
 
 NodeInfoReader* nireader;
 
-
-
-class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
-public:
-    RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
-        interface,
-        uavcan_register_Access_1_0_FIXED_PORT_ID_,
-        CanardTransferKindRequest
-    ) {};
-    void handler(const RegisterAccessRequest::Type&, CanardRxTransfer*) override;
-};
-
-RegisterAccessReader* reg_access_service;
-
-
-
-
-#define TEST_REG_NAME_LEN 8
-#define MOTOR_ON_REG_NAME_LEN 11
-#define MOTOR_SPEED_REG_NAME_LEN 11
-#define MOTOR_CURRENT_LIM_REG_NAME_LEN 19
-#define MOTOR_VOLTAGE_REG_NAME_LEN 13
-
-uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg";
-uint8_t motor_current_lim_reg_name[MOTOR_CURRENT_LIM_REG_NAME_LEN + 1] = "motor.current_limit";
-uint8_t motor_speed_reg_name[MOTOR_SPEED_REG_NAME_LEN + 1] = "motor.speed";
-uint8_t motor_voltage_reg_name[MOTOR_VOLTAGE_REG_NAME_LEN + 1] = "motor.voltage";
-
-
 void NodeInfoReader::handler(
     const uavcan_node_GetInfo_Request_1_0& object,
     CanardRxTransfer* transfer
@@ -189,6 +160,31 @@ void NodeInfoReader::handler(
 }
 
 
+
+
+class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
+public:
+    RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
+        interface,
+        uavcan_register_Access_1_0_FIXED_PORT_ID_,
+        CanardTransferKindRequest
+    ) {};
+    void handler(const RegisterAccessRequest::Type&, CanardRxTransfer*) override;
+};
+
+RegisterAccessReader* reg_access_service;
+
+#define TEST_REG_NAME_LEN 8
+#define MOTOR_ON_REG_NAME_LEN 11
+#define MOTOR_SPEED_REG_NAME_LEN 11
+#define MOTOR_CURRENT_LIM_REG_NAME_LEN 19
+#define MOTOR_VOLTAGE_REG_NAME_LEN 13
+
+uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg";
+uint8_t motor_current_lim_reg_name[MOTOR_CURRENT_LIM_REG_NAME_LEN + 1] = "motor.current_limit";
+uint8_t motor_speed_reg_name[MOTOR_SPEED_REG_NAME_LEN + 1] = "motor.speed";
+uint8_t motor_voltage_reg_name[MOTOR_VOLTAGE_REG_NAME_LEN + 1] = "motor.voltage";
+
 void RegisterAccessReader::handler(
     const uavcan_register_Access_Request_1_0& register_access_request,
     CanardRxTransfer* transfer
@@ -198,30 +194,31 @@ void RegisterAccessReader::handler(
 
     register_access_response.timestamp.microsecond = micros_64();
     uavcan_register_Value_1_0 value = {};
-    uint8_t tv = 0; //PZDC!!!! temp value...
+    uint64_t tv = 0; //PZDC!!!! temp value...
     if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
     {
-        if (register_access_request.value._tag_ == 11) {
-            if (register_access_request.value.natural8.value.elements[0] == 2)
-            {
-            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-            	tv = 111;  //PZDC!!!
-            	tmc5160_move(50000);
-            }
-            else
-            {
-            	tv = register_access_request.value.natural8.value.elements[0];  //PZDC!!!
-            	tmc5160_move(0);
-            }
+    	//tv = register_access_request.value._tag_;
+        if (register_access_request.value._tag_ == 4) {
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+//            if (register_access_request.value.integer64.value.elements[0] != 0)
+//            {
+            	tv = register_access_request.value.integer64.value.elements[0];  //PZDC!!!
+            	tmc5160_move(tv);
+//            }
+//            else
+//            {
+//            	tv = register_access_request.value.integer64.value.elements[0];  //PZDC!!!
+//            	tmc5160_move(0);
+//            }
         }
 
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 11;
-        uavcan_primitive_array_Natural8_1_0 result = {};
+        value._tag_ = 4;
+        uavcan_primitive_array_Integer64_1_0 result = {};
         result.value.elements[0] = tv; //PZDC!!!
         result.value.count = 1;
-        value.natural8 = result;
+        value.integer64 = result;
     } else if (memcmp(register_access_request.name.name.elements, motor_speed_reg_name, MOTOR_SPEED_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 12) {
             double new_speed = register_access_request.value.real64.value.elements[0];
@@ -232,7 +229,7 @@ void RegisterAccessReader::handler(
         register_access_response._mutable = true;
         value._tag_ = 12;
         uavcan_primitive_array_Real64_1_0 result = {};
-        result.value.elements[0] = 11; //motor_get_speed();
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
         result.value.count = 1;
         value.real64 = result;
     } else if (memcmp(register_access_request.name.name.elements, motor_current_lim_reg_name, MOTOR_CURRENT_LIM_REG_NAME_LEN) == 0) {
@@ -251,7 +248,6 @@ void RegisterAccessReader::handler(
         result.value.count = 1;
         value.real64 = result;
     } else if (memcmp(register_access_request.name.name.elements, motor_voltage_reg_name, MOTOR_VOLTAGE_REG_NAME_LEN) == 0) {
-        HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
         if (register_access_request.value._tag_ == 12) {
             double new_voltage = register_access_request.value.real64.value.elements[0];
             //motor_set_voltage(new_voltage);
