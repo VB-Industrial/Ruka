@@ -63,8 +63,26 @@ void delay(uint32_t);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED2_Pin GPIO_PIN_5
-#define LED2_GPIO_Port GPIOA
+#define VC_CONTROL_Pin GPIO_PIN_0
+#define VC_CONTROL_GPIO_Port GPIOC
+#define DIAG0_SWN_Pin GPIO_PIN_2
+#define DIAG0_SWN_GPIO_Port GPIOC
+#define DIAG1_SWP_Pin GPIO_PIN_3
+#define DIAG1_SWP_GPIO_Port GPIOC
+#define SPI1_CS_Pin GPIO_PIN_4
+#define SPI1_CS_GPIO_Port GPIOA
+#define DRV_EN_Pin GPIO_PIN_5
+#define DRV_EN_GPIO_Port GPIOC
+#define STEP_Pin GPIO_PIN_8
+#define STEP_GPIO_Port GPIOA
+#define DIR_Pin GPIO_PIN_9
+#define DIR_GPIO_Port GPIOA
+#define SPI_MODE_Pin GPIO_PIN_11
+#define SPI_MODE_GPIO_Port GPIOA
+#define SD_MODE_Pin GPIO_PIN_12
+#define SD_MODE_GPIO_Port GPIOA
+#define SPI3_CS_Pin GPIO_PIN_15
+#define SPI3_CS_GPIO_Port GPIOA
 #define LED1_Pin GPIO_PIN_2
 #define LED1_GPIO_Port GPIOD
 

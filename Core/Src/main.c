@@ -21,14 +21,17 @@
 #include "dma.h"
 #include "fdcan.h"
 #include "i2c.h"
+#include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "MPU6050.h"
-#include "MPU9250.h"
+#include "tmc5160.h"
 #include "IMU.h"
+#include "joint_config.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -95,9 +98,16 @@ int main(void)
   MX_FDCAN1_Init();
   MX_I2C4_Init();
   MX_USART2_UART_Init();
+  MX_SPI1_Init();
+  MX_SPI3_Init();
+  MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
+  joint_config joint_config;
   cyphal_can_starter(&hfdcan1);
   setup_cyphal(&hfdcan1);
+  HAL_Delay(10);
+  tmc5160_init();
+  HAL_Delay(10);
   /* USER CODE END 2 */
 
   /* Infinite loop */

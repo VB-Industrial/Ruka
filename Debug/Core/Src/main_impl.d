@@ -19,8 +19,7 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_dma_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_cortex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_exti.h \
- ../Core/Inc/stm32g4xx_hal_fdcan.h \
- ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_def.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ramfunc.h \
@@ -28,9 +27,13 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi_ex.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/ruka_joints.h ../Core/Inc/main.h \
+ ../Core/Inc/ruka_joints.h ../Core/Inc/main.h ../Core/Inc/joint_config.h \
  ../Drivers/libcyphal/cyphal/cyphal.h \
  ../Drivers/libcyphal/cyphal/definitions.h \
  ../Drivers/libcyphal/cyphal/providers/provider.h \
@@ -79,7 +82,8 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/libcyphal/libs/uavcan/time/SynchronizedTimestamp_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h
+ ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h \
+ ../Core/Inc/tmc5160.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -101,8 +105,7 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_dma_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_cortex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_exti.h:
-../Core/Inc/stm32g4xx_hal_fdcan.h:
-../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_def.h:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_flash_ramfunc.h:
@@ -110,10 +113,15 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_i2c_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi.h:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi_ex.h:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
 ../Core/Inc/ruka_joints.h:
 ../Core/Inc/main.h:
+../Core/Inc/joint_config.h:
 ../Drivers/libcyphal/cyphal/cyphal.h:
 ../Drivers/libcyphal/cyphal/definitions.h:
 ../Drivers/libcyphal/cyphal/providers/provider.h:
@@ -163,3 +171,4 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h:
+../Core/Inc/tmc5160.h:

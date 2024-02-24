@@ -1,6 +1,8 @@
 #include "main.h"
 #include "ruka_joints.h"
 
+#include "joint_config.h"
+
 #include <memory>
 
 #include "cyphal/cyphal.h"
@@ -19,7 +21,12 @@
 
 #include <uavcan/node/GetInfo_1_0.h>
 
+//joint_config joint_config;
+
+
 extern "C" {
+#include "tmc5160.h"
+
 
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
 TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
@@ -51,9 +58,7 @@ public:
         // Тут параметры - port_id, transfer kind или только port_id
         uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_
     ) {};
-    void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {
-    	HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    }
+    void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {}
 };
 
 
@@ -71,8 +76,6 @@ public:
 };
 
 JSReader* js_reader;
-
-
 
 
 class RegisterListReader : public AbstractSubscription<RegisterListRequest> {
@@ -163,7 +166,7 @@ void NodeInfoReader::handler(
             break;
         default:
             name_len = 7;
-            memcpy(node_info_response.name.elements, "unknown", name_len);
+            memcpy(node_info_response.name.elements, "JOINT_5", name_len);
             break;
     }
     node_info_response.name.count = name_len;
@@ -175,7 +178,7 @@ void NodeInfoReader::handler(
     memcpy(node_info_response.unique_id + 4, &word1, 4);
     memcpy(node_info_response.unique_id + 8, &word2, 4);
 
-    node_info_response.unique_id[0] = 5;
+    node_info_response.unique_id[0] = JOINT_N;
 
     interface->send_response<NodeInfoResponse>(
         &node_info_response,
@@ -184,10 +187,6 @@ void NodeInfoReader::handler(
         uavcan_node_GetInfo_1_0_FIXED_PORT_ID_
     );
 }
-
-
-
-
 
 
 void RegisterAccessReader::handler(
@@ -199,21 +198,20 @@ void RegisterAccessReader::handler(
 
     register_access_response.timestamp.microsecond = micros_64();
     uavcan_register_Value_1_0 value = {};
+    uint8_t tv = 0; //PZDC!!!! temp value...
     if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
     {
         if (register_access_request.value._tag_ == 11) {
             if (register_access_request.value.natural8.value.elements[0] == 2)
             {
             	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+            	tv = 111;  //PZDC!!!
+            	tmc5160_move(50000);
             }
             else
             {
-                //stop_motor();
-                //controller.electric_regulator.integral_error = 0;
-                //controller.electric_regulator.prev_error = 0;
-                //controller.velocity_regulator.integral_error = 0;
-                //controller.velocity_regulator.prev_error = 0;
-                //motor_set_speed(0);
+            	tv = register_access_request.value.natural8.value.elements[0];  //PZDC!!!
+            	tmc5160_move(0);
             }
         }
 
@@ -221,7 +219,7 @@ void RegisterAccessReader::handler(
         register_access_response._mutable = true;
         value._tag_ = 11;
         uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = 127; //(uint8_t)motor_get_state();
+        result.value.elements[0] = tv; //PZDC!!!
         result.value.count = 1;
         value.natural8 = result;
     } else if (memcmp(register_access_request.name.name.elements, motor_speed_reg_name, MOTOR_SPEED_REG_NAME_LEN) == 0) {
@@ -278,7 +276,6 @@ void RegisterAccessReader::handler(
         transfer,
         uavcan_register_Access_1_0_FIXED_PORT_ID_
     );
-
 }
 
 void RegisterListReader::handler(
@@ -318,6 +315,8 @@ void RegisterListReader::handler(
         uavcan_register_List_1_0_FIXED_PORT_ID_
     );
 }
+
+
 
 
 void send_JS(float* pos, float* vel, float* eff) {
