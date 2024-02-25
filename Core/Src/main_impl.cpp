@@ -223,118 +223,129 @@ void RegisterAccessReader::handler(
     else if (memcmp(register_access_request.name.name.elements, move_reg_name, MOVE_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 9) {
             //MOVE
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 11;
-        uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = tv; //motor_get_speed();
+        value._tag_ = 9;
+        uavcan_primitive_array_Integer32_1_0 result = {};
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
         result.value.count = 1;
-        value.natural8 = result;
+        value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, pos_reg_name, POS_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 9) {
             //GOTO POS
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 11;
-        uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = tv; //motor_get_speed();
+        value._tag_ = 9;
+        uavcan_primitive_array_Integer32_1_0 result = {};
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
         result.value.count = 1;
-        value.natural8 = result;
+        value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 9) {
             //RETURN CURENT POS
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 11;
-        uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = tv; //motor_get_speed();
+        value._tag_ = 9;
+        uavcan_primitive_array_Integer32_1_0 result = {};
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
         result.value.count = 1;
-        value.natural8 = result;
+        value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, calib_reg_name, CALIB_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 11) {
             //ENABLE CALIB
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
         uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = tv; //motor_get_speed();
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
         result.value.count = 1;
         value.natural8 = result;
     	}
         else if (memcmp(register_access_request.name.name.elements, upper_lim_reg_name, UPPER_LIM_REG_NAME_LEN) == 0) {
             if (register_access_request.value._tag_ == 9) {
                 //SET UPPER LIMIT FOR JOINT
+            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
             	tv = 0;
             }
             register_access_response.persistent = true;
             register_access_response._mutable = true;
-            value._tag_ = 11;
-            uavcan_primitive_array_Natural8_1_0 result = {};
-            result.value.elements[0] = tv; //motor_get_speed();
+            value._tag_ = 9;
+            uavcan_primitive_array_Integer32_1_0 result = {};
+            result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
             result.value.count = 1;
-            value.natural8 = result;
+            value.integer32 = result;
         }
         else if (memcmp(register_access_request.name.name.elements, lower_lim_reg_name, LOWER_LIM_REG_NAME_LEN) == 0) {
             if (register_access_request.value._tag_ == 9) {
                 //SET UPPER LIMIT FOR JOINT
+            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
             	tv = 0;
             }
             register_access_response.persistent = true;
             register_access_response._mutable = true;
-            value._tag_ = 11;
-            uavcan_primitive_array_Natural8_1_0 result = {};
-            result.value.elements[0] = tv; //motor_get_speed();
+            value._tag_ = 9;
+            uavcan_primitive_array_Integer32_1_0 result = {};
+            result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
             result.value.count = 1;
-            value.natural8 = result;
+            value.integer32 = result;
         }
         else if (memcmp(register_access_request.name.name.elements, zero_reg_name, ZERO_REG_NAME_LEN) == 0) {
             if (register_access_request.value._tag_ == 12) {
                 //SET ZERO VALUE FOR JOINT
+            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
             	tv = 0;
             }
             register_access_response.persistent = true;
             register_access_response._mutable = true;
-            value._tag_ = 11;
-            uavcan_primitive_array_Natural8_1_0 result = {};
-            result.value.elements[0] = tv; //motor_get_speed();
+            value._tag_ = 12;
+            uavcan_primitive_array_Real64_1_0 result = {};
+            result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
             result.value.count = 1;
-            value.natural8 = result;
+            value.real64 = result;
         }
 
     else if (memcmp(register_access_request.name.name.elements, name_reg_name, NAME_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 1) {
             //SET NAME FOR JOINT
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
+        char mystring[4] = "xyz";
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 11;
-        uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = tv; //motor_get_speed();
-        result.value.count = 1;
-        value.natural8 = result;
+        value._tag_ = 1;
+        uavcan_primitive_String_1_0 result = {};
+
+        memcpy(result.value.elements, mystring, 4);
+        result.value.count = 3;
+        value._string = result;
     }
     else if (memcmp(register_access_request.name.name.elements, type_reg_name, TYPE_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 11) {
             //SET TYPE OF MOTOR FOR JOINT
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
         uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = tv; //motor_get_speed();
+        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
         result.value.count = 1;
         value.natural8 = result;
     }
