@@ -4,6 +4,8 @@
 #include "joint_config.h"
 
 #include <memory>
+#include <cstdio>
+
 
 #include "cyphal/cyphal.h"
 #include "cyphal/providers/G4CAN.h"
@@ -125,21 +127,10 @@ void NodeInfoReader::handler(
     node_info_response.certificate_of_authenticity.count = 0;
     node_info_response.software_image_crc.count = 0;
 
-    size_t name_len;
-    switch (5) {
-        case 2:
-            name_len = 22;
-            memcpy(node_info_response.name.elements, "org.voltbro.motor.left", name_len);
-            break;
-        case 4:
-            name_len = 23;
-            memcpy(node_info_response.name.elements, "org.voltbro.motor.right", name_len);
-            break;
-        default:
-            name_len = 7;
-            memcpy(node_info_response.name.elements, "JOINT_5", name_len);
-            break;
-    }
+    size_t name_len = 8;
+    char joint_name[name_len];
+    std::sprintf(joint_name,"joint_%d", JOINT_N);
+    memcpy(node_info_response.name.elements, joint_name, name_len);
     node_info_response.name.count = name_len;
 
     uint32_t word0 = 1;
@@ -161,7 +152,6 @@ void NodeInfoReader::handler(
 
 
 
-
 class RegisterAccessReader : public AbstractSubscription<RegisterAccessRequest> {
 public:
     RegisterAccessReader(InterfacePtr interface): AbstractSubscription<RegisterAccessRequest>(
@@ -175,15 +165,26 @@ public:
 RegisterAccessReader* reg_access_service;
 
 #define TEST_REG_NAME_LEN 8
-#define MOTOR_ON_REG_NAME_LEN 11
-#define MOTOR_SPEED_REG_NAME_LEN 11
-#define MOTOR_CURRENT_LIM_REG_NAME_LEN 19
-#define MOTOR_VOLTAGE_REG_NAME_LEN 13
+#define MOVE_REG_NAME_LEN 8
+#define POS_REG_NAME_LEN 7
+#define GET_POS_REG_NAME_LEN 11
+#define CALIB_REG_NAME_LEN 9
+#define UPPER_LIM_REG_NAME_LEN 13
+#define LOWER_LIM_REG_NAME_LEN 13
+#define ZERO_REG_NAME_LEN 8
+#define NAME_REG_NAME_LEN 8
+#define TYPE_REG_NAME_LEN 8
 
-uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg";
-uint8_t motor_current_lim_reg_name[MOTOR_CURRENT_LIM_REG_NAME_LEN + 1] = "motor.current_limit";
-uint8_t motor_speed_reg_name[MOTOR_SPEED_REG_NAME_LEN + 1] = "motor.speed";
-uint8_t motor_voltage_reg_name[MOTOR_VOLTAGE_REG_NAME_LEN + 1] = "motor.voltage";
+uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg"; //for test purpose TODO REMOVE
+uint8_t move_reg_name[MOVE_REG_NAME_LEN + 1] = "move_reg"; //INT32 _tag_ == 9
+uint8_t pos_reg_name[POS_REG_NAME_LEN + 1] = "pos_reg"; //INT32 _tag_ == 9
+uint8_t get_pos_reg_name[GET_POS_REG_NAME_LEN + 1] = "get_pos_reg"; //INT32 _tag_ == 9
+uint8_t calib_reg_name[CALIB_REG_NAME_LEN + 1] = "calib_reg"; //UINT8 _tag_ == 11
+uint8_t upper_lim_reg_name[UPPER_LIM_REG_NAME_LEN + 1] = "upper_lim_reg"; //INT32 _tag_ == 9
+uint8_t lower_lim_reg_name[LOWER_LIM_REG_NAME_LEN + 1] = "lower_lim_reg"; //INT32 _tag_ == 9
+uint8_t zero_reg_name[ZERO_REG_NAME_LEN + 1] = "zero_reg"; //FLOAT64  _tag_ == 12
+uint8_t name_reg_name[NAME_REG_NAME_LEN + 1] = "name_reg"; //STRING _tag_ == 1
+uint8_t type_reg_name[TYPE_REG_NAME_LEN + 1] = "type_reg"; //UINT8 _tag_ == 11
 
 void RegisterAccessReader::handler(
     const uavcan_register_Access_Request_1_0& register_access_request,
@@ -197,7 +198,6 @@ void RegisterAccessReader::handler(
     uint64_t tv = 0; //PZDC!!!! temp value...
     if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
     {
-    	//tv = register_access_request.value._tag_;
         if (register_access_request.value._tag_ == 4) {
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
 //            if (register_access_request.value.integer64.value.elements[0] != 0)
@@ -219,48 +219,126 @@ void RegisterAccessReader::handler(
         result.value.elements[0] = tv; //PZDC!!!
         result.value.count = 1;
         value.integer64 = result;
-    } else if (memcmp(register_access_request.name.name.elements, motor_speed_reg_name, MOTOR_SPEED_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 12) {
-            double new_speed = register_access_request.value.real64.value.elements[0];
-            //motor_set_speed(new_speed);
+    }
+    else if (memcmp(register_access_request.name.name.elements, move_reg_name, MOVE_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 9) {
+            //MOVE
+        	tv = 0;
         }
-
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 12;
-        uavcan_primitive_array_Real64_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = tv; //motor_get_speed();
         result.value.count = 1;
-        value.real64 = result;
-    } else if (memcmp(register_access_request.name.name.elements, motor_current_lim_reg_name, MOTOR_CURRENT_LIM_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 12) {
-            double new_current_lim = register_access_request.value.real64.value.elements[0];
-            if (new_current_lim > 0) {
-                //motor_set_current_lim(new_current_lim);
+        value.natural8 = result;
+    }
+    else if (memcmp(register_access_request.name.name.elements, pos_reg_name, POS_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 9) {
+            //GOTO POS
+        	tv = 0;
+        }
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = tv; //motor_get_speed();
+        result.value.count = 1;
+        value.natural8 = result;
+    }
+    else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 9) {
+            //RETURN CURENT POS
+        	tv = 0;
+        }
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = tv; //motor_get_speed();
+        result.value.count = 1;
+        value.natural8 = result;
+    }
+    else if (memcmp(register_access_request.name.name.elements, calib_reg_name, CALIB_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 11) {
+            //ENABLE CALIB
+        	tv = 0;
+        }
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = tv; //motor_get_speed();
+        result.value.count = 1;
+        value.natural8 = result;
+    	}
+        else if (memcmp(register_access_request.name.name.elements, upper_lim_reg_name, UPPER_LIM_REG_NAME_LEN) == 0) {
+            if (register_access_request.value._tag_ == 9) {
+                //SET UPPER LIMIT FOR JOINT
+            	tv = 0;
             }
+            register_access_response.persistent = true;
+            register_access_response._mutable = true;
+            value._tag_ = 11;
+            uavcan_primitive_array_Natural8_1_0 result = {};
+            result.value.elements[0] = tv; //motor_get_speed();
+            result.value.count = 1;
+            value.natural8 = result;
+        }
+        else if (memcmp(register_access_request.name.name.elements, lower_lim_reg_name, LOWER_LIM_REG_NAME_LEN) == 0) {
+            if (register_access_request.value._tag_ == 9) {
+                //SET UPPER LIMIT FOR JOINT
+            	tv = 0;
+            }
+            register_access_response.persistent = true;
+            register_access_response._mutable = true;
+            value._tag_ = 11;
+            uavcan_primitive_array_Natural8_1_0 result = {};
+            result.value.elements[0] = tv; //motor_get_speed();
+            result.value.count = 1;
+            value.natural8 = result;
+        }
+        else if (memcmp(register_access_request.name.name.elements, zero_reg_name, ZERO_REG_NAME_LEN) == 0) {
+            if (register_access_request.value._tag_ == 12) {
+                //SET ZERO VALUE FOR JOINT
+            	tv = 0;
+            }
+            register_access_response.persistent = true;
+            register_access_response._mutable = true;
+            value._tag_ = 11;
+            uavcan_primitive_array_Natural8_1_0 result = {};
+            result.value.elements[0] = tv; //motor_get_speed();
+            result.value.count = 1;
+            value.natural8 = result;
         }
 
-        register_access_response.persistent = true;
-        register_access_response._mutable = true;
-        value._tag_ = 12;
-        uavcan_primitive_array_Real64_1_0 result = {};
-        result.value.elements[0] = 1; //motor_get_current_lim();
-        result.value.count = 1;
-        value.real64 = result;
-    } else if (memcmp(register_access_request.name.name.elements, motor_voltage_reg_name, MOTOR_VOLTAGE_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 12) {
-            double new_voltage = register_access_request.value.real64.value.elements[0];
-            //motor_set_voltage(new_voltage);
+    else if (memcmp(register_access_request.name.name.elements, name_reg_name, NAME_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 1) {
+            //SET NAME FOR JOINT
+        	tv = 0;
         }
-
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 12;
-        uavcan_primitive_array_Real64_1_0 result = {};
-        result.value.elements[0] = 1; //motor_get_current_lim();
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = tv; //motor_get_speed();
         result.value.count = 1;
-        value.real64 = result;
-    } else {
+        value.natural8 = result;
+    }
+    else if (memcmp(register_access_request.name.name.elements, type_reg_name, TYPE_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 11) {
+            //SET TYPE OF MOTOR FOR JOINT
+        	tv = 0;
+        }
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = tv; //motor_get_speed();
+        result.value.count = 1;
+        value.natural8 = result;
+    }
+    else {
         value._tag_ = 0;
         value.empty = (uavcan_primitive_Empty_1_0){};
     }
@@ -274,43 +352,45 @@ void RegisterAccessReader::handler(
     );
 }
 
-void RegisterListReader::handler(
-    const uavcan_register_List_Request_1_0& register_list_request,
-    CanardRxTransfer* transfer
-) {
-    static uint8_t register_list_response_buf[RegisterListResponse::buffer_size];
-    RegisterListResponse::Type register_list_response = {};
+//TODO reg list
 
-    uavcan_register_Name_1_0 name = {};
-    uint8_t* reg_name = nullptr;
-    size_t reg_name_len = 0;
-    switch (register_list_request.index) {
-        case 0:
-            reg_name = test_reg_name;
-            reg_name_len = TEST_REG_NAME_LEN;
-            break;
-        case 1:
-            reg_name = motor_speed_reg_name;
-            reg_name_len = MOTOR_SPEED_REG_NAME_LEN;
-            break;
-        case 2:
-            reg_name = motor_current_lim_reg_name;
-            reg_name_len = MOTOR_CURRENT_LIM_REG_NAME_LEN;
-            break;
-    }
-    if (reg_name != nullptr) {
-        memcpy(name.name.elements, reg_name, reg_name_len);
-        name.name.count = reg_name_len;
-    }
-    register_list_response.name = name;
-
-    interface->send_response<RegisterListResponse>(
-        &register_list_response,
-        register_list_response_buf,
-        transfer,
-        uavcan_register_List_1_0_FIXED_PORT_ID_
-    );
-}
+//void RegisterListReader::handler(
+//    const uavcan_register_List_Request_1_0& register_list_request,
+//    CanardRxTransfer* transfer
+//) {
+//    static uint8_t register_list_response_buf[RegisterListResponse::buffer_size];
+//    RegisterListResponse::Type register_list_response = {};
+//
+//    uavcan_register_Name_1_0 name = {};
+//    uint8_t* reg_name = nullptr;
+//    size_t reg_name_len = 0;
+//    switch (register_list_request.index) {
+//        case 0:
+//            reg_name = test_reg_name;
+//            reg_name_len = TEST_REG_NAME_LEN;
+//            break;
+//        case 1:
+//            reg_name = motor_speed_reg_name;
+//            reg_name_len = MOTOR_SPEED_REG_NAME_LEN;
+//            break;
+//        case 2:
+//            reg_name = motor_current_lim_reg_name;
+//            reg_name_len = MOTOR_CURRENT_LIM_REG_NAME_LEN;
+//            break;
+//    }
+//    if (reg_name != nullptr) {
+//        memcpy(name.name.elements, reg_name, reg_name_len);
+//        name.name.count = reg_name_len;
+//    }
+//    register_list_response.name = name;
+//
+//    interface->send_response<RegisterListResponse>(
+//        &register_list_response,
+//        register_list_response_buf,
+//        transfer,
+//        uavcan_register_List_1_0_FIXED_PORT_ID_
+//    );
+//}
 
 
 
