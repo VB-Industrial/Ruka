@@ -164,27 +164,31 @@ public:
 
 RegisterAccessReader* reg_access_service;
 
-#define TEST_REG_NAME_LEN 8
-#define MOVE_REG_NAME_LEN 8
-#define POS_REG_NAME_LEN 7
-#define GET_POS_REG_NAME_LEN 11
-#define CALIB_REG_NAME_LEN 9
-#define UPPER_LIM_REG_NAME_LEN 13
-#define LOWER_LIM_REG_NAME_LEN 13
-#define ZERO_REG_NAME_LEN 8
-#define NAME_REG_NAME_LEN 8
-#define TYPE_REG_NAME_LEN 8
+#define TEST_REG_NAME_LEN 4
+#define MOVE_REG_NAME_LEN 4
+#define POS_REG_NAME_LEN 3
+#define DIR_REG_NAME_LEN 3
+#define GET_POS_REG_NAME_LEN 7
+#define CALIB_REG_NAME_LEN 5
+#define UPPER_LIM_REG_NAME_LEN 9
+#define LOWER_LIM_REG_NAME_LEN 9
+#define SET_ZERO_REG_NAME_LEN 8
+#define SET_ENC_ZERO_REG_NAME_LEN 12
+#define NAME_REG_NAME_LEN 4
+#define TYPE_REG_NAME_LEN 4
 
-uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test_reg"; //for test purpose TODO REMOVE
-uint8_t move_reg_name[MOVE_REG_NAME_LEN + 1] = "move_reg"; //INT32 _tag_ == 9
-uint8_t pos_reg_name[POS_REG_NAME_LEN + 1] = "pos_reg"; //INT32 _tag_ == 9
-uint8_t get_pos_reg_name[GET_POS_REG_NAME_LEN + 1] = "get_pos_reg"; //INT32 _tag_ == 9
-uint8_t calib_reg_name[CALIB_REG_NAME_LEN + 1] = "calib_reg"; //UINT8 _tag_ == 11
-uint8_t upper_lim_reg_name[UPPER_LIM_REG_NAME_LEN + 1] = "upper_lim_reg"; //INT32 _tag_ == 9
-uint8_t lower_lim_reg_name[LOWER_LIM_REG_NAME_LEN + 1] = "lower_lim_reg"; //INT32 _tag_ == 9
-uint8_t zero_reg_name[ZERO_REG_NAME_LEN + 1] = "zero_reg"; //FLOAT64  _tag_ == 12
-uint8_t name_reg_name[NAME_REG_NAME_LEN + 1] = "name_reg"; //STRING _tag_ == 1
-uint8_t type_reg_name[TYPE_REG_NAME_LEN + 1] = "type_reg"; //UINT8 _tag_ == 11
+uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test"; //for test purpose TODO REMOVE
+uint8_t move_reg_name[MOVE_REG_NAME_LEN + 1] = "move"; //INT32 _tag_ == 9
+uint8_t pos_reg_name[POS_REG_NAME_LEN + 1] = "pos"; //INT32 _tag_ == 9
+uint8_t dir_reg_name[DIR_REG_NAME_LEN + 1] = "dir"; //UINT8 _tag_ == 11
+uint8_t get_pos_reg_name[GET_POS_REG_NAME_LEN + 1] = "get_pos"; //INT32 _tag_ == 9
+uint8_t calib_reg_name[CALIB_REG_NAME_LEN + 1] = "calib"; //UINT8 _tag_ == 11
+uint8_t upper_lim_reg_name[UPPER_LIM_REG_NAME_LEN + 1] = "upper_lim"; //INT32 _tag_ == 9
+uint8_t lower_lim_reg_name[LOWER_LIM_REG_NAME_LEN + 1] = "lower_lim"; //INT32 _tag_ == 9
+uint8_t set_enc_zero_reg_name[SET_ENC_ZERO_REG_NAME_LEN + 1] = "set_enc_zero"; //FLOAT64  _tag_ == 12
+uint8_t set_zero_reg_name[SET_ZERO_REG_NAME_LEN + 1] = "set_zero"; //UINT8 _tag_ == 11
+uint8_t name_reg_name[NAME_REG_NAME_LEN + 1] = "name"; //STRING _tag_ == 1
+uint8_t type_reg_name[TYPE_REG_NAME_LEN + 1] = "type"; //UINT8 _tag_ == 11
 
 void RegisterAccessReader::handler(
     const uavcan_register_Access_Request_1_0& register_access_request,
@@ -196,6 +200,7 @@ void RegisterAccessReader::handler(
     register_access_response.timestamp.microsecond = micros_64();
     uavcan_register_Value_1_0 value = {};
     uint64_t tv = 0; //PZDC!!!! temp value...
+    int32_t js_pos_v = 0;
     if (memcmp(register_access_request.name.name.elements, test_reg_name, TEST_REG_NAME_LEN) == 0)
     {
         if (register_access_request.value._tag_ == 4) {
@@ -230,27 +235,29 @@ void RegisterAccessReader::handler(
         register_access_response._mutable = true;
         value._tag_ = 9;
         uavcan_primitive_array_Integer32_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+        result.value.elements[0] = register_access_request.value._tag_;
         result.value.count = 1;
         value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, pos_reg_name, POS_REG_NAME_LEN) == 0) {
+
         if (register_access_request.value._tag_ == 9) {
-            //GOTO POS
+            tmc5160_position(register_access_request.value.integer32.value.elements[0]);
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
+        	js_pos_v = tmc5160_position_read();
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 9;
         uavcan_primitive_array_Integer32_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+        result.value.elements[0] = js_pos_v;
         result.value.count = 1;
         value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 9) {
             //RETURN CURENT POS
+        	js_pos_v = tmc5160_position_read();
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
@@ -258,10 +265,24 @@ void RegisterAccessReader::handler(
         register_access_response._mutable = true;
         value._tag_ = 9;
         uavcan_primitive_array_Integer32_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+        result.value.elements[0] = js_pos_v;
         result.value.count = 1;
         value.integer32 = result;
     }
+    else if (memcmp(register_access_request.name.name.elements, dir_reg_name, DIR_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 7) {
+            tmc5160_set_motor_direction(register_access_request.value.integer8.value.elements[0]);
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+        	tv = 0;
+        }
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Integer8_1_0 result = {};
+        result.value.elements[0] = register_access_request.value.integer8.value.elements[0];
+        result.value.count = 1;
+        value.integer8 = result;
+    	}
     else if (memcmp(register_access_request.name.name.elements, calib_reg_name, CALIB_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 11) {
             //ENABLE CALIB
@@ -272,65 +293,78 @@ void RegisterAccessReader::handler(
         register_access_response._mutable = true;
         value._tag_ = 11;
         uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+        result.value.elements[0] = register_access_request.value._tag_;
         result.value.count = 1;
         value.natural8 = result;
     	}
-        else if (memcmp(register_access_request.name.name.elements, upper_lim_reg_name, UPPER_LIM_REG_NAME_LEN) == 0) {
-            if (register_access_request.value._tag_ == 9) {
-                //SET UPPER LIMIT FOR JOINT
-            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-            	tv = 0;
-            }
-            register_access_response.persistent = true;
-            register_access_response._mutable = true;
-            value._tag_ = 9;
-            uavcan_primitive_array_Integer32_1_0 result = {};
-            result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
-            result.value.count = 1;
-            value.integer32 = result;
+	else if (memcmp(register_access_request.name.name.elements, upper_lim_reg_name, UPPER_LIM_REG_NAME_LEN) == 0) {
+		if (register_access_request.value._tag_ == 9) {
+			//SET UPPER LIMIT FOR JOINT
+			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+			tv = 0;
+		}
+		register_access_response.persistent = true;
+		register_access_response._mutable = true;
+		value._tag_ = 9;
+		uavcan_primitive_array_Integer32_1_0 result = {};
+		result.value.elements[0] = register_access_request.value._tag_;
+		result.value.count = 1;
+		value.integer32 = result;
+	}
+	else if (memcmp(register_access_request.name.name.elements, lower_lim_reg_name, LOWER_LIM_REG_NAME_LEN) == 0) {
+		if (register_access_request.value._tag_ == 9) {
+			//SET UPPER LIMIT FOR JOINT
+			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+			tv = 0;
+		}
+		register_access_response.persistent = true;
+		register_access_response._mutable = true;
+		value._tag_ = 9;
+		uavcan_primitive_array_Integer32_1_0 result = {};
+		result.value.elements[0] = register_access_request.value._tag_;
+		result.value.count = 1;
+		value.integer32 = result;
+	}
+	else if (memcmp(register_access_request.name.name.elements, set_zero_reg_name, SET_ZERO_REG_NAME_LEN) == 0) {
+		if (register_access_request.value._tag_ == 12) {
+			//SET ZERO VALUE FOR JOINT
+			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+			tv = 0;
+		}
+		register_access_response.persistent = true;
+		register_access_response._mutable = true;
+		value._tag_ = 12;
+		uavcan_primitive_array_Real64_1_0 result = {};
+		result.value.elements[0] = register_access_request.value._tag_;
+		result.value.count = 1;
+		value.real64 = result;
+	}
+    else if (memcmp(register_access_request.name.name.elements, set_enc_zero_reg_name, SET_ENC_ZERO_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 11) {
+            //SET TYPE OF MOTOR FOR JOINT
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+        	tv = 0;
         }
-        else if (memcmp(register_access_request.name.name.elements, lower_lim_reg_name, LOWER_LIM_REG_NAME_LEN) == 0) {
-            if (register_access_request.value._tag_ == 9) {
-                //SET UPPER LIMIT FOR JOINT
-            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-            	tv = 0;
-            }
-            register_access_response.persistent = true;
-            register_access_response._mutable = true;
-            value._tag_ = 9;
-            uavcan_primitive_array_Integer32_1_0 result = {};
-            result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
-            result.value.count = 1;
-            value.integer32 = result;
-        }
-        else if (memcmp(register_access_request.name.name.elements, zero_reg_name, ZERO_REG_NAME_LEN) == 0) {
-            if (register_access_request.value._tag_ == 12) {
-                //SET ZERO VALUE FOR JOINT
-            	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-            	tv = 0;
-            }
-            register_access_response.persistent = true;
-            register_access_response._mutable = true;
-            value._tag_ = 12;
-            uavcan_primitive_array_Real64_1_0 result = {};
-            result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
-            result.value.count = 1;
-            value.real64 = result;
-        }
-
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Natural8_1_0 result = {};
+        result.value.elements[0] = register_access_request.value._tag_;
+        result.value.count = 1;
+        value.natural8 = result;
+    }
     else if (memcmp(register_access_request.name.name.elements, name_reg_name, NAME_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 1) {
             //SET NAME FOR JOINT
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
-        char mystring[4] = "xyz";
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 1;
         uavcan_primitive_String_1_0 result = {};
 
+        char mystring[4] = "xyz";
         memcpy(result.value.elements, mystring, 4);
         result.value.count = 3;
         value._string = result;
@@ -345,7 +379,7 @@ void RegisterAccessReader::handler(
         register_access_response._mutable = true;
         value._tag_ = 11;
         uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_; //motor_get_speed();
+        result.value.elements[0] = register_access_request.value._tag_;
         result.value.count = 1;
         value.natural8 = result;
     }
@@ -468,7 +502,6 @@ void heartbeat() {
 		&hbeat_transfer_id
 	);
     uptime += 1;
-
 }
 
 void setup_cyphal(FDCAN_HandleTypeDef* handler) {
