@@ -64,6 +64,8 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN 0 */
 //I2C_HandleTypeDef hi2c4;
 extern I2C_HandleTypeDef hi2c4;
+motor_config mc;
+joint_config jc;
 /* USER CODE END 0 */
 
 /**
@@ -102,11 +104,13 @@ int main(void)
   MX_SPI3_Init();
   MX_TIM8_Init();
   /* USER CODE BEGIN 2 */
-  joint_config joint_config;
   cyphal_can_starter(&hfdcan1);
   setup_cyphal(&hfdcan1);
   HAL_Delay(10);
-  tmc5160_init();
+  joint_config_assembler(&jc);
+  motor_config_assembler(&mc);
+  HAL_Delay(10);
+  tmc5160_init(&mc);
   HAL_Delay(10);
   /* USER CODE END 2 */
 
@@ -123,6 +127,7 @@ int main(void)
 
 
   uint32_t last_hbeat = HAL_GetTick();
+  uint32_t last_js = HAL_GetTick();
 
   vec_4ax linear = {0};
   vec_4ax quat = {0};
@@ -133,20 +138,22 @@ int main(void)
 
   while (1)
   {
-
       uint32_t now = HAL_GetTick();
       if ( (now - last_hbeat) >= 1000) {
+          last_hbeat = now;
+          heartbeat();
       	  //imu_get_quat(&quat);
       	  //imu_get_linear(&linear);
       	  //imu_get_gyro(&gyro);
-          last_hbeat = now;
-          heartbeat();
           //sprintf(msg,"%d\n\0", q[1]);
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           //send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
       }
+      if ( (now - last_js) >= 100) {
+    	  last_js = now;
+    	  send_JS();
+      }
       cyphal_loop();
-
   }
     /* USER CODE END WHILE */
 

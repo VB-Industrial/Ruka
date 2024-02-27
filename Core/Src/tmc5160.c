@@ -64,12 +64,7 @@
 
 
 #include "tmc5160.h"
-#include "spi.h"
-#include "main.h"
-#include <stdbool.h>
-#include <stdint.h>
-#include <stddef.h>
-#include "utility.h"
+
 
 #if (USE_FREERTOS == 1)
 #include "cmsis_os.h"
@@ -78,9 +73,7 @@
 #define tmc5160_delay(x)   HAL_Delay(x)
 #endif
 
-
-extern motor_config motor_cfg;
-
+extern motor_config mc;
 
 void tmc5160_position(int32_t position)
 {
@@ -124,7 +117,7 @@ void tmc5160_move(int32_t vel)
 	WData[4] = (v1 & 0x000000FF);
 	tmc5160_write(WData);
 
-	//vel = abs(vel); //TODO!!!
+	vel = abs(vel);
 	//sending VMAX
 	WData[0] = 0xA7; //VMAX speed register
 	WData[1] = (vel & 0xFF000000) >> 24;
@@ -185,13 +178,13 @@ void tmc5160_velocity(uint32_t vel)
 
 }
 
-void tmc5160_effort(double effort, double motor_max_torque)
+void tmc5160_effort(double effort, motor_config* mc)
 {
 uint8_t IRUN = 0;
 uint8_t IHOLD = 0;
 uint8_t WData[5] = {0};
 
-IRUN =  tmc5160_torque_to_curent(effort, motor_max_torque);
+IRUN =  tmc5160_torque_to_curent(effort, mc);
 IHOLD = IRUN >> 1;
 
 WData[0] = 0x90;
@@ -255,7 +248,9 @@ void tmc5160_read(uint8_t* WData, uint8_t* RData)
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //CS LOW
 	HAL_SPI_TransmitReceive(&_STEPPER_MOTOR_DRIVER_SPI, WData, RData, 5, HAL_MAX_DELAY);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //CS HIGH
-
+	nop();
+	nop();
+	nop();
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //CS LOW
 	HAL_SPI_TransmitReceive(&_STEPPER_MOTOR_DRIVER_SPI, WData, RData, 5, HAL_MAX_DELAY);
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //CS HIGH
@@ -305,7 +300,7 @@ int32_t tmc5160_velocity_read()
 	return (rv / 1.3981013); //1.3981.. is the time ratio according to "Microstep velocity time reference t for velocities: TSTEP = fCLK / fSTEP" see ref on p. 81 of datasheet
 }
 
-void tmc5160_init()
+void tmc5160_init(motor_config * mc)
 {
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_5, GPIO_PIN_RESET); //DRV SLEEP 0 for power on, 1 for power off
 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_11, GPIO_PIN_SET); //SPI_MODE ON
@@ -322,11 +317,14 @@ void tmc5160_init()
 	WData[0] = 0xEC; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0xC3; // CHOPCONF: TOFF=3, HSTRT=4, HEND=1, TBL=2, CHM=0 (SpreadCycle)
 	tmc5160_write(WData);
 
-	WData[0] = 0x90; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x01; WData[4] = 0x01; //  IHOLDDELAY=10,  IRUN=10/31,  IHOLD=02/31
+	WData[0] = 0x90; WData[1] = 0x00; WData[2] = 0x00; WData[3] = mc->init_irun; WData[4] = mc->init_irun; //  IHOLDDELAY=0,  IRUN=10/31,  IHOLD=02/31
 	tmc5160_write(WData);
 
 	WData[0] = 0x91; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // TPOWERDOWN=10: Delay before power down in stand still
 	tmc5160_write(WData);
+
+	//WData[0] = 0xF0; WData[1] = 0x04; WData[2] = 0x0d; WData[3] = 0x00; WData[4] = 0x30; // PWM_CONF PWM_FREQ 35kHz TODO
+	//tmc5160_write(WData);
 
 	WData[0] = 0x80; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x04; // EN_PWM_MODE=1 enables StealthChop (with default PWMCONF)
 	tmc5160_write(WData);
@@ -356,6 +354,8 @@ void tmc5160_init()
 
 	WData[0] = 0xAB; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // VSTOP = 10 Stop velocity (Near to zero)
 	tmc5160_write(WData);
+
+	tmc5160_set_motor_direction(mc->direction);
 
 	HAL_Delay(100);
 }
@@ -417,31 +417,10 @@ void tmc5160_stop()
 }
 
 
-int tmc5160_torque_to_curent(double effort, double max_effort)
+uint8_t tmc5160_torque_to_curent(double effort, motor_config * mc)
 {
-	int IRUN = 0;
-	IRUN = (effort / max_effort) * motor_cfg.max_irun_scaler;
+	uint8_t IRUN = 0;
+	effort = (effort > mc->max_effort)? mc->max_effort : effort; //TODO use clamp no ref function from utility
+	IRUN = (effort / mc->max_effort) * mc->max_irun_scaler;
 	return IRUN;
-}
-
-void tmc5160_motor_config(int8_t motor_type, int8_t direction, uint32_t full_steps, float gear_ratio, float upper_limit_effort, motor_config * mc)
-{
-	switch(motor_type)
-	{
-	case 14:
-		mc->max_irun_scaler = 10;
-		mc->max_effort_by_default = 0.5;
-	case 17:
-		mc->max_irun_scaler = 12;
-		mc->max_effort_by_default = 3.9;
-	case 21:
-		mc->max_irun_scaler = 31;
-		mc->max_effort_by_default = 10.2;
-	}
-
-	mc->motor_type = motor_type;
-	mc->gear_ratio = gear_ratio;
-	mc->full_steps = full_steps;
-	mc->upper_limit_effort = upper_limit_effort;
-	tmc5160_set_motor_direction(direction);
 }

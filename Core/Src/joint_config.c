@@ -12,8 +12,9 @@
 #include "joint_config.h"
 #include "at24_eeprom.h"
 #include "main.h"
+#include "tmc5160.h"
 
-void joint_config_main_part_init(joint_config * jconf)
+void joint_config_init(joint_config * jconf)
 {
 #ifdef NODIPSWITCH
 	jconf->domain_id = DOMAINID;
@@ -24,23 +25,90 @@ void joint_config_main_part_init(joint_config * jconf)
 #endif
 }
 
-
-void joint_config_freertos_init(joint_config * jconf)
+void motor_config_assembler(motor_config * mc)
 {
-	//TODO to make clear why JC not transfered from main()
-	joint_number_selector(jconf);
-	domain_id_selector(jconf);
-	if (&jconf->joint_number == 0)
+	if (JOINT_N == 1)
 	{
-		joint_config_assembler(jconf);
-		joint_config_write(jconf);
-		return;
+		mc->motor_type = 17;
+		mc->direction = 1;
 	}
-	joint_config_read(jconf);
+	else if (JOINT_N == 2)
+	{
+		mc->motor_type = 23;
+		mc->direction = 1;
+	}
+	else if (JOINT_N == 3)
+	{
+		mc->motor_type = 17;
+		mc->direction = 1;
+	}
+	else if (JOINT_N == 4)
+	{
+		mc->motor_type = 17;
+		mc->direction = 1;
+	}
+	else if (JOINT_N == 5)
+	{
+		mc->motor_type = 14;
+		mc->direction = 1;
+	}
+	else if (JOINT_N == 6)
+	{
+		mc->motor_type = 14;
+		mc->direction = 1;
+	}
+
+	switch(mc->motor_type)
+	{
+	case 14:
+		mc->max_irun_scaler = 10;
+		mc->max_effort = 0.5;
+		mc->init_irun = 1;
+	case 17:
+		mc->max_irun_scaler = 12;
+		mc->max_effort = 3.9;
+		mc->init_irun = 1;
+	case 23:
+		mc->max_irun_scaler = 31;
+		mc->max_effort = 10.2;
+		mc->init_irun = 3;
+	}
 }
+
 
 void joint_config_assembler(joint_config * jconf)
 {
+	if (JOINT_N == 1)
+	{
+		jconf->full_steps = 2560000;
+		jconf->gear_ratio = 50;
+	}
+	else if (JOINT_N == 2)
+	{
+		jconf->full_steps = 2560000;
+		jconf->gear_ratio = 50;
+	}
+	else if (JOINT_N == 3)
+	{
+		jconf->full_steps = 2560000;
+		jconf->gear_ratio = 50;
+	}
+	else if (JOINT_N == 4)
+	{
+		jconf->full_steps = 2560000;
+		jconf->gear_ratio = 50;
+	}
+	else if (JOINT_N == 5)
+	{
+		jconf->full_steps = 983204;
+		jconf->gear_ratio = 19;
+	}
+	else if (JOINT_N == 6)
+	{
+		jconf->full_steps = 983204;
+		jconf->gear_ratio = 19;
+	}
+
 	jconf->domain_id = 0;
 	jconf->full_steps = 0;
 	jconf->gear_ratio = 0.0;
@@ -52,6 +120,18 @@ void joint_config_assembler(joint_config * jconf)
 	jconf->zero_enc = 0.0;
 	jconf->upper_limit_effort = 0.0;
 	jconf->direction = 1;
+
+
+
+//#define NEMA14_FULLSTEPS    983204
+//#define NEMA17_FULLSTEPS	2560000
+//#define NEMA23_FULLSTEPS    2560000
+//
+//
+//
+//#define NEMA14_GR 19 //TODO possible to correct ratio to 19.38/187 for more precise velocity calculation
+//#define NEMA17_GR 50
+//#define NEMA23_GR 50
 }
 
 

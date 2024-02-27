@@ -1,7 +1,7 @@
 #include "main.h"
 #include "ruka_joints.h"
 
-#include "joint_config.h"
+
 
 #include <memory>
 #include <cstdio>
@@ -23,12 +23,15 @@
 
 #include <uavcan/node/GetInfo_1_0.h>
 
-//joint_config joint_config;
 
+//#include "tmc5160.h"
 
 extern "C" {
-#include "tmc5160.h"
+#include "utility.h"
+#include "joint_config.h" //TMC5160.h HERE
 
+extern motor_config mc;
+extern joint_config jc;
 
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
 TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
@@ -44,6 +47,9 @@ TYPE_ALIAS(RegisterAccessResponse, uavcan_register_Access_Response_1_0)
 TYPE_ALIAS(NodeInfoRequest, uavcan_node_GetInfo_Request_1_0)
 TYPE_ALIAS(NodeInfoResponse, uavcan_node_GetInfo_Response_1_0)
 
+static float pos_in = 0;
+static float vel_in = 0;
+static float eff_in = 0;
 
 std::byte buffer[sizeof(CyphalInterface) + sizeof(G4CAN) + sizeof(SystemAllocator)];
 std::shared_ptr<CyphalInterface> interface;
@@ -72,8 +78,23 @@ public:
         // Тут параметры - port_id, transfer kind или только port_id
 		JS_SUB_PORT_ID
     ) {};
-    void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override {
-    	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+    void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override
+    {
+    	if (js_in.angular_velocity.radian_per_second != vel_in)
+    	{
+    		vel_in = js_in.angular_velocity.radian_per_second;
+    		tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
+    	}
+    	if (js_in.angular_acceleration.radian_per_second_per_second != eff_in)
+    	{
+    		eff_in = js_in.angular_acceleration.radian_per_second_per_second;
+    		tmc5160_effort(js_in.angular_acceleration.radian_per_second_per_second, &mc);
+    	}
+    	if (js_in.angular_position.radian != pos_in)
+    	{
+    		pos_in = js_in.angular_position.radian;
+    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+    	}
     }
 };
 
@@ -256,7 +277,6 @@ void RegisterAccessReader::handler(
     }
     else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 9) {
-            //RETURN CURENT POS
         	js_pos_v = tmc5160_position_read();
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
@@ -327,7 +347,7 @@ void RegisterAccessReader::handler(
 	}
 	else if (memcmp(register_access_request.name.name.elements, set_zero_reg_name, SET_ZERO_REG_NAME_LEN) == 0) {
 		if (register_access_request.value._tag_ == 12) {
-			//SET ZERO VALUE FOR JOINT
+			tmc5160_set_zero();
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
 			tv = 0;
 		}
@@ -440,14 +460,14 @@ void RegisterAccessReader::handler(
 
 
 
-void send_JS(float* pos, float* vel, float* eff) {
+void send_JS() {             //float* pos, float* vel, float* eff
 	static uint8_t js_buffer[JS_msg::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
 	reg_udral_physics_kinematics_rotation_Planar_0_1 js_msg =
 	{
-			.angular_position = *pos,
-			.angular_velocity = *vel,
-			.angular_acceleration = *eff
+			.angular_position = steps_to_rads(tmc5160_position_read(), jc.full_steps),
+			.angular_velocity = steps_to_rads(tmc5160_velocity_read(), jc.full_steps),
+			.angular_acceleration = eff_in
 	};
     interface->send_msg<JS_msg>(
 		&js_msg,
@@ -581,6 +601,9 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 
 	HAL_FDCAN_Start(hfdcan);
 }
+
+
+
 
 }
 
