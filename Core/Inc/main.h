@@ -53,12 +53,6 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void cyphal_loop();
-void heartbeat();
-void send_JS(); //float*, float*, float*
-void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
-void setup_cyphal(FDCAN_HandleTypeDef*);
-void cyphal_can_starter(FDCAN_HandleTypeDef*);
 void delay(uint32_t);
 /* USER CODE END EFP */
 

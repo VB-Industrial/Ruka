@@ -28,9 +28,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "tmc5160.h"
+//#include "tmc5160.h"
 #include "IMU.h"
-#include "joint_config.h"
+#include "mainimpl.h"
+//#include "joint_config.h"
 
 /* USER CODE END Includes */
 
@@ -151,7 +152,7 @@ int main(void)
       }
       if ( (now - last_js) >= 100) {
     	  last_js = now;
-    	  send_JS();
+    	  send_JS(&jc);
       }
       cyphal_loop();
   }
@@ -208,10 +209,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-void delay(uint32_t delay)
-{
-	HAL_Delay(delay);
-}
 
 
 /* USER CODE END 4 */

@@ -61,17 +61,17 @@ void motor_config_assembler(motor_config * mc)
 	switch(mc->motor_type)
 	{
 	case 14:
-		mc->max_irun_scaler = 10;
+		mc->max_irun_scaler = 8;
 		mc->max_effort = 0.5;
-		mc->init_irun = 1;
+		mc->init_irun = 0;
 	case 17:
 		mc->max_irun_scaler = 12;
 		mc->max_effort = 3.9;
-		mc->init_irun = 1;
+		mc->init_irun = 2;
 	case 23:
 		mc->max_irun_scaler = 31;
 		mc->max_effort = 10.2;
-		mc->init_irun = 3;
+		mc->init_irun = 4;
 	}
 }
 
@@ -110,8 +110,6 @@ void joint_config_assembler(joint_config * jconf)
 	}
 
 	jconf->domain_id = 0;
-	jconf->full_steps = 0;
-	jconf->gear_ratio = 0.0;
 	jconf->lower_limit_enc = 0.0;
 	jconf->lower_limit_ticks = 0;
 	jconf->motor_type = 0;

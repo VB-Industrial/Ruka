@@ -26,9 +26,11 @@
 
 //#include "tmc5160.h"
 
+
+
 extern "C" {
 #include "utility.h"
-#include "joint_config.h" //TMC5160.h HERE
+#include "mainimpl.h"//TMC5160.h HERE
 
 extern motor_config mc;
 extern joint_config jc;
@@ -80,20 +82,21 @@ public:
     ) {};
     void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override
     {
-    	if (js_in.angular_velocity.radian_per_second != vel_in)
-    	{
-    		vel_in = js_in.angular_velocity.radian_per_second;
-    		tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
-    	}
-    	if (js_in.angular_acceleration.radian_per_second_per_second != eff_in)
-    	{
-    		eff_in = js_in.angular_acceleration.radian_per_second_per_second;
-    		tmc5160_effort(js_in.angular_acceleration.radian_per_second_per_second, &mc);
-    	}
+//    	if (js_in.angular_velocity.radian_per_second != vel_in)
+//    	{
+//    		vel_in = js_in.angular_velocity.radian_per_second;
+//    		tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second, 2560000)); //jc.full_steps
+//    	}
+//    	if (js_in.angular_acceleration.radian_per_second_per_second != eff_in)
+//    	{
+//    		eff_in = js_in.angular_acceleration.radian_per_second_per_second;
+//    		tmc5160_effort(js_in.angular_acceleration.radian_per_second_per_second, &mc);
+//    	}
     	if (js_in.angular_position.radian != pos_in)
     	{
+    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
     		pos_in = js_in.angular_position.radian;
-    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, 2560000)); //jc.full_steps
     	}
     }
 };
@@ -460,13 +463,13 @@ void RegisterAccessReader::handler(
 
 
 
-void send_JS() {             //float* pos, float* vel, float* eff
+void send_JS(joint_config * jc) {             //float* pos, float* vel, float* eff
 	static uint8_t js_buffer[JS_msg::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
 	reg_udral_physics_kinematics_rotation_Planar_0_1 js_msg =
 	{
-			.angular_position = steps_to_rads(tmc5160_position_read(), jc.full_steps),
-			.angular_velocity = steps_to_rads(tmc5160_velocity_read(), jc.full_steps),
+			.angular_position = steps_to_rads(tmc5160_position_read(), jc->full_steps),
+			.angular_velocity = steps_to_rads(tmc5160_velocity_read(), jc->full_steps),
 			.angular_acceleration = eff_in
 	};
     interface->send_msg<JS_msg>(
@@ -543,7 +546,7 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 {
 
 	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
-	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(1125);//JS_SUB_PORT_ID
+	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(JS_SUB_PORT_ID);//
 	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID
 	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
 
@@ -581,9 +584,9 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 	if (HAL_FDCAN_ConfigFilter(hfdcan, &niFilterConfig) != HAL_OK) {
 	  Error_Handler();
 	}
-//	if (HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK) {
-//	  Error_Handler();
-//	}
+	if (HAL_FDCAN_ConfigFilter(hfdcan, &sFilterConfig) != HAL_OK) {
+	  Error_Handler();
+	}
 	if (HAL_FDCAN_ConfigFilter(hfdcan, &hbFilterConfig) != HAL_OK) {
 	  Error_Handler();
 	}

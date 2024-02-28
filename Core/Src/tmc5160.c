@@ -422,5 +422,6 @@ uint8_t tmc5160_torque_to_curent(double effort, motor_config * mc)
 	uint8_t IRUN = 0;
 	effort = (effort > mc->max_effort)? mc->max_effort : effort; //TODO use clamp no ref function from utility
 	IRUN = (effort / mc->max_effort) * mc->max_irun_scaler;
+	IRUN = (IRUN < mc->init_irun)? mc->init_irun: IRUN;
 	return IRUN;
 }
