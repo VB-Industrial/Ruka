@@ -82,22 +82,26 @@ public:
     ) {};
     void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override
     {
-//    	if (js_in.angular_velocity.radian_per_second != vel_in)
-//    	{
-//    		vel_in = js_in.angular_velocity.radian_per_second;
-//    		tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second, 2560000)); //jc.full_steps
-//    	}
+    	if(js_in.angular_velocity.radian_per_second)
+    	{
+    		tmc5160_move(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
+    	}
+    	else
+    	{
+    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
+    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+    	}
 //    	if (js_in.angular_acceleration.radian_per_second_per_second != eff_in)
 //    	{
 //    		eff_in = js_in.angular_acceleration.radian_per_second_per_second;
 //    		tmc5160_effort(js_in.angular_acceleration.radian_per_second_per_second, &mc);
 //    	}
-    	if (js_in.angular_position.radian != pos_in)
-    	{
-    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-    		pos_in = js_in.angular_position.radian;
-    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, 2560000)); //jc.full_steps
-    	}
+//    	if (js_in.angular_position.radian != pos_in)
+//    	{
+//    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+//    		pos_in = js_in.angular_position.radian;
+//    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, 2560000)); //jc.full_steps
+//    	}
     }
 };
 

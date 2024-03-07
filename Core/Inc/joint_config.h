@@ -21,7 +21,8 @@ struct joint_config
 	int8_t motor_type;
 	int8_t direction;
 	uint32_t full_steps;
-	float gear_ratio;
+	float joint_gear_ratio;
+	float motor_gear_ratio;
 	int32_t upper_limit_ticks;
 	int32_t lower_limit_ticks;
 	float upper_limit_enc;

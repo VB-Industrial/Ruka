@@ -43,11 +43,30 @@ struct motor_config
 
 typedef struct motor_config motor_config;
 
-
+/*Init
+ *
+ *
+ *
+ *
+ */
 void tmc5160_init(motor_config * mc);
 
+/*Position in ticks
+ *
+ *
+ *
+ *
+ *
+ */
 void tmc5160_position(int32_t position);
 
+/*Velocity in ticks
+ *
+ *
+ *
+ *
+ *
+ */
 void tmc5160_move(int32_t vel);
 
 void tmc5160_acceleration(uint32_t acc);
