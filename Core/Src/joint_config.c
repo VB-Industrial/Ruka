@@ -25,37 +25,31 @@ void joint_config_init(joint_config * jconf)
 #endif
 }
 
-void motor_config_assembler(motor_config * mc)
+void motor_config_assembler(motor_config * mc, joint_config * jc)
 {
 	if (JOINT_N == 1)
 	{
 		mc->motor_type = 17;
-		mc->direction = 1;
 	}
 	else if (JOINT_N == 2)
 	{
 		mc->motor_type = 23;
-		mc->direction = 1;
 	}
 	else if (JOINT_N == 3)
 	{
 		mc->motor_type = 17;
-		mc->direction = 1;
 	}
 	else if (JOINT_N == 4)
 	{
-		mc->motor_type = 17;
-		mc->direction = 1;
+		mc->motor_type = 14;
 	}
 	else if (JOINT_N == 5)
 	{
 		mc->motor_type = 14;
-		mc->direction = 1;
 	}
 	else if (JOINT_N == 6)
 	{
 		mc->motor_type = 14;
-		mc->direction = 1;
 	}
 
 	switch(mc->motor_type)
@@ -73,6 +67,7 @@ void motor_config_assembler(motor_config * mc)
 		mc->max_effort = 10.2;
 		mc->init_irun = 4;
 	}
+	mc->direction = jc->direction;
 }
 
 
@@ -81,38 +76,44 @@ void joint_config_assembler(joint_config * jconf)
 	if (JOINT_N == 1)
 	{
 		jconf->motor_gear_ratio = 50;
-		jconf->joint_gear_ratio = 1;
+		jconf->joint_gear_ratio = 3;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
+		jconf->direction = -1;
 	}
 	else if (JOINT_N == 2)
 	{
 		jconf->motor_gear_ratio = 50;
-		jconf->joint_gear_ratio = 1;
+		jconf->joint_gear_ratio = 2;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
+		jconf->direction = 1;
 	}
 	else if (JOINT_N == 3)
 	{
 		jconf->motor_gear_ratio = 50;
-		jconf->joint_gear_ratio = 1;
+		jconf->joint_gear_ratio = 2;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
+		jconf->direction = 1;
 	}
 	else if (JOINT_N == 4)
 	{
-		jconf->motor_gear_ratio = 50;
-		jconf->joint_gear_ratio = 1;
+		jconf->motor_gear_ratio = 19.203208;
+		jconf->joint_gear_ratio = 2.5;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
+		jconf->direction = 1;
 	}
 	else if (JOINT_N == 5)
 	{
 		jconf->motor_gear_ratio = 19.203208;
-		jconf->joint_gear_ratio = 1;
+		jconf->joint_gear_ratio = 2.5;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
+		jconf->direction = 1;
 	}
 	else if (JOINT_N == 6)
 	{
 		jconf->motor_gear_ratio = 19.203208;
 		jconf->joint_gear_ratio = 1;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
+		jconf->direction = -1;
 	}
 
 	jconf->domain_id = 0;
@@ -123,7 +124,7 @@ void joint_config_assembler(joint_config * jconf)
 	jconf->upper_limit_ticks = 0;
 	jconf->zero_enc = 0.0;
 	jconf->upper_limit_effort = 0.0;
-	jconf->direction = 1;
+
 
 
 

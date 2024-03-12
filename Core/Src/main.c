@@ -109,7 +109,7 @@ int main(void)
   setup_cyphal(&hfdcan1);
   HAL_Delay(10);
   joint_config_assembler(&jc);
-  motor_config_assembler(&mc);
+  motor_config_assembler(&mc, &jc);
   HAL_Delay(10);
   tmc5160_init(&mc);
   HAL_Delay(10);

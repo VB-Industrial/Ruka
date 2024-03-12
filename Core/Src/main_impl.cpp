@@ -84,6 +84,7 @@ public:
     {
     	if(js_in.angular_velocity.radian_per_second)
     	{
+    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
     		tmc5160_move(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
     	}
     	else
@@ -98,7 +99,7 @@ public:
 //    	}
 //    	if (js_in.angular_position.radian != pos_in)
 //    	{
-//    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+//
 //    		pos_in = js_in.angular_position.radian;
 //    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, 2560000)); //jc.full_steps
 //    	}
@@ -193,6 +194,7 @@ public:
 RegisterAccessReader* reg_access_service;
 
 #define TEST_REG_NAME_LEN 4
+#define ARM_REG_NAME_LEN 3
 #define MOVE_REG_NAME_LEN 4
 #define POS_REG_NAME_LEN 3
 #define DIR_REG_NAME_LEN 3
@@ -206,6 +208,7 @@ RegisterAccessReader* reg_access_service;
 #define TYPE_REG_NAME_LEN 4
 
 uint8_t test_reg_name[TEST_REG_NAME_LEN + 1] = "test"; //for test purpose TODO REMOVE
+uint8_t arm_reg_name[ARM_REG_NAME_LEN + 1] = "arm"; //UINT8 _tag_ == 11
 uint8_t move_reg_name[MOVE_REG_NAME_LEN + 1] = "move"; //INT32 _tag_ == 9
 uint8_t pos_reg_name[POS_REG_NAME_LEN + 1] = "pos"; //INT32 _tag_ == 9
 uint8_t dir_reg_name[DIR_REG_NAME_LEN + 1] = "dir"; //UINT8 _tag_ == 11
@@ -255,7 +258,7 @@ void RegisterAccessReader::handler(
     }
     else if (memcmp(register_access_request.name.name.elements, move_reg_name, MOVE_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 9) {
-            //MOVE
+            tmc5160_move(register_access_request.value.integer32.value.elements[0]);
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
@@ -270,6 +273,7 @@ void RegisterAccessReader::handler(
     else if (memcmp(register_access_request.name.name.elements, pos_reg_name, POS_REG_NAME_LEN) == 0) {
 
         if (register_access_request.value._tag_ == 9) {
+        	tmc5160_set_default_vel();
             tmc5160_position(register_access_request.value.integer32.value.elements[0]);
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	js_pos_v = tmc5160_position_read();
@@ -299,6 +303,27 @@ void RegisterAccessReader::handler(
     else if (memcmp(register_access_request.name.name.elements, dir_reg_name, DIR_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 7) {
             tmc5160_set_motor_direction(register_access_request.value.integer8.value.elements[0]);
+        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+        	tv = 0;
+        }
+        register_access_response.persistent = true;
+        register_access_response._mutable = true;
+        value._tag_ = 11;
+        uavcan_primitive_array_Integer8_1_0 result = {};
+        result.value.elements[0] = register_access_request.value.integer8.value.elements[0];
+        result.value.count = 1;
+        value.integer8 = result;
+    	}
+    else if (memcmp(register_access_request.name.name.elements, arm_reg_name, ARM_REG_NAME_LEN) == 0) {
+        if (register_access_request.value._tag_ == 7) {
+        	if(register_access_request.value.integer8.value.elements[0])
+        	{
+        		tmc5160_arm();
+        	}
+        	else
+        	{
+        		tmc5160_disarm();
+        	}
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
@@ -470,6 +495,10 @@ void RegisterAccessReader::handler(
 void send_JS(joint_config * jc) {             //float* pos, float* vel, float* eff
 	static uint8_t js_buffer[JS_msg::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
+//	uavcan_si_unit_angle_Scalar_1_0 pos;
+//	pos.radian = steps_to_rads(tmc5160_position_read(), jc->full_steps);
+//	uavcan_si_unit_angular_velocity_Scalar_1_0 vel;
+//	vel.radian_per_second = steps_to_rads(tmc5160_velocity_read(), jc->full_steps);
 	reg_udral_physics_kinematics_rotation_Planar_0_1 js_msg =
 	{
 			.angular_position = steps_to_rads(tmc5160_position_read(), jc->full_steps),
@@ -550,7 +579,7 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 {
 
 	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
-	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(JS_SUB_PORT_ID);//
+	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(JS_SUB_PORT_ID);//JS_SUB_PORT_ID //1121
 	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID
 	CanardFilter cyphal_filter_consolidated = canardConsolidateFilters(&cyphal_filter_for_node_id, &cyphal_filter_for_JS);
 

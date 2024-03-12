@@ -11,7 +11,7 @@
 ../Core/Src/tmc5160.c:303:6:tmc5160_init	1
 ../Core/Src/tmc5160.c:364:6:tmc5160_set_motor_direction	2
 ../Core/Src/tmc5160.c:380:6:tmc5160_set_zero	1
-../Core/Src/tmc5160.c:393:6:tmc5160_disarm	1
-../Core/Src/tmc5160.c:398:6:tmc5160_arm	1
-../Core/Src/tmc5160.c:403:6:tmc5160_stop	1
-../Core/Src/tmc5160.c:420:9:tmc5160_torque_to_curent	2
+../Core/Src/tmc5160.c:390:6:tmc5160_disarm	1
+../Core/Src/tmc5160.c:395:6:tmc5160_arm	1
+../Core/Src/tmc5160.c:400:6:tmc5160_stop	1
+../Core/Src/tmc5160.c:417:9:tmc5160_torque_to_curent	2

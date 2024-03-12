@@ -363,7 +363,7 @@ void tmc5160_init(motor_config * mc)
 
 void tmc5160_set_motor_direction(int8_t dir)
 {
-	if(dir < 0)
+	if(dir <= 0)
 	{
 	  uint8_t WData[5] = {0};
 	  WData[0] = 0x80; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x14; // EN_PWM_MODE=1 enables StealthChop (with default PWMCONF)
@@ -380,9 +380,6 @@ void tmc5160_set_motor_direction(int8_t dir)
 void tmc5160_set_zero()
 {
 	uint8_t WData[5] = {0};
-	uint32_t pos = 0;
-	//tmc5160_stop();
-	pos = tmc5160_position_read();
 	WData[0] = 0xA0; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x03; // RAMPMODE = 3 (HOLD mode)
 	tmc5160_write(WData);
 

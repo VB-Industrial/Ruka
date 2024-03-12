@@ -34,7 +34,7 @@ struct joint_config
 typedef struct joint_config joint_config;
 
 void joint_config_init(joint_config * jc);
-void motor_config_assembler(motor_config * mc);
+void motor_config_assembler(motor_config * mc, joint_config *jc);
 void joint_config_assembler(joint_config *jc);
 void joint_number_selector(joint_config * jc);
 void domain_id_selector(joint_config * jc);
