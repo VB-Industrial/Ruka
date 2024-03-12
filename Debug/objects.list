@@ -1,5 +1,6 @@
 "./Core/Src/Adafruit_BNO055.o"
 "./Core/Src/IMU.o"
+"./Core/Src/as50xx.o"
 "./Core/Src/at24_eeprom.o"
 "./Core/Src/dma.o"
 "./Core/Src/fdcan.o"

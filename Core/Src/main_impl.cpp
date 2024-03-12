@@ -35,6 +35,8 @@ extern "C" {
 extern motor_config mc;
 extern joint_config jc;
 
+extern uint16_t enc_angle;
+
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
 TYPE_ALIAS(JS_msg, reg_udral_physics_kinematics_rotation_Planar_0_1)
 TYPE_ALIAS(State, reg_udral_physics_kinematics_cartesian_State_0_1)
@@ -287,18 +289,18 @@ void RegisterAccessReader::handler(
         value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 9) {
-        	js_pos_v = tmc5160_position_read();
+        if (register_access_request.value._tag_ == 10) {
+        	js_pos_v = enc_angle;
         	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
         	tv = 0;
         }
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 9;
-        uavcan_primitive_array_Integer32_1_0 result = {};
+        value._tag_ = 10;
+        uavcan_primitive_array_Natural16_1_0 result = {};
         result.value.elements[0] = js_pos_v;
         result.value.count = 1;
-        value.integer32 = result;
+        value.natural16 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, dir_reg_name, DIR_REG_NAME_LEN) == 0) {
         if (register_access_request.value._tag_ == 7) {

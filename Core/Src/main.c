@@ -67,6 +67,7 @@ void SystemClock_Config(void);
 extern I2C_HandleTypeDef hi2c4;
 motor_config mc;
 joint_config jc;
+uint16_t enc_angle = 0;
 /* USER CODE END 0 */
 
 /**
@@ -122,7 +123,7 @@ int main(void)
   uint8_t msg[10];
   int i = 0;
 
-  //uint16_t addr9250=0xD0; //0x68<<1
+
 
   HAL_StatusTypeDef rv;
 
@@ -153,6 +154,7 @@ int main(void)
       if ( (now - last_js) >= 100) {
     	  last_js = now;
     	  send_JS(&jc);
+    	  as50_readAngle(&enc_angle, 100);
       }
       cyphal_loop();
   }
