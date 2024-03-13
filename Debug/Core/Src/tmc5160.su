@@ -9,9 +9,9 @@
 ../Core/Src/tmc5160.c:260:9:tmc5160_position_read	32	static
 ../Core/Src/tmc5160.c:280:9:tmc5160_velocity_read	32	static
 ../Core/Src/tmc5160.c:303:6:tmc5160_init	24	static
-../Core/Src/tmc5160.c:364:6:tmc5160_set_motor_direction	32	static
-../Core/Src/tmc5160.c:380:6:tmc5160_set_zero	16	static
-../Core/Src/tmc5160.c:390:6:tmc5160_disarm	8	static
-../Core/Src/tmc5160.c:395:6:tmc5160_arm	8	static
-../Core/Src/tmc5160.c:400:6:tmc5160_stop	24	static
-../Core/Src/tmc5160.c:417:9:tmc5160_torque_to_curent	40	static
+../Core/Src/tmc5160.c:365:6:tmc5160_set_motor_direction	32	static
+../Core/Src/tmc5160.c:381:6:tmc5160_set_zero	16	static
+../Core/Src/tmc5160.c:391:6:tmc5160_disarm	8	static
+../Core/Src/tmc5160.c:396:6:tmc5160_arm	8	static
+../Core/Src/tmc5160.c:401:6:tmc5160_stop	24	static
+../Core/Src/tmc5160.c:418:9:tmc5160_torque_to_curent	40	static

@@ -323,8 +323,9 @@ void tmc5160_init(motor_config * mc)
 	WData[0] = 0x91; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // TPOWERDOWN=10: Delay before power down in stand still
 	tmc5160_write(WData);
 
-	//WData[0] = 0xF0; WData[1] = 0x04; WData[2] = 0x0d; WData[3] = 0x00; WData[4] = 0x30; // PWM_CONF PWM_FREQ 35kHz TODO
-	//tmc5160_write(WData);
+	//0xC40C001E default for 0x70 reg
+	WData[0] = 0xF0; WData[1] = 0xC4; WData[2] = 0x0D; WData[3] = 0x00; WData[4] = 0x1E; // PWM_CONF PWM_FREQ 35kHz TODO
+	tmc5160_write(WData);
 
 	WData[0] = 0x80; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x04; // EN_PWM_MODE=1 enables StealthChop (with default PWMCONF)
 	tmc5160_write(WData);
