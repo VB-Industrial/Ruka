@@ -16,6 +16,7 @@ void send_JS(joint_config * jc); //float*, float*, float*
 void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, float* az, float* gx, float* gy, float* gz);
 void setup_cyphal(FDCAN_HandleTypeDef*);
 void cyphal_can_starter(FDCAN_HandleTypeDef*);
+void calib_move(joint_config * jc);
 
 
 

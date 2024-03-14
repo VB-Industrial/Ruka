@@ -10,7 +10,7 @@
 
 
 #include "stm32g4xx_hal.h"
-#include <stdbool.h>
+#include "spi.h"
 #include <stdint.h>
 #include <stddef.h>
 
@@ -26,7 +26,7 @@
   * @param  timeout Timeout duration
   * @retval bool status
 */
-bool as50_readAngle(uint16_t * data, uint32_t timeout);
+void as50_readAngle(uint16_t * data, uint32_t timeout);
 
 
 /**
@@ -34,12 +34,9 @@ bool as50_readAngle(uint16_t * data, uint32_t timeout);
   * @param  timeout Timeout duration
   * @retval bool status
   */
-bool as50_setZero(uint32_t timeout);
+void as50_setZero(uint32_t timeout);
 
-bool as50_write(uint16_t address, uint16_t data);
+void as50_write(uint16_t address, uint16_t data);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #endif /* INC_AS50XX_H_ */

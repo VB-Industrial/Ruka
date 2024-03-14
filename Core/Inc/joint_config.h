@@ -9,6 +9,8 @@
 #define INC_JOINT_CONFIG_H_
 
 #include "tmc5160.h"
+
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -27,7 +29,7 @@ struct joint_config
 	int32_t lower_limit_ticks;
 	float upper_limit_enc;
 	float lower_limit_enc;
-	float zero_enc;
+	uint32_t zero_enc;
 	float upper_limit_effort;
 };
 

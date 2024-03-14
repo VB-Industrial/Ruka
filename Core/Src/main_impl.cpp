@@ -1,11 +1,8 @@
 #include "main.h"
 #include "ruka_joints.h"
 
-
-
 #include <memory>
 #include <cstdio>
-
 
 #include "cyphal/cyphal.h"
 #include "cyphal/providers/G4CAN.h"
@@ -23,12 +20,8 @@
 
 #include <uavcan/node/GetInfo_1_0.h>
 
-
-//#include "tmc5160.h"
-
-
-
 extern "C" {
+#include "as50xx.h"
 #include "utility.h"
 #include "mainimpl.h"//TMC5160.h HERE
 
@@ -259,11 +252,10 @@ void RegisterAccessReader::handler(
         value.integer64 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, move_reg_name, MOVE_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 9) {
-            tmc5160_move(register_access_request.value.integer32.value.elements[0]);
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		tmc5160_move(register_access_request.value.integer32.value.elements[0]);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 9;
@@ -274,12 +266,11 @@ void RegisterAccessReader::handler(
     }
     else if (memcmp(register_access_request.name.name.elements, pos_reg_name, POS_REG_NAME_LEN) == 0) {
 
-        if (register_access_request.value._tag_ == 9) {
-        	tmc5160_set_default_vel();
-            tmc5160_position(register_access_request.value.integer32.value.elements[0]);
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	js_pos_v = tmc5160_position_read();
-        }
+		tmc5160_set_default_vel();
+		tmc5160_position(register_access_request.value.integer32.value.elements[0]);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		js_pos_v = tmc5160_position_read();
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 9;
@@ -289,11 +280,10 @@ void RegisterAccessReader::handler(
         value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 10) {
-        	js_pos_v = enc_angle;
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		js_pos_v = enc_angle;
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 10;
@@ -303,11 +293,10 @@ void RegisterAccessReader::handler(
         value.natural16 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, dir_reg_name, DIR_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 7) {
-            tmc5160_set_motor_direction(register_access_request.value.integer8.value.elements[0]);
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		tmc5160_set_motor_direction(register_access_request.value.integer8.value.elements[0]);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
@@ -317,18 +306,17 @@ void RegisterAccessReader::handler(
         value.integer8 = result;
     	}
     else if (memcmp(register_access_request.name.name.elements, arm_reg_name, ARM_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 7) {
-        	if(register_access_request.value.integer8.value.elements[0])
-        	{
-        		tmc5160_arm();
-        	}
-        	else
-        	{
-        		tmc5160_disarm();
-        	}
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		if(register_access_request.value.integer8.value.elements[0])
+		{
+			tmc5160_arm();
+		}
+		else
+		{
+			tmc5160_disarm();
+		}
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
@@ -338,11 +326,11 @@ void RegisterAccessReader::handler(
         value.integer8 = result;
     	}
     else if (memcmp(register_access_request.name.name.elements, calib_reg_name, CALIB_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 11) {
-            //ENABLE CALIB
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		//ENABLE CALIB
+    	calib_move(&jc);
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
@@ -352,11 +340,10 @@ void RegisterAccessReader::handler(
         value.natural8 = result;
     	}
 	else if (memcmp(register_access_request.name.name.elements, upper_lim_reg_name, UPPER_LIM_REG_NAME_LEN) == 0) {
-		if (register_access_request.value._tag_ == 9) {
-			//SET UPPER LIMIT FOR JOINT
-			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-			tv = 0;
-		}
+		//SET UPPER LIMIT FOR JOINT
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
 		register_access_response.persistent = true;
 		register_access_response._mutable = true;
 		value._tag_ = 9;
@@ -366,11 +353,9 @@ void RegisterAccessReader::handler(
 		value.integer32 = result;
 	}
 	else if (memcmp(register_access_request.name.name.elements, lower_lim_reg_name, LOWER_LIM_REG_NAME_LEN) == 0) {
-		if (register_access_request.value._tag_ == 9) {
-			//SET UPPER LIMIT FOR JOINT
-			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-			tv = 0;
-		}
+		//SET UPPER LIMIT FOR JOINT
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
 		register_access_response.persistent = true;
 		register_access_response._mutable = true;
 		value._tag_ = 9;
@@ -380,11 +365,10 @@ void RegisterAccessReader::handler(
 		value.integer32 = result;
 	}
 	else if (memcmp(register_access_request.name.name.elements, set_zero_reg_name, SET_ZERO_REG_NAME_LEN) == 0) {
-		if (register_access_request.value._tag_ == 12) {
-			tmc5160_set_zero();
-			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-			tv = 0;
-		}
+		tmc5160_set_zero();
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
 		register_access_response.persistent = true;
 		register_access_response._mutable = true;
 		value._tag_ = 12;
@@ -394,11 +378,10 @@ void RegisterAccessReader::handler(
 		value.real64 = result;
 	}
     else if (memcmp(register_access_request.name.name.elements, set_enc_zero_reg_name, SET_ENC_ZERO_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 11) {
-            //SET TYPE OF MOTOR FOR JOINT
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		//SET TYPE OF MOTOR FOR JOINT
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
@@ -408,11 +391,10 @@ void RegisterAccessReader::handler(
         value.natural8 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, name_reg_name, NAME_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 1) {
-            //SET NAME FOR JOINT
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		//SET NAME FOR JOINT
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 1;
@@ -424,11 +406,10 @@ void RegisterAccessReader::handler(
         value._string = result;
     }
     else if (memcmp(register_access_request.name.name.elements, type_reg_name, TYPE_REG_NAME_LEN) == 0) {
-        if (register_access_request.value._tag_ == 11) {
-            //SET TYPE OF MOTOR FOR JOINT
-        	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tv = 0;
-        }
+		//SET TYPE OF MOTOR FOR JOINT
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		tv = 0;
+		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 11;
@@ -641,7 +622,22 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 }
 
 
-
+void calib_move(joint_config * jc)
+{
+	int8_t Kp = 20;
+	uint32_t epsilon = 10;
+	uint32_t deviation = 0;
+	deviation = jc->zero_enc - enc_angle;
+	while(deviation > epsilon)
+	{
+		as50_readAngle(&enc_angle, 100);
+		deviation = jc->direction * (jc->zero_enc - enc_angle);
+		tmc5160_move(deviation * Kp);
+		HAL_Delay(1);
+	}
+	tmc5160_stop();
+	tmc5160_set_zero();
+}
 
 }
 

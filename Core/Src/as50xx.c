@@ -6,9 +6,7 @@
  */
 
 #include "as50xx.h"
-#include "spi.h"
-#include "main.h"
-#include <stdbool.h>
+
 #include <stdint.h>
 #include <stddef.h>
 
@@ -44,7 +42,7 @@ uint16_t parity(uint16_t x)
 	return (parity & 0x1);
 }
 
-bool as50_readAngle(uint16_t * data, uint32_t timeout)
+void as50_readAngle(uint16_t * data, uint32_t timeout)
 {
 
 	  HAL_GPIO_WritePin(_ENCODER_NSS_GPIO, _ENCODER_NSS_PIN, GPIO_PIN_RESET);
@@ -52,27 +50,24 @@ bool as50_readAngle(uint16_t * data, uint32_t timeout)
 	  {
 		  HAL_GPIO_WritePin(_ENCODER_NSS_GPIO, _ENCODER_NSS_PIN, GPIO_PIN_SET);
 		  *data &= _ENCODER_READMASK;
-		  return true;
 	  }
 	  else
 	  {
 		  HAL_GPIO_WritePin(_ENCODER_NSS_GPIO, _ENCODER_NSS_PIN, GPIO_PIN_SET);
-		  return false;
 	  }
 }
 
 
-bool as50_setZero(uint32_t timeout)
+void as50_setZero(uint32_t timeout)
 {
 	  uint16_t angle_to_set_as_zero;
 	  as50_readAngle(&angle_to_set_as_zero, 100);
 	  as50_write(set_zero_register_M, ((angle_to_set_as_zero >> 6) & 0x00FF));
 	  as50_write(set_zero_register_L, (angle_to_set_as_zero  & 0x003F));
-	  return true;
 }
 
 
-bool as50_write(uint16_t address, uint16_t data)
+void as50_write(uint16_t address, uint16_t data)
 {
 	if (parity(address & 0x3FFF) == 1) address = address | 0x8000; // set parity bit
 
@@ -101,5 +96,5 @@ bool as50_write(uint16_t address, uint16_t data)
 	}
 
 	HAL_GPIO_WritePin(_ENCODER_NSS_GPIO, _ENCODER_NSS_PIN, GPIO_PIN_SET);
-	return true;
 }
+

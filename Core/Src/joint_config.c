@@ -14,6 +14,7 @@
 #include "main.h"
 #include "tmc5160.h"
 
+
 void joint_config_init(joint_config * jconf)
 {
 #ifdef NODIPSWITCH
@@ -114,6 +115,7 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 1;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = -1;
+		jconf->zero_enc = 4410;
 	}
 
 	jconf->domain_id = 0;
@@ -122,7 +124,6 @@ void joint_config_assembler(joint_config * jconf)
 	jconf->motor_type = 0;
 	jconf->upper_limit_enc = 0.0;
 	jconf->upper_limit_ticks = 0;
-	jconf->zero_enc = 0.0;
 	jconf->upper_limit_effort = 0.0;
 
 
