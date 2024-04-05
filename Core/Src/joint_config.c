@@ -14,6 +14,8 @@
 #include "main.h"
 #include "tmc5160.h"
 
+extern joint_config jc;
+extern joint_config_address jc_address;
 
 void joint_config_init(joint_config * jconf)
 {
@@ -72,7 +74,7 @@ void motor_config_assembler(motor_config * mc, joint_config * jc)
 }
 
 
-void joint_config_assembler(joint_config * jconf)
+void joint_config_assembler(joint_config * jconf, joint_config_address * jc_a)
 {
 	if (JOINT_N == 1)
 	{
@@ -80,6 +82,8 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 3;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = -1;
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 	else if (JOINT_N == 2)
 	{
@@ -87,6 +91,8 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 2;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = 1;
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 	else if (JOINT_N == 3)
 	{
@@ -94,6 +100,8 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 2;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = 1;
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 	else if (JOINT_N == 4)
 	{
@@ -101,6 +109,8 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 2.5;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = 1;
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 	else if (JOINT_N == 5)
 	{
@@ -108,6 +118,8 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 2.5;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = 1;
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 	else if (JOINT_N == 6)
 	{
@@ -115,29 +127,20 @@ void joint_config_assembler(joint_config * jconf)
 		jconf->joint_gear_ratio = 1;
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
 		jconf->direction = -1;
-		jconf->zero_enc = 4410;
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 
-	jconf->domain_id = 0;
+	//TODO!!!!!!!!!!!!!!!!!!!!!!!!! from config read
 	jconf->lower_limit_enc = 0.0;
-	jconf->lower_limit_ticks = 0;
-	jconf->motor_type = 0;
 	jconf->upper_limit_enc = 0.0;
-	jconf->upper_limit_ticks = 0;
-	jconf->upper_limit_effort = 0.0;
+	jconf->zero_enc = 0;
+	//TODO!!!!!!!!!!!!!!!!!!!!!!!!!
 
+	jc_a->address_of_upper_limit_enc = 0x00;
+	jc_a->address_of_lower_limit_enc = jc_a->address_of_upper_limit_enc + sizeof(jconf->upper_limit_enc);
+	jc_a->address_of_zero_enc = jc_a->address_of_lower_limit_enc + sizeof(jconf->lower_limit_enc);
 
-
-
-//#define NEMA14_FULLSTEPS    983204
-//#define NEMA17_FULLSTEPS	2560000
-//#define NEMA23_FULLSTEPS    2560000
-//
-//
-//
-//#define NEMA14_GR 19 //TODO possible to correct ratio to 19.38/187 for more precise velocity calculation
-//#define NEMA17_GR 50
-//#define NEMA23_GR 50
 }
 
 
@@ -186,100 +189,30 @@ void joint_config_assembler(joint_config * jconf)
 
 
 
-void joint_config_write(joint_config * jc)
+void joint_config_write(joint_config * jc, joint_config_address * jc_a)
 {
-	uint16_t address_of_domain_id = 0x00;
-	uint16_t address_of_upper_limit_enc = sizeof(&jc->domain_id);
-	uint16_t address_of_lower_limit_enc = address_of_upper_limit_enc + sizeof(&jc->upper_limit_enc);
-	uint16_t address_of_upper_limit_ticks = address_of_lower_limit_enc + sizeof(&jc->lower_limit_enc);
-	uint16_t address_of_lower_limit_ticks = address_of_upper_limit_ticks + sizeof(&jc->upper_limit_ticks);
-	uint16_t address_of_zero_enc = address_of_lower_limit_ticks + sizeof(&jc->lower_limit_ticks);
-	uint16_t address_of_joint_number = address_of_zero_enc + sizeof(&jc->zero_enc);
-	uint16_t address_of_motor_type = address_of_joint_number + sizeof(&jc->joint_number);
-	uint16_t address_of_full_steps = address_of_motor_type + sizeof(&jc->motor_type);
-	uint16_t address_of_motor_gear_ratio = address_of_full_steps + sizeof(&jc->full_steps);
-	uint16_t address_of_joint_gear_ratio = address_of_motor_gear_ratio + sizeof(&jc->motor_gear_ratio);
-	uint16_t address_of_upper_limit_effort = address_of_joint_gear_ratio + sizeof(&jc->joint_gear_ratio);
-	uint16_t address_of_direction = address_of_upper_limit_effort + sizeof(&jc->upper_limit_effort);
-
 	int timeout = 100;
 	if (at24_isConnected())
 	{
-
-		at24_write(address_of_domain_id, &jc->domain_id, sizeof(&jc->domain_id), timeout);
+		at24_write(&jc_a->address_of_upper_limit_enc, &jc->upper_limit_enc, sizeof(&jc->upper_limit_enc), timeout);
 		os_delay(1);
-		at24_write(address_of_upper_limit_enc, &jc->upper_limit_enc, sizeof(&jc->upper_limit_enc), timeout);
+		at24_write(&jc_a->address_of_lower_limit_enc, &jc->lower_limit_enc, sizeof(&jc->lower_limit_enc), timeout);
 		os_delay(1);
-		at24_write(address_of_lower_limit_enc, &jc->lower_limit_enc, sizeof(&jc->lower_limit_enc), timeout);
+		at24_write(&jc_a->address_of_zero_enc, &jc->zero_enc, sizeof(&jc->zero_enc), timeout);
 		os_delay(1);
-		at24_write(address_of_upper_limit_ticks, &jc->upper_limit_ticks, sizeof(&jc->upper_limit_ticks), timeout);
-		os_delay(1);
-		at24_write(address_of_lower_limit_ticks, &jc->lower_limit_ticks, sizeof(&jc->lower_limit_ticks), timeout);
-		os_delay(1);
-		at24_write(address_of_zero_enc, &jc->zero_enc, sizeof(&jc->zero_enc), timeout);
-		os_delay(1);
-		at24_write(address_of_joint_number, &jc->joint_number, sizeof(&jc->joint_number), timeout);
-		os_delay(1);
-		at24_write(address_of_motor_type, &jc->motor_type, sizeof(&jc->motor_type), timeout);
-		os_delay(1);
-		at24_write(address_of_full_steps, &jc->full_steps, sizeof(&jc->full_steps), timeout);
-		os_delay(1);
-		at24_write(address_of_motor_gear_ratio, &jc->motor_gear_ratio, sizeof(&jc->motor_gear_ratio), timeout);
-		os_delay(1);
-		at24_write(address_of_joint_gear_ratio, &jc->joint_gear_ratio, sizeof(&jc->joint_gear_ratio), timeout);
-		os_delay(1);
-		at24_write(address_of_upper_limit_effort, &jc->upper_limit_effort, sizeof(&jc->upper_limit_effort), timeout);
-		os_delay(1);
-		at24_write(address_of_direction, &jc->direction, sizeof(&jc->direction), timeout);
-		os_delay(1);
-
 	}
 }
 
-void joint_config_read(joint_config * jc)
+void joint_config_read(joint_config * jc, joint_config_address * jc_a)
 {
-
-	uint16_t address_of_domain_id = 0x00;
-	uint16_t address_of_upper_limit_enc = sizeof(&jc->domain_id);
-	uint16_t address_of_lower_limit_enc = address_of_upper_limit_enc + sizeof(&jc->upper_limit_enc);
-	uint16_t address_of_upper_limit_ticks = address_of_lower_limit_enc + sizeof(&jc->lower_limit_enc);
-	uint16_t address_of_lower_limit_ticks = address_of_upper_limit_ticks + sizeof(&jc->upper_limit_ticks);
-	uint16_t address_of_zero_enc = address_of_lower_limit_ticks + sizeof(&jc->lower_limit_ticks);
-	uint16_t address_of_joint_number = address_of_zero_enc + sizeof(&jc->zero_enc);
-	uint16_t address_of_motor_type = address_of_joint_number + sizeof(&jc->joint_number);
-	uint16_t address_of_full_steps = address_of_motor_type + sizeof(&jc->motor_type);
-	uint16_t address_of_motor_gear_ratio = address_of_full_steps + sizeof(&jc->full_steps);
-	uint16_t address_of_joint_gear_ratio = address_of_motor_gear_ratio + sizeof(&jc->motor_gear_ratio);
-	uint16_t address_of_upper_limit_effort = address_of_joint_gear_ratio + sizeof(&jc->joint_gear_ratio);
-	uint16_t address_of_direction = address_of_upper_limit_effort + sizeof(&jc->upper_limit_effort);
 	int timeout = 100;
 	if (at24_isConnected())
 		{
-		at24_read(address_of_domain_id, &jc->domain_id, sizeof(&jc->domain_id), timeout);
+		at24_read(&jc_a->address_of_upper_limit_enc, &jc->upper_limit_enc, sizeof(&jc->upper_limit_enc), timeout);
 		os_delay(1);
-		at24_read(address_of_upper_limit_enc, &jc->upper_limit_enc, sizeof(&jc->upper_limit_enc), timeout);
+		at24_read(&jc_a->address_of_lower_limit_enc, &jc->lower_limit_enc, sizeof(&jc->lower_limit_enc), timeout);
 		os_delay(1);
-		at24_read(address_of_lower_limit_enc, &jc->lower_limit_enc, sizeof(&jc->lower_limit_enc), timeout);
-		os_delay(1);
-		at24_read(address_of_upper_limit_ticks, &jc->upper_limit_ticks, sizeof(&jc->upper_limit_ticks), timeout);
-		os_delay(1);
-		at24_read(address_of_lower_limit_ticks, &jc->lower_limit_ticks, sizeof(&jc->lower_limit_ticks), timeout);
-		os_delay(1);
-		at24_read(address_of_zero_enc, &jc->zero_enc, sizeof(&jc->zero_enc), timeout);
-		os_delay(1);
-		//at24_read(address_of_joint_number, &jc->joint_number, sizeof(&jc->joint_number), timeout);
-		//vTaskDelay(1000/ portTICK_PERIOD_MS);
-		at24_read(address_of_motor_type, &jc->motor_type, sizeof(&jc->motor_type), timeout);
-		os_delay(1);
-		at24_read(address_of_full_steps, &jc->full_steps, sizeof(&jc->full_steps), timeout);
-		os_delay(1);
-		at24_read(address_of_motor_gear_ratio, &jc->motor_gear_ratio, sizeof(&jc->motor_gear_ratio), timeout);
-		os_delay(1);
-		at24_read(address_of_joint_gear_ratio, &jc->joint_gear_ratio, sizeof(&jc->joint_gear_ratio), timeout);
-		os_delay(1);
-		at24_read(address_of_upper_limit_effort, &jc->upper_limit_effort, sizeof(&jc->upper_limit_effort), timeout);
-		os_delay(1);
-		at24_read(address_of_direction, &jc->direction, sizeof(&jc->direction), timeout);
+		at24_read(&jc_a->address_of_zero_enc, &jc->zero_enc, sizeof(&jc->zero_enc), timeout);
 		os_delay(1);
 		}
 }

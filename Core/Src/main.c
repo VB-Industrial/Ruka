@@ -68,6 +68,7 @@ void SystemClock_Config(void);
 extern I2C_HandleTypeDef hi2c4;
 motor_config mc;
 joint_config jc;
+joint_config_address jc_a;
 uint16_t enc_angle = 0;
 /* USER CODE END 0 */
 
@@ -110,8 +111,9 @@ int main(void)
   cyphal_can_starter(&hfdcan1);
   setup_cyphal(&hfdcan1);
   HAL_Delay(10);
-  joint_config_assembler(&jc);
+  joint_config_assembler(&jc, &jc_a);
   motor_config_assembler(&mc, &jc);
+  joint_config_read(&jc, &jc_a);
   HAL_Delay(10);
   tmc5160_init(&mc);
   HAL_Delay(10);

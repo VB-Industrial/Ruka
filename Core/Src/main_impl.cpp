@@ -27,6 +27,7 @@ extern "C" {
 
 extern motor_config mc;
 extern joint_config jc;
+extern joint_config_address jc_a;
 
 extern uint16_t enc_angle;
 
@@ -198,7 +199,7 @@ RegisterAccessReader* reg_access_service;
 #define UPPER_LIM_REG_NAME_LEN 9
 #define LOWER_LIM_REG_NAME_LEN 9
 #define SET_ZERO_REG_NAME_LEN 8
-#define SET_ENC_ZERO_REG_NAME_LEN 12
+#define SET_ENC_VALUE_ZERO_REG_NAME_LEN 18
 #define NAME_REG_NAME_LEN 4
 #define TYPE_REG_NAME_LEN 4
 
@@ -211,7 +212,7 @@ uint8_t get_pos_reg_name[GET_POS_REG_NAME_LEN + 1] = "get_pos"; //INT32 _tag_ ==
 uint8_t calib_reg_name[CALIB_REG_NAME_LEN + 1] = "calib"; //UINT8 _tag_ == 11
 uint8_t upper_lim_reg_name[UPPER_LIM_REG_NAME_LEN + 1] = "upper_lim"; //INT32 _tag_ == 9
 uint8_t lower_lim_reg_name[LOWER_LIM_REG_NAME_LEN + 1] = "lower_lim"; //INT32 _tag_ == 9
-uint8_t set_enc_zero_reg_name[SET_ENC_ZERO_REG_NAME_LEN + 1] = "set_enc_zero"; //FLOAT64  _tag_ == 12
+uint8_t set_enc_value_zero_reg_name[SET_ENC_VALUE_ZERO_REG_NAME_LEN + 1] = "set_enc_value_zero"; //INT32 _tag_ == 9
 uint8_t set_zero_reg_name[SET_ZERO_REG_NAME_LEN + 1] = "set_zero"; //UINT8 _tag_ == 11
 uint8_t name_reg_name[NAME_REG_NAME_LEN + 1] = "name"; //STRING _tag_ == 1
 uint8_t type_reg_name[TYPE_REG_NAME_LEN + 1] = "type"; //UINT8 _tag_ == 11
@@ -280,15 +281,15 @@ void RegisterAccessReader::handler(
         value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, get_pos_reg_name, GET_POS_REG_NAME_LEN) == 0) {
-		js_pos_v = enc_angle;
+		//js_pos_v = enc_angle;
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-		tv = 0;
+		//tv = 0;
 		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 10;
         uavcan_primitive_array_Natural16_1_0 result = {};
-        result.value.elements[0] = js_pos_v;
+        result.value.elements[0] = enc_angle;
         result.value.count = 1;
         value.natural16 = result;
     }
@@ -342,6 +343,8 @@ void RegisterAccessReader::handler(
 	else if (memcmp(register_access_request.name.name.elements, upper_lim_reg_name, UPPER_LIM_REG_NAME_LEN) == 0) {
 		//SET UPPER LIMIT FOR JOINT
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		jc.upper_limit_enc = register_access_request.value.integer32.value.elements[0];
+		joint_config_write(&jc, &jc_a);
 		tv = 0;
 		//response
 		register_access_response.persistent = true;
@@ -355,6 +358,8 @@ void RegisterAccessReader::handler(
 	else if (memcmp(register_access_request.name.name.elements, lower_lim_reg_name, LOWER_LIM_REG_NAME_LEN) == 0) {
 		//SET UPPER LIMIT FOR JOINT
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		jc.lower_limit_enc = register_access_request.value.integer32.value.elements[0];
+		joint_config_write(&jc, &jc_a);
 		tv = 0;
 		register_access_response.persistent = true;
 		register_access_response._mutable = true;
@@ -367,28 +372,33 @@ void RegisterAccessReader::handler(
 	else if (memcmp(register_access_request.name.name.elements, set_zero_reg_name, SET_ZERO_REG_NAME_LEN) == 0) {
 		tmc5160_set_zero();
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+		jc.zero_enc = enc_angle;
+		joint_config_write(&jc, &jc_a);
 		tv = 0;
 		//response
 		register_access_response.persistent = true;
 		register_access_response._mutable = true;
-		value._tag_ = 12;
+		value._tag_ = 9;
 		uavcan_primitive_array_Real64_1_0 result = {};
 		result.value.elements[0] = register_access_request.value._tag_;
 		result.value.count = 1;
 		value.real64 = result;
 	}
-    else if (memcmp(register_access_request.name.name.elements, set_enc_zero_reg_name, SET_ENC_ZERO_REG_NAME_LEN) == 0) {
-		//SET TYPE OF MOTOR FOR JOINT
+    else if (memcmp(register_access_request.name.name.elements, set_enc_value_zero_reg_name, SET_ENC_VALUE_ZERO_REG_NAME_LEN) == 0) {
+		//SET ENCODER ZERO TODO
+		jc.zero_enc = register_access_request.value.integer32.value.elements[0];
+		joint_config_write(&jc, &jc_a);
+		tv = 0;
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
 		tv = 0;
 		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
-        value._tag_ = 11;
-        uavcan_primitive_array_Natural8_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_;
-        result.value.count = 1;
-        value.natural8 = result;
+		value._tag_ = 9;
+		uavcan_primitive_array_Integer32_1_0 result = {};
+		result.value.elements[0] = register_access_request.value._tag_;
+		result.value.count = 1;
+		value.integer32 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, name_reg_name, NAME_REG_NAME_LEN) == 0) {
 		//SET NAME FOR JOINT
@@ -624,7 +634,7 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 
 void calib_move(joint_config * jc)
 {
-	int8_t Kp = 20;
+	int8_t Kp = 100;
 	uint32_t epsilon = 10;
 	uint32_t deviation = 0;
 	deviation = jc->zero_enc - enc_angle;
