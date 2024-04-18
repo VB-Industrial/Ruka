@@ -253,15 +253,28 @@ void RegisterAccessReader::handler(
         value.integer64 = result;
     }
     else if (memcmp(register_access_request.name.name.elements, move_reg_name, MOVE_REG_NAME_LEN) == 0) {
-		tmc5160_move(register_access_request.value.integer32.value.elements[0]);
+
+    	int32_t pos = register_access_request.value.integer32.value.elements[0];
+    	int32_t rv;
+    	if (pos > jc.upper_limit_ticks && pos < jc.lower_limit_ticks)
+    	{
+    		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
+    		rv = 1;
+    	}
+    	else
+    	{
+    		tmc5160_move(pos);
+    		rv = 0;
+    	}
+
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-		tv = 0;
+
 		//response
         register_access_response.persistent = true;
         register_access_response._mutable = true;
         value._tag_ = 9;
         uavcan_primitive_array_Integer32_1_0 result = {};
-        result.value.elements[0] = register_access_request.value._tag_;
+        result.value.elements[0] = tv;
         result.value.count = 1;
         value.integer32 = result;
     }
