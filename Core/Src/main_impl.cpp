@@ -28,6 +28,7 @@ extern "C" {
 extern motor_config mc;
 extern joint_config jc;
 extern joint_config_address jc_a;
+extern joint_state js;
 
 extern uint16_t enc_angle;
 
@@ -258,12 +259,13 @@ void RegisterAccessReader::handler(
     	int32_t rv;
     	if (pos > jc.upper_limit_ticks && pos < jc.lower_limit_ticks)
     	{
-    		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, 1);
+    		HAL_GPIO_WritePin(GPIOD, GPIO_PIN_2, GPIO_PIN_SET);
     		rv = 1;
     	}
     	else
     	{
     		tmc5160_move(pos);
+    		js.move = 1;
     		rv = 0;
     	}
 

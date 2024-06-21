@@ -28,8 +28,8 @@ struct joint_config
 	float lower_limit_enc;
 	uint32_t zero_enc;
 };
-
 typedef struct joint_config joint_config;
+
 
 struct joint_config_address
 {
@@ -38,7 +38,6 @@ struct joint_config_address
 	uint16_t address_of_lower_limit_enc;
 	uint16_t address_of_zero_enc;
 };
-
 typedef struct joint_config_address joint_config_address;
 
 

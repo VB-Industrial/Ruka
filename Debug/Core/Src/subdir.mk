@@ -1,12 +1,14 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (11.3.rel1)
+# Toolchain: GNU Tools for STM32 (12.3.rel1)
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Core/Src/Adafruit_BNO055.cpp \
 ../Core/Src/IMU.cpp \
+../Core/Src/alert_reg.cpp \
+../Core/Src/jsm.cpp \
 ../Core/Src/main_impl.cpp 
 
 C_SRCS += \
@@ -52,6 +54,7 @@ C_DEPS += \
 OBJS += \
 ./Core/Src/Adafruit_BNO055.o \
 ./Core/Src/IMU.o \
+./Core/Src/alert_reg.o \
 ./Core/Src/as50xx.o \
 ./Core/Src/at24_eeprom.o \
 ./Core/Src/dma.o \
@@ -59,6 +62,7 @@ OBJS += \
 ./Core/Src/gpio.o \
 ./Core/Src/i2c.o \
 ./Core/Src/joint_config.o \
+./Core/Src/jsm.o \
 ./Core/Src/main.o \
 ./Core/Src/main_impl.o \
 ./Core/Src/spi.o \
@@ -75,6 +79,8 @@ OBJS += \
 CPP_DEPS += \
 ./Core/Src/Adafruit_BNO055.d \
 ./Core/Src/IMU.d \
+./Core/Src/alert_reg.d \
+./Core/Src/jsm.d \
 ./Core/Src/main_impl.d 
 
 
@@ -87,7 +93,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/Adafruit_BNO055.cyclo ./Core/Src/Adafruit_BNO055.d ./Core/Src/Adafruit_BNO055.o ./Core/Src/Adafruit_BNO055.su ./Core/Src/IMU.cyclo ./Core/Src/IMU.d ./Core/Src/IMU.o ./Core/Src/IMU.su ./Core/Src/as50xx.cyclo ./Core/Src/as50xx.d ./Core/Src/as50xx.o ./Core/Src/as50xx.su ./Core/Src/at24_eeprom.cyclo ./Core/Src/at24_eeprom.d ./Core/Src/at24_eeprom.o ./Core/Src/at24_eeprom.su ./Core/Src/dma.cyclo ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/dma.su ./Core/Src/fdcan.cyclo ./Core/Src/fdcan.d ./Core/Src/fdcan.o ./Core/Src/fdcan.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/joint_config.cyclo ./Core/Src/joint_config.d ./Core/Src/joint_config.o ./Core/Src/joint_config.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/main_impl.cyclo ./Core/Src/main_impl.d ./Core/Src/main_impl.o ./Core/Src/main_impl.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/stm32g4xx_hal_msp.cyclo ./Core/Src/stm32g4xx_hal_msp.d ./Core/Src/stm32g4xx_hal_msp.o ./Core/Src/stm32g4xx_hal_msp.su ./Core/Src/stm32g4xx_it.cyclo ./Core/Src/stm32g4xx_it.d ./Core/Src/stm32g4xx_it.o ./Core/Src/stm32g4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g4xx.cyclo ./Core/Src/system_stm32g4xx.d ./Core/Src/system_stm32g4xx.o ./Core/Src/system_stm32g4xx.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/tmc5160.cyclo ./Core/Src/tmc5160.d ./Core/Src/tmc5160.o ./Core/Src/tmc5160.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su ./Core/Src/utility.cyclo ./Core/Src/utility.d ./Core/Src/utility.o ./Core/Src/utility.su
+	-$(RM) ./Core/Src/Adafruit_BNO055.cyclo ./Core/Src/Adafruit_BNO055.d ./Core/Src/Adafruit_BNO055.o ./Core/Src/Adafruit_BNO055.su ./Core/Src/IMU.cyclo ./Core/Src/IMU.d ./Core/Src/IMU.o ./Core/Src/IMU.su ./Core/Src/alert_reg.cyclo ./Core/Src/alert_reg.d ./Core/Src/alert_reg.o ./Core/Src/alert_reg.su ./Core/Src/as50xx.cyclo ./Core/Src/as50xx.d ./Core/Src/as50xx.o ./Core/Src/as50xx.su ./Core/Src/at24_eeprom.cyclo ./Core/Src/at24_eeprom.d ./Core/Src/at24_eeprom.o ./Core/Src/at24_eeprom.su ./Core/Src/dma.cyclo ./Core/Src/dma.d ./Core/Src/dma.o ./Core/Src/dma.su ./Core/Src/fdcan.cyclo ./Core/Src/fdcan.d ./Core/Src/fdcan.o ./Core/Src/fdcan.su ./Core/Src/gpio.cyclo ./Core/Src/gpio.d ./Core/Src/gpio.o ./Core/Src/gpio.su ./Core/Src/i2c.cyclo ./Core/Src/i2c.d ./Core/Src/i2c.o ./Core/Src/i2c.su ./Core/Src/joint_config.cyclo ./Core/Src/joint_config.d ./Core/Src/joint_config.o ./Core/Src/joint_config.su ./Core/Src/jsm.cyclo ./Core/Src/jsm.d ./Core/Src/jsm.o ./Core/Src/jsm.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/main_impl.cyclo ./Core/Src/main_impl.d ./Core/Src/main_impl.o ./Core/Src/main_impl.su ./Core/Src/spi.cyclo ./Core/Src/spi.d ./Core/Src/spi.o ./Core/Src/spi.su ./Core/Src/stm32g4xx_hal_msp.cyclo ./Core/Src/stm32g4xx_hal_msp.d ./Core/Src/stm32g4xx_hal_msp.o ./Core/Src/stm32g4xx_hal_msp.su ./Core/Src/stm32g4xx_it.cyclo ./Core/Src/stm32g4xx_it.d ./Core/Src/stm32g4xx_it.o ./Core/Src/stm32g4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g4xx.cyclo ./Core/Src/system_stm32g4xx.d ./Core/Src/system_stm32g4xx.o ./Core/Src/system_stm32g4xx.su ./Core/Src/tim.cyclo ./Core/Src/tim.d ./Core/Src/tim.o ./Core/Src/tim.su ./Core/Src/tmc5160.cyclo ./Core/Src/tmc5160.d ./Core/Src/tmc5160.o ./Core/Src/tmc5160.su ./Core/Src/usart.cyclo ./Core/Src/usart.d ./Core/Src/usart.o ./Core/Src/usart.su ./Core/Src/utility.cyclo ./Core/Src/utility.d ./Core/Src/utility.o ./Core/Src/utility.su
 
 .PHONY: clean-Core-2f-Src
 

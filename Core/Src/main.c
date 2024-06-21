@@ -28,9 +28,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-//#include "tmc5160.h"
 #include "IMU.h"
 #include "mainimpl.h"
+#include <alert_reg.h>
 
 //#include "joint_config.h"
 
@@ -69,6 +69,7 @@ extern I2C_HandleTypeDef hi2c4;
 motor_config mc;
 joint_config jc;
 joint_config_address jc_a;
+joint_state js;
 uint16_t enc_angle = 0;
 /* USER CODE END 0 */
 
@@ -116,6 +117,7 @@ int main(void)
   joint_config_read(&jc, &jc_a);
   HAL_Delay(10);
   tmc5160_init(&mc);
+  js_init();
   HAL_Delay(10);
   /* USER CODE END 2 */
 
@@ -133,6 +135,7 @@ int main(void)
 
   uint32_t last_hbeat = HAL_GetTick();
   uint32_t last_js = HAL_GetTick();
+  uint32_t last_AR = HAL_GetTick();
 
   vec_4ax linear = {0};
   vec_4ax quat = {0};
@@ -153,6 +156,10 @@ int main(void)
           //sprintf(msg,"%d\n\0", q[1]);
           //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
           //send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
+      }
+      if ( (now - last_AR) >= 500) {
+    	  last_AR = now;
+    	  alert_regulator();
       }
       if ( (now - last_js) >= 100) {
     	  last_js = now;

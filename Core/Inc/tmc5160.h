@@ -22,6 +22,9 @@
 #define     _STEPPER_MOTOR_DRIVER_NSS_PIN GPIO_PIN_4
 #define nop() asm volatile("nop")
 
+#define DEFAULT_VELOCITY_IN_STEPS 20000
+
+
 
 #define BYTE(value, n)    (((value) >> ((n) << 3)) & 0xFF)
 

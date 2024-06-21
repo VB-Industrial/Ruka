@@ -131,7 +131,7 @@ void tmc5160_set_default_vel()
 {
 	uint8_t WData[5] = {0};
 
-	tmc5160_velocity(1000000); //initial vel config
+	tmc5160_velocity(DEFAULT_VELOCITY_IN_STEPS); //initial vel config
 
 	WData[0] = 0xA3; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // Start acceleration = 10 (Near start)
 	tmc5160_write(WData);
@@ -330,7 +330,7 @@ void tmc5160_init(motor_config * mc)
 	WData[0] = 0x80; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x04; // EN_PWM_MODE=1 enables StealthChop (with default PWMCONF)
 	tmc5160_write(WData);
 
-	tmc5160_velocity(1000000); //initial vel config
+	tmc5160_velocity(DEFAULT_VELOCITY_IN_STEPS); //initial vel config
 
 	WData[0] = 0x93; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0xC8; // TPWM_THRS=200 yields a switching velocity about 35000 = ca. 30RPM
 	tmc5160_write(WData);
