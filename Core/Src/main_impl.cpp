@@ -30,6 +30,9 @@ extern joint_config jc;
 extern joint_config_address jc_a;
 extern joint_state js;
 
+static float vel;
+static float pos;
+
 extern uint16_t enc_angle;
 
 TYPE_ALIAS(HBeat, uavcan_node_Heartbeat_1_0)
@@ -55,14 +58,12 @@ std::shared_ptr<CyphalInterface> interface;
 
 
 void error_handler() { Error_Handler(); }
-// Тут не нужен точный таймер, поэтому так
 uint64_t micros_64() { return HAL_GetTick() * 1000; }
 UtilityConfig utilities(micros_64, error_handler);
 
 class HBeatReader: public AbstractSubscription<HBeat> {
 public:
     HBeatReader(InterfacePtr interface): AbstractSubscription<HBeat>(interface,
-        // Тут параметры - port_id, transfer kind или только port_id
         uavcan_node_Heartbeat_1_0_FIXED_PORT_ID_
     ) {};
     void handler(const uavcan_node_Heartbeat_1_0& hbeat, CanardRxTransfer* transfer) override {}
@@ -79,27 +80,37 @@ public:
     ) {};
     void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override
     {
+
+    	vel = js_in.angular_velocity.radian_per_second;
+    	pos = js_in.angular_position.radian;
+
+    	//OLD VERSION VELOCITY CONTROL
+//    	if(js_in.angular_velocity.radian_per_second)
+//    	{
+//    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+//    		tmc5160_move(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
+//    	}
+//    	else
+//    	{
+//    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
+//    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+//    	}
+
+    	//New version POS-VEL control
+
     	if(js_in.angular_velocity.radian_per_second)
     	{
+        	tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
+        	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
     		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-    		tmc5160_move(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
+
     	}
     	else
     	{
-    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
-    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+			tmc5160_velocity(rad_to_steps(10000, jc.full_steps));
+			tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
     	}
-//    	if (js_in.angular_acceleration.radian_per_second_per_second != eff_in)
-//    	{
-//    		eff_in = js_in.angular_acceleration.radian_per_second_per_second;
-//    		tmc5160_effort(js_in.angular_acceleration.radian_per_second_per_second, &mc);
-//    	}
-//    	if (js_in.angular_position.radian != pos_in)
-//    	{
-//
-//    		pos_in = js_in.angular_position.radian;
-//    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, 2560000)); //jc.full_steps
-//    	}
+
     }
 };
 
@@ -526,12 +537,8 @@ void send_IMU(float* qw, float* qx, float* qy, float* qz, float* ax, float* ay, 
 	static uint8_t state_buffer[State::buffer_size];
 	static CanardTransferID int_transfer_id = 0;
 
-	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-
-	//uavcan_si_unit_angle_Quaternion_1_0 q_orient = {*av_1, *av_2, *av_3, *av_3};
 	reg_udral_physics_kinematics_cartesian_Pose_0_1 imu_pose;
 	imu_pose.orientation = {*qw, *qx, *qy, *qz};
-	//imu_pose.position =
 
 	reg_udral_physics_kinematics_cartesian_Twist_0_1 imu_twist;
 	imu_twist.angular = {*ax, *ay, *az};
