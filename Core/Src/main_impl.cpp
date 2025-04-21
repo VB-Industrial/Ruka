@@ -30,8 +30,7 @@ extern joint_config jc;
 extern joint_config_address jc_a;
 extern joint_state js;
 
-static float vel;
-static float pos;
+
 
 extern uint16_t enc_angle;
 
@@ -72,6 +71,14 @@ public:
 
 HBeatReader* h_reader;
 
+
+static float vel_moveit;
+static float pos_moveit;
+static float vel_actual;
+static float pos_actual;
+static float vel_set;
+static float pos_set;
+
 class JSReader: public AbstractSubscription<JS_msg> {
 public:
 	JSReader(InterfacePtr interface): AbstractSubscription<JS_msg>(interface,
@@ -81,8 +88,14 @@ public:
     void handler(const reg_udral_physics_kinematics_rotation_Planar_0_1& js_in, CanardRxTransfer* transfer) override
     {
 
-    	vel = js_in.angular_velocity.radian_per_second;
-    	pos = js_in.angular_position.radian;
+    	vel_moveit = js_in.angular_velocity.radian_per_second;
+    	pos_moveit = js_in.angular_position.radian;
+    	pos_actual = steps_to_rads(tmc5160_position_read(), jc.full_steps);
+    	vel_actual = steps_to_rads(tmc5160_velocity_read(), jc.full_steps);
+    	float Kd = 2.0;
+
+    	pos_set = steps_to_rads(rad_to_steps(js_in.angular_position.radian, jc.full_steps), jc.full_steps);
+    	vel_set = steps_to_rads(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps), jc.full_steps);
 
     	//OLD VERSION VELOCITY CONTROL
 //    	if(js_in.angular_velocity.radian_per_second)
@@ -97,19 +110,21 @@ public:
 //    	}
 
     	//New version POS-VEL control
-
-    	if(js_in.angular_velocity.radian_per_second)
+    	//tmc5160_acceleration(10000000);
+    	tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second * Kd, jc.full_steps));
+    	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+    	if(fabs(js_in.angular_velocity.radian_per_second) < 0.0001)
     	{
-        	tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
-        	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
     		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-
+        	tmc5160_velocity(rad_to_steps(20000, jc.full_steps));
+        	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
     	}
-    	else
-    	{
-			tmc5160_velocity(rad_to_steps(10000, jc.full_steps));
-			tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-    	}
+//    	else
+//    	{
+//    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
+//    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+//    		tmc5160_velocity(rad_to_steps(100000, jc.full_steps)); //TODO to define proper speed
+//    	}
 
     }
 };

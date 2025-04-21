@@ -63,20 +63,13 @@ void tmc5160_init(motor_config * mc);
  */
 void tmc5160_position(int32_t position);
 
-/*Velocity in ticks
- *
- *
- *
- *
- *
- */
 void tmc5160_move(int32_t vel);
 
 void tmc5160_acceleration(uint32_t acc);
 
 int32_t tmc5160_position_read();
 
-void tmc5160_velocity(uint32_t vel);
+void tmc5160_velocity(int32_t vel);
 
 void tmc5160_set_default_vel();
 

@@ -114,10 +114,10 @@ int main(void)
   HAL_Delay(10);
   joint_config_assembler(&jc, &jc_a);
   motor_config_assembler(&mc, &jc);
-  joint_config_read(&jc, &jc_a);
+  //joint_config_read(&jc, &jc_a);
   HAL_Delay(10);
   tmc5160_init(&mc);
-  js_init();
+  //js_init();
   HAL_Delay(10);
   /* USER CODE END 2 */
 

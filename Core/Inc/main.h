@@ -82,7 +82,7 @@ void delay(uint32_t);
 
 /* USER CODE BEGIN Private defines */
 
-#define JOINT_N 1
+#define JOINT_N 6
 
 #define M_PI 3.14159265358979323846
 
