@@ -37,17 +37,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  00033f9a  00000000  00000000  0007114b  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0003859a  00000000  00000000  000a50e5  2**0
+ 17 .debug_line   0003859e  00000000  00000000  000a50e5  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00129a65  00000000  00000000  000dd67f  2**0
+ 18 .debug_str    00129a65  00000000  00000000  000dd683  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000086  00000000  00000000  002070e4  2**0
+ 19 .comment      00000086  00000000  00000000  002070e8  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000cc68  00000000  00000000  0020716c  2**2
+ 20 .debug_frame  0000cc68  00000000  00000000  00207170  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000005c  00000000  00000000  00213dd4  2**0
+ 21 .debug_line_str 0000005c  00000000  00000000  00213dd8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_loclists 00000037  00000000  00000000  00213e30  2**0
+ 22 .debug_loclists 00000037  00000000  00000000  00213e34  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -3404,14 +3404,17 @@ void motor_config_assembler(motor_config * mc, joint_config * jc)
  8001e02:	6078      	str	r0, [r7, #4]
  8001e04:	6039      	str	r1, [r7, #0]
 	{
-		mc->motor_type = 14;
+		mc->motor_type = 23;
 	}
+	else if (JOINT_N == 3)
+	{
+		mc->motor_type = 17;
+ 8001e06:	687b      	ldr	r3, [r7, #4]
+ 8001e08:	2211      	movs	r2, #17
+ 8001e0a:	701a      	strb	r2, [r3, #0]
 	else if (JOINT_N == 6)
 	{
 		mc->motor_type = 14;
- 8001e06:	687b      	ldr	r3, [r7, #4]
- 8001e08:	220e      	movs	r2, #14
- 8001e0a:	701a      	strb	r2, [r3, #0]
 	}
 
 	switch(mc->motor_type)
@@ -3449,9 +3452,9 @@ void motor_config_assembler(motor_config * mc, joint_config * jc)
  8001e3e:	687b      	ldr	r3, [r7, #4]
  8001e40:	4a0c      	ldr	r2, [pc, #48]	@ (8001e74 <motor_config_assembler+0x78>)
  8001e42:	605a      	str	r2, [r3, #4]
-		mc->init_irun = 2;
+		mc->init_irun = 6;
  8001e44:	687b      	ldr	r3, [r7, #4]
- 8001e46:	2202      	movs	r2, #2
+ 8001e46:	2206      	movs	r2, #6
  8001e48:	725a      	strb	r2, [r3, #9]
 	case 23:
 		mc->max_irun_scaler = 31;
@@ -3462,9 +3465,9 @@ void motor_config_assembler(motor_config * mc, joint_config * jc)
  8001e50:	687b      	ldr	r3, [r7, #4]
  8001e52:	4a09      	ldr	r2, [pc, #36]	@ (8001e78 <motor_config_assembler+0x7c>)
  8001e54:	605a      	str	r2, [r3, #4]
-		mc->init_irun = 4;
+		mc->init_irun = 5;
  8001e56:	687b      	ldr	r3, [r7, #4]
- 8001e58:	2204      	movs	r2, #4
+ 8001e58:	2205      	movs	r2, #5
  8001e5a:	725a      	strb	r2, [r3, #9]
 	}
 	mc->direction = jc->direction;
@@ -3495,15 +3498,15 @@ void joint_config_assembler(joint_config * jconf, joint_config_address * jc_a)
 		jconf->lower_limit_ticks = 0;
 		jconf->upper_limit_ticks = 0;
 	}
-	else if (JOINT_N == 6)
+	else if (JOINT_N == 3)
 	{
-		jconf->motor_gear_ratio = 19.203208;
+		jconf->motor_gear_ratio = 50;
  8001e86:	687b      	ldr	r3, [r7, #4]
  8001e88:	4a20      	ldr	r2, [pc, #128]	@ (8001f0c <joint_config_assembler+0x90>)
  8001e8a:	60da      	str	r2, [r3, #12]
-		jconf->joint_gear_ratio = 1;
+		jconf->joint_gear_ratio = 2;
  8001e8c:	687b      	ldr	r3, [r7, #4]
- 8001e8e:	f04f 527e 	mov.w	r2, #1065353216	@ 0x3f800000
+ 8001e8e:	f04f 4280 	mov.w	r2, #1073741824	@ 0x40000000
  8001e92:	609a      	str	r2, [r3, #8]
 		jconf->full_steps = (uint32_t)(256 * 200* jconf->motor_gear_ratio * jconf->joint_gear_ratio);
  8001e94:	687b      	ldr	r3, [r7, #4]
@@ -3517,9 +3520,9 @@ void joint_config_assembler(joint_config * jconf, joint_config_address * jc_a)
  8001eb0:	ee17 2a90 	vmov	r2, s15
  8001eb4:	687b      	ldr	r3, [r7, #4]
  8001eb6:	605a      	str	r2, [r3, #4]
-		jconf->direction = -1;
+		jconf->direction = 1;
  8001eb8:	687b      	ldr	r3, [r7, #4]
- 8001eba:	22ff      	movs	r2, #255	@ 0xff
+ 8001eba:	2201      	movs	r2, #1
  8001ebc:	705a      	strb	r2, [r3, #1]
 		jconf->lower_limit_ticks = 0;
  8001ebe:	687b      	ldr	r3, [r7, #4]
@@ -3529,6 +3532,8 @@ void joint_config_assembler(joint_config * jconf, joint_config_address * jc_a)
  8001ec4:	687b      	ldr	r3, [r7, #4]
  8001ec6:	2200      	movs	r2, #0
  8001ec8:	611a      	str	r2, [r3, #16]
+		jconf->lower_limit_ticks = 0;
+		jconf->upper_limit_ticks = 0;
 	}
 
 	//TODO!!!!!!!!!!!!!!!!!!!!!!!!! from config read
@@ -3572,7 +3577,7 @@ void joint_config_assembler(joint_config * jconf, joint_config_address * jc_a)
  8001f04:	f85d 7b04 	ldr.w	r7, [sp], #4
  8001f08:	4770      	bx	lr
  8001f0a:	bf00      	nop
- 8001f0c:	4199a02c 	.word	0x4199a02c
+ 8001f0c:	42480000 	.word	0x42480000
  8001f10:	47480000 	.word	0x47480000
 
 08001f14 <joint_config_write>:
@@ -15376,7 +15381,7 @@ public:
  80062f2:	4618      	mov	r0, r3
  80062f4:	f7ff ffa7 	bl	8006246 <_ZNSt10shared_ptrI15CyphalInterfaceEC1ERKS1_>
  80062f8:	f107 0308 	add.w	r3, r7, #8
- 80062fc:	f240 4266 	movw	r2, #1126	@ 0x466
+ 80062fc:	f240 4263 	movw	r2, #1123	@ 0x463
  8006300:	4619      	mov	r1, r3
  8006302:	4620      	mov	r0, r4
  8006304:	f001 fb75 	bl	80079f2 <_ZN20AbstractSubscriptionI6JS_msgEC1ESt10shared_ptrI15CyphalInterfaceEt>
@@ -15702,7 +15707,7 @@ void NodeInfoReader::handler(
  80065d8:	3300      	adds	r3, #0
  80065da:	f8c7 3174 	str.w	r3, [r7, #372]	@ 0x174
     std::sprintf(joint_name,"joint_%d", JOINT_N);
- 80065de:	2206      	movs	r2, #6
+ 80065de:	2203      	movs	r2, #3
  80065e0:	4939      	ldr	r1, [pc, #228]	@ (80066c8 <_ZN14NodeInfoReader7handlerERK31uavcan_node_GetInfo_Request_1_0P16CanardRxTransfer+0x1bc>)
  80065e2:	f8d7 0174 	ldr.w	r0, [r7, #372]	@ 0x174
  80065e6:	f00e f98f 	bl	8014908 <siprintf>
@@ -15759,7 +15764,7 @@ void NodeInfoReader::handler(
     node_info_response.unique_id[0] = JOINT_N;
  800666c:	f507 73c0 	add.w	r3, r7, #384	@ 0x180
  8006670:	f5a3 73b0 	sub.w	r3, r3, #352	@ 0x160
- 8006674:	2206      	movs	r2, #6
+ 8006674:	2203      	movs	r2, #3
  8006676:	741a      	strb	r2, [r3, #16]
     interface->send_response<NodeInfoResponse>(
  8006678:	f507 73c0 	add.w	r3, r7, #384	@ 0x180
@@ -17171,7 +17176,7 @@ void setup_cyphal(FDCAN_HandleTypeDef* handler) {
  80073c2:	9300      	str	r3, [sp, #0]
  80073c4:	f44f 73c8 	mov.w	r3, #400	@ 0x190
  80073c8:	687a      	ldr	r2, [r7, #4]
- 80073ca:	2106      	movs	r1, #6
+ 80073ca:	2103      	movs	r1, #3
  80073cc:	483f      	ldr	r0, [pc, #252]	@ (80074cc <setup_cyphal+0x114>)
  80073ce:	f000 fc80 	bl	8007cd2 <_ZN15CyphalInterface10create_bssI5G4CAN15SystemAllocatorJEEEPS_PSt4bytehNT_7HandlerEjDpOT1_R13UtilityConfig>
  80073d2:	4602      	mov	r2, r0
@@ -17304,12 +17309,12 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 
 	CanardFilter cyphal_filter_for_node_id = canardMakeFilterForServices(JOINT_N);
  8007508:	f107 0320 	add.w	r3, r7, #32
- 800750c:	2106      	movs	r1, #6
+ 800750c:	2103      	movs	r1, #3
  800750e:	4618      	mov	r0, r3
  8007510:	f00c f956 	bl	80137c0 <canardMakeFilterForServices>
 	CanardFilter cyphal_filter_for_JS = canardMakeFilterForSubject(JS_SUB_PORT_ID);//JS_SUB_PORT_ID //1121
  8007514:	f107 0318 	add.w	r3, r7, #24
- 8007518:	f240 4166 	movw	r1, #1126	@ 0x466
+ 8007518:	f240 4163 	movw	r1, #1123	@ 0x463
  800751c:	4618      	mov	r0, r3
  800751e:	f00c f92f 	bl	8013780 <canardMakeFilterForSubject>
 	CanardFilter cyphal_filter_for_HB = canardMakeFilterForSubject(7509);//JS_SUB_PORT_ID

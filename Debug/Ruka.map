@@ -12301,7 +12301,7 @@ LOAD C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x00033d7f      0x205 ./Drivers/libcyphal/libs/libcanard/canard.o
  .debug_macro   0x00033f84       0x16 ./Drivers/libcyphal/libs/libcanard/canard.o
 
-.debug_line     0x00000000    0x3859a
+.debug_line     0x00000000    0x3859e
  .debug_line    0x00000000     0x1f15 ./Core/Src/Adafruit_BNO055.o
  .debug_line    0x00001f15     0x1a36 ./Core/Src/IMU.o
  .debug_line    0x0000394b       0x67 ./Core/Src/alert_reg.o
@@ -12311,42 +12311,42 @@ LOAD C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x00005303      0x87b ./Core/Src/fdcan.o
  .debug_line    0x00005b7e      0x825 ./Core/Src/gpio.o
  .debug_line    0x000063a3      0x8d8 ./Core/Src/i2c.o
- .debug_line    0x00006c7b      0xa83 ./Core/Src/joint_config.o
- .debug_line    0x000076fe      0xa80 ./Core/Src/main.o
- .debug_line    0x0000817e     0x6a4b ./Core/Src/main_impl.o
- .debug_line    0x0000ebc9      0x8dc ./Core/Src/spi.o
- .debug_line    0x0000f4a5      0x7e6 ./Core/Src/stm32g4xx_hal_msp.o
- .debug_line    0x0000fc8b      0x937 ./Core/Src/stm32g4xx_it.o
- .debug_line    0x000105c2      0x8b2 ./Core/Src/syscalls.o
- .debug_line    0x00010e74      0x583 ./Core/Src/sysmem.o
- .debug_line    0x000113f7      0x851 ./Core/Src/system_stm32g4xx.o
- .debug_line    0x00011c48      0x881 ./Core/Src/tim.o
- .debug_line    0x000124c9      0xed9 ./Core/Src/tmc5160.o
- .debug_line    0x000133a2      0x886 ./Core/Src/usart.o
- .debug_line    0x00013c28      0x67b ./Core/Src/utility.o
- .debug_line    0x000142a3       0x7b ./Core/Startup/startup_stm32g474retx.o
- .debug_line    0x0001431e      0xc0d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o
- .debug_line    0x00014f2b      0xd76 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o
- .debug_line    0x00015ca1      0xf37 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o
- .debug_line    0x00016bd8     0x19bc ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.o
- .debug_line    0x00018594      0xc26 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o
- .debug_line    0x000191ba     0x3ac3 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.o
- .debug_line    0x0001cc7d      0xa02 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.o
- .debug_line    0x0001d67f      0xd7c ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o
- .debug_line    0x0001e3fb      0xfd8 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o
- .debug_line    0x0001f3d3     0x12e8 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o
- .debug_line    0x000206bb     0x208d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.o
- .debug_line    0x00022748     0x40cd ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o
- .debug_line    0x00026815     0x2210 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o
- .debug_line    0x00028a25     0x3c81 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.o
- .debug_line    0x0002c6a6      0xe33 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.o
- .debug_line    0x0002d4d9     0x1823 ./Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.o
- .debug_line    0x0002ecfc     0x1731 ./Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.o
- .debug_line    0x0003042d     0x19fa ./Drivers/libcyphal/cyphal/cyphal.o
- .debug_line    0x00031e27     0x1628 ./Drivers/libcyphal/cyphal/providers/FDCAN_generic.o
- .debug_line    0x0003344f     0x1aa1 ./Drivers/libcyphal/cyphal/providers/G4CAN.o
- .debug_line    0x00034ef0     0x1b80 ./Drivers/libcyphal/cyphal/providers/provider.o
- .debug_line    0x00036a70     0x1b2a ./Drivers/libcyphal/libs/libcanard/canard.o
+ .debug_line    0x00006c7b      0xa87 ./Core/Src/joint_config.o
+ .debug_line    0x00007702      0xa80 ./Core/Src/main.o
+ .debug_line    0x00008182     0x6a4b ./Core/Src/main_impl.o
+ .debug_line    0x0000ebcd      0x8dc ./Core/Src/spi.o
+ .debug_line    0x0000f4a9      0x7e6 ./Core/Src/stm32g4xx_hal_msp.o
+ .debug_line    0x0000fc8f      0x937 ./Core/Src/stm32g4xx_it.o
+ .debug_line    0x000105c6      0x8b2 ./Core/Src/syscalls.o
+ .debug_line    0x00010e78      0x583 ./Core/Src/sysmem.o
+ .debug_line    0x000113fb      0x851 ./Core/Src/system_stm32g4xx.o
+ .debug_line    0x00011c4c      0x881 ./Core/Src/tim.o
+ .debug_line    0x000124cd      0xed9 ./Core/Src/tmc5160.o
+ .debug_line    0x000133a6      0x886 ./Core/Src/usart.o
+ .debug_line    0x00013c2c      0x67b ./Core/Src/utility.o
+ .debug_line    0x000142a7       0x7b ./Core/Startup/startup_stm32g474retx.o
+ .debug_line    0x00014322      0xc0d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o
+ .debug_line    0x00014f2f      0xd76 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_cortex.o
+ .debug_line    0x00015ca5      0xf37 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_dma.o
+ .debug_line    0x00016bdc     0x19bc ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_fdcan.o
+ .debug_line    0x00018598      0xc26 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_gpio.o
+ .debug_line    0x000191be     0x3ac3 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c.o
+ .debug_line    0x0001cc81      0xa02 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_i2c_ex.o
+ .debug_line    0x0001d683      0xd7c ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_pwr_ex.o
+ .debug_line    0x0001e3ff      0xfd8 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc.o
+ .debug_line    0x0001f3d7     0x12e8 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_rcc_ex.o
+ .debug_line    0x000206bf     0x208d ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_spi.o
+ .debug_line    0x0002274c     0x40cd ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim.o
+ .debug_line    0x00026819     0x2210 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_tim_ex.o
+ .debug_line    0x00028a29     0x3c81 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart.o
+ .debug_line    0x0002c6aa      0xe33 ./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal_uart_ex.o
+ .debug_line    0x0002d4dd     0x1823 ./Drivers/libcyphal/cyphal/allocators/o1/o1_allocator.o
+ .debug_line    0x0002ed00     0x1731 ./Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.o
+ .debug_line    0x00030431     0x19fa ./Drivers/libcyphal/cyphal/cyphal.o
+ .debug_line    0x00031e2b     0x1628 ./Drivers/libcyphal/cyphal/providers/FDCAN_generic.o
+ .debug_line    0x00033453     0x1aa1 ./Drivers/libcyphal/cyphal/providers/G4CAN.o
+ .debug_line    0x00034ef4     0x1b80 ./Drivers/libcyphal/cyphal/providers/provider.o
+ .debug_line    0x00036a74     0x1b2a ./Drivers/libcyphal/libs/libcanard/canard.o
 
 .debug_str      0x00000000   0x129a65
  .debug_str     0x00000000   0x10703d ./Core/Src/Adafruit_BNO055.o
