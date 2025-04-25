@@ -60,15 +60,18 @@ void motor_config_assembler(motor_config * mc, joint_config * jc)
 	case 14:
 		mc->max_irun_scaler = 8;
 		mc->max_effort = 0.5;
-		mc->init_irun = 0;
+		mc->init_irun = 4;
+		break;
 	case 17:
 		mc->max_irun_scaler = 12;
 		mc->max_effort = 3.9;
-		mc->init_irun = 6;
+		mc->init_irun = 8;
+		break;
 	case 23:
 		mc->max_irun_scaler = 31;
 		mc->max_effort = 10.2;
-		mc->init_irun = 5;
+		mc->init_irun = 18;
+		break;
 	}
 	mc->direction = jc->direction;
 }
