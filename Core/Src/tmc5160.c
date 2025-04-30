@@ -139,16 +139,16 @@ void tmc5160_set_default_vel()
 	WData[0] = 0xA3; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // Start acceleration = 10 (Near start)
 	tmc5160_write(WData);
 
-	WData[0] = 0xA4; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0xff; WData[4] = 0xff; // A1 = 10 000 First acceleration
+	WData[0] = 0xA4; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0x0f; WData[4] = 0xff; // A1 = 10 000 First acceleration
 	tmc5160_write(WData);
 
-	WData[0] = 0xA6; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0xff; WData[4] = 0xff; // AMAX = 5 000 Acceleration above V1
+	WData[0] = 0xA6; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x0f; WData[4] = 0xff; // AMAX = 5 000 Acceleration above V1
 	tmc5160_write(WData);
 
-	WData[0] = 0xA8; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0xff; WData[4] = 0xff; // DMAX = 5 000 Deceleration above V1
+	WData[0] = 0xA8; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x0f; WData[4] = 0xff; // DMAX = 5 000 Deceleration above V1
 	tmc5160_write(WData);
 
-	WData[0] = 0xAA; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0xff; WData[4] = 0xff; // D1 = 10 000 Deceleration below V1
+	WData[0] = 0xAA; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0x0f; WData[4] = 0xff; // D1 = 10 000 Deceleration below V1
 	tmc5160_write(WData);
 
 	WData[0] = 0xAB; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0F; // VSTOP = 15 Stop velocity (Near to zero)

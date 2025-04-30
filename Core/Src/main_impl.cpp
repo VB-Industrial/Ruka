@@ -79,6 +79,8 @@ static float pos_actual;
 static float vel_set;
 static float pos_set;
 
+static float Kd = 0;
+
 class JSReader: public AbstractSubscription<JS_msg> {
 public:
 	JSReader(InterfacePtr interface): AbstractSubscription<JS_msg>(interface,
@@ -92,39 +94,49 @@ public:
     	pos_moveit = js_in.angular_position.radian;
     	pos_actual = steps_to_rads(tmc5160_position_read(), jc.full_steps);
     	vel_actual = steps_to_rads(tmc5160_velocity_read(), jc.full_steps);
-    	float Kd = 2.0;
 
     	pos_set = steps_to_rads(rad_to_steps(js_in.angular_position.radian, jc.full_steps), jc.full_steps);
     	vel_set = steps_to_rads(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps), jc.full_steps);
 
     	//OLD VERSION VELOCITY CONTROL
-//    	if(js_in.angular_velocity.radian_per_second)
+
+    	float velocity_threshhold = 0.1;
+    	if(js_in.angular_velocity.radian_per_second)
+    	{
+    		if(fabs(js_in.angular_velocity.radian_per_second) < velocity_threshhold)
+    		{
+    			tmc5160_velocity(rad_to_steps(velocity_threshhold, jc.full_steps));
+        		tmc5160_position(rad_to_steps(pos_set, jc.full_steps));
+    		}
+    		else
+    		{
+    		//Kd = (pos_actual - pos_moveit); //TODO
+    		tmc5160_move(rad_to_steps(js_in.angular_velocity.radian_per_second * (1 + Kd), jc.full_steps));
+    		}
+    	}
+    	else
+    	{
+    		tmc5160_velocity(rad_to_steps(velocity_threshhold, jc.full_steps));
+    		tmc5160_position(rad_to_steps(pos_set, jc.full_steps));
+    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+    	}
+
+//    	//New version POS-VEL control
+//    	//tmc5160_acceleration(10000000);
+//    	tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second * Kd, jc.full_steps));
+//    	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+//    	if(fabs(js_in.angular_velocity.radian_per_second) < 0.0001)
 //    	{
 //    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-//    		tmc5160_move(rad_to_steps(js_in.angular_velocity.radian_per_second, jc.full_steps));
+//        	tmc5160_velocity(rad_to_steps(20000, jc.full_steps));
+//        	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
 //    	}
-//    	else
-//    	{
-//    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
-//    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-//    	}
-
-    	//New version POS-VEL control
-    	//tmc5160_acceleration(10000000);
-    	tmc5160_velocity(rad_to_steps(js_in.angular_velocity.radian_per_second * Kd, jc.full_steps));
-    	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-    	if(fabs(js_in.angular_velocity.radian_per_second) < 0.0001)
-    	{
-    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tmc5160_velocity(rad_to_steps(20000, jc.full_steps));
-        	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-    	}
-//    	else
-//    	{
-//    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
-//    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-//    		tmc5160_velocity(rad_to_steps(100000, jc.full_steps)); //TODO to define proper speed
-//    	}
+////    	else
+////    	{
+////    		js_in.angular_position.radian != steps_to_rads(tmc5160_position_read(), jc.full_steps);
+////    		tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+////    		tmc5160_velocity(rad_to_steps(100000, jc.full_steps)); //TODO to define proper speed
+////    	}
 
     }
 };
