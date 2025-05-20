@@ -1,0 +1,10 @@
+../Core/Src/motor_controller.cpp:24:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	3
+../Core/Src/motor_controller.cpp:35:1:motor::motor()	1
+../Core/Src/motor_controller.cpp:40:6:void motor::update()	1
+../Core/Src/motor_controller.cpp:46:6:void motor::set_position_to_go(float)	1
+../Core/Src/motor_controller.cpp:51:6:void motor::_apply_speed(float)	1
+../Core/Src/motor_controller.cpp:57:7:float motor::get_position()	1
+../Core/Src/motor_controller.cpp:62:7:float motor::get_velocity()	1
+../Core/Src/motor_controller.cpp:67:7:float motor::read_encoder()	1
+../Core/Src/motor_controller.cpp:76:1:void __static_initialization_and_destruction_0(int, int)	3
+../Core/Src/motor_controller.cpp:76:1:cpp)	1

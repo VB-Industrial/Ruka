@@ -5,11 +5,10 @@
  *      Author: VR
  */
 
-#ifndef INC_MAINIMPL_H_
-#define INC_MAINIMPL_H_
+#ifndef INC_COMMUNICATION_H_
+#define INC_COMMUNICATION_H_
 
 #include "joint_config.h"
-#include <jsm.h>
 
 void cyphal_loop();
 void heartbeat();
@@ -19,4 +18,4 @@ void setup_cyphal(FDCAN_HandleTypeDef*);
 void cyphal_can_starter(FDCAN_HandleTypeDef*);
 void calib_move(joint_config * jc);
 
-#endif /* INC_MAINIMPL_H_ */
+#endif /* INC_COMMUNICATION_H_ */

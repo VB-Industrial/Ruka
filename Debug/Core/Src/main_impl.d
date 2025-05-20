@@ -1,5 +1,7 @@
-Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
- ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
+Core/Src/main_impl.o: ../Core/Src/main_impl.cpp \
+ ../Core/Inc/communication.h ../Core/Inc/joint_config.h \
+ ../Core/Inc/tmc5160.h ../Core/Inc/utility.h ../Core/Inc/spi.h \
+ ../Core/Inc/main.h ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_def.h \
@@ -33,59 +35,12 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/ruka_joints.h ../Core/Inc/main.h \
- ../Drivers/libcyphal/cyphal/cyphal.h \
- ../Drivers/libcyphal/cyphal/definitions.h \
- ../Drivers/libcyphal/cyphal/providers/provider.h \
- ../Drivers/libcyphal/cyphal/allocators/allocator.h \
- ../Drivers/libcyphal/libs/libcanard/canard.h \
- ../Drivers/libcyphal/cyphal/cyphal.tpp \
- ../Drivers/libcyphal/cyphal/providers/G4CAN.h \
- ../Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.h \
- ../Drivers/libcyphal/cyphal/subscriptions/subscription.h \
- ../Drivers/libcyphal/cyphal/interfaces.h \
- ../Drivers/libcyphal/libs/uavcan/node/Heartbeat_1_0.h \
- ../Drivers/libcyphal/libs/nunavut/support/serialization.h \
- ../Drivers/libcyphal/libs/uavcan/node/Health_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/node/Mode_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/scalar/Integer32_1_0.h \
- ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/rotation/Planar_0_1.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/angle/Scalar_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/angular_acceleration/Scalar_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Scalar_1_0.h \
- ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Twist_0_1.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Vector3_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/velocity/Vector3_1_0.h \
- ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/State_0_1.h \
- ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Pose_0_1.h \
- ../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Point_0_1.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/length/WideVector3_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/si/unit/angle/Quaternion_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/_register/Access_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/_register/Name_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/_register/Value_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Bit_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer16_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer32_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer64_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Integer8_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Natural16_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Natural32_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Natural64_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Natural8_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Real16_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Real32_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/array/Real64_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/Empty_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/String_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/primitive/Unstructured_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/time/SynchronizedTimestamp_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h ../Core/Inc/as50xx.h \
- ../Core/Inc/spi.h ../Core/Inc/utility.h ../Core/Inc/mainimpl.h \
- ../Core/Inc/joint_config.h ../Core/Inc/tmc5160.h ../Core/Inc/utility.h \
- ../Core/Inc/jsm.h
+ ../Core/Inc/main_impl.h ../Core/Inc/IMU.h
+../Core/Inc/communication.h:
+../Core/Inc/joint_config.h:
+../Core/Inc/tmc5160.h:
+../Core/Inc/utility.h:
+../Core/Inc/spi.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -121,62 +76,5 @@ Core/Src/main_impl.o: ../Core/Src/main_impl.cpp ../Core/Inc/main.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
-../Core/Inc/ruka_joints.h:
-../Core/Inc/main.h:
-../Drivers/libcyphal/cyphal/cyphal.h:
-../Drivers/libcyphal/cyphal/definitions.h:
-../Drivers/libcyphal/cyphal/providers/provider.h:
-../Drivers/libcyphal/cyphal/allocators/allocator.h:
-../Drivers/libcyphal/libs/libcanard/canard.h:
-../Drivers/libcyphal/cyphal/cyphal.tpp:
-../Drivers/libcyphal/cyphal/providers/G4CAN.h:
-../Drivers/libcyphal/cyphal/allocators/sys/sys_allocator.h:
-../Drivers/libcyphal/cyphal/subscriptions/subscription.h:
-../Drivers/libcyphal/cyphal/interfaces.h:
-../Drivers/libcyphal/libs/uavcan/node/Heartbeat_1_0.h:
-../Drivers/libcyphal/libs/nunavut/support/serialization.h:
-../Drivers/libcyphal/libs/uavcan/node/Health_1_0.h:
-../Drivers/libcyphal/libs/uavcan/node/Mode_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/scalar/Integer32_1_0.h:
-../Drivers/libcyphal/libs/reg/udral/physics/kinematics/rotation/Planar_0_1.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/angle/Scalar_1_0.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/angular_acceleration/Scalar_1_0.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Scalar_1_0.h:
-../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Twist_0_1.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/angular_velocity/Vector3_1_0.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/velocity/Vector3_1_0.h:
-../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/State_0_1.h:
-../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Pose_0_1.h:
-../Drivers/libcyphal/libs/reg/udral/physics/kinematics/cartesian/Point_0_1.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/length/WideVector3_1_0.h:
-../Drivers/libcyphal/libs/uavcan/si/unit/angle/Quaternion_1_0.h:
-../Drivers/libcyphal/libs/uavcan/_register/Access_1_0.h:
-../Drivers/libcyphal/libs/uavcan/_register/Name_1_0.h:
-../Drivers/libcyphal/libs/uavcan/_register/Value_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Bit_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Integer16_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Integer32_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Integer64_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Integer8_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Natural16_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Natural32_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Natural64_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Natural8_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Real16_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Real32_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/array/Real64_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/Empty_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/String_1_0.h:
-../Drivers/libcyphal/libs/uavcan/primitive/Unstructured_1_0.h:
-../Drivers/libcyphal/libs/uavcan/time/SynchronizedTimestamp_1_0.h:
-../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h:
-../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h:
-../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h:
-../Core/Inc/as50xx.h:
-../Core/Inc/spi.h:
-../Core/Inc/utility.h:
-../Core/Inc/mainimpl.h:
-../Core/Inc/joint_config.h:
-../Core/Inc/tmc5160.h:
-../Core/Inc/utility.h:
-../Core/Inc/jsm.h:
+../Core/Inc/main_impl.h:
+../Core/Inc/IMU.h:

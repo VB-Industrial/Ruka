@@ -28,9 +28,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "IMU.h"
-#include "mainimpl.h"
-#include <alert_reg.h>
+#include "main_impl.h"
 
 //#include "joint_config.h"
 
@@ -64,13 +62,7 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//I2C_HandleTypeDef hi2c4;
-extern I2C_HandleTypeDef hi2c4;
-motor_config mc;
-joint_config jc;
-joint_config_address jc_a;
-joint_state js;
-uint16_t enc_angle = 0;
+
 /* USER CODE END 0 */
 
 /**
@@ -108,65 +100,22 @@ int main(void)
   MX_SPI1_Init();
   MX_SPI3_Init();
   MX_TIM8_Init();
+  MX_TIM7_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-  cyphal_can_starter(&hfdcan1);
-  setup_cyphal(&hfdcan1);
-  HAL_Delay(10);
-  joint_config_assembler(&jc, &jc_a);
-  motor_config_assembler(&mc, &jc);
-  //joint_config_read(&jc, &jc_a);
-  HAL_Delay(10);
-  tmc5160_init(&mc);
-  //js_init();
-  HAL_Delay(10);
+  HAL_TIM_Base_Start_IT(&htim7);
+  HAL_TIM_Base_Start_IT(&htim6);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 
-
-  uint8_t msg[10];
-  int i = 0;
-
-
-
-  HAL_StatusTypeDef rv;
-
-
-  uint32_t last_hbeat = HAL_GetTick();
-  uint32_t last_js = HAL_GetTick();
-  uint32_t last_AR = HAL_GetTick();
-
-  vec_4ax linear = {0};
-  vec_4ax quat = {0};
-  vec_4ax gyro = {0};
-
-  //rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
-  //IMU_setup();
+  main_cpp();
 
   while (1)
   {
-      uint32_t now = HAL_GetTick();
-      if ( (now - last_hbeat) >= 1000) {
-          last_hbeat = now;
-          heartbeat();
-      	  //imu_get_quat(&quat);
-      	  //imu_get_linear(&linear);
-      	  //imu_get_gyro(&gyro);
-          //sprintf(msg,"%d\n\0", q[1]);
-          //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-          //send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
-      }
-      if ( (now - last_AR) >= 500) {
-    	  last_AR = now;
-    	  alert_regulator();
-      }
-      if ( (now - last_js) >= 100) {
-    	  last_js = now;
-    	  send_JS(&jc);
-    	  as50_readAngle(&enc_angle, 100);
-      }
-      cyphal_loop();
+
   }
     /* USER CODE END WHILE */
 
