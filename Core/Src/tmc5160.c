@@ -324,7 +324,11 @@ void tmc5160_init(motor_config * mc)
 	WData[0] = 0xEC; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0xC3; // CHOPCONF: TOFF=3, HSTRT=4, HEND=1, TBL=2, CHM=0 (SpreadCycle)
 	tmc5160_write(WData);
 
-	WData[0] = 0x90; WData[1] = 0x00; WData[2] = 0x00; WData[3] = mc->init_irun; WData[4] = mc->init_irun; //  IHOLDDELAY=0,  IRUN=10/31,  IHOLD=02/31
+	WData[0] = 0x8B; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = mc->max_irun_scaler; //GLOBAL CURRENT SCALER
+	tmc5160_write(WData);
+
+	int init_ihold = mc->init_irun * 0.7;
+	WData[0] = 0x90; WData[1] = 0x00; WData[2] = 0x00; WData[3] = init_ihold; WData[4] = mc->init_irun; //  IHOLDDELAY=0,  IRUN=10/31,  IHOLD=02/31
 	tmc5160_write(WData);
 
 	WData[0] = 0x91; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // TPOWERDOWN=10: Delay before power down in stand still
@@ -348,16 +352,16 @@ void tmc5160_init(motor_config * mc)
 	WData[0] = 0xA3; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // Start acceleration = 10 (Near start)
 	tmc5160_write(WData);
 
-	WData[0] = 0xA4; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0xFF; WData[4] = 0xFF; // A1 = 10 000 First acceleration
+	WData[0] = 0xA4; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0x0F; WData[4] = 0xFF; // A1 = 10 000 First acceleration
 	tmc5160_write(WData);
 
-	WData[0] = 0xA6; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0xFF; WData[4] = 0xFF; // AMAX = 5 000 Acceleration above V1
+	WData[0] = 0xA6; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x0F; WData[4] = 0xFF; // AMAX = 5 000 Acceleration above V1
 	tmc5160_write(WData);
 
-	WData[0] = 0xA8; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0xFF; WData[4] = 0xFF; // DMAX = 5 000 Deceleration above V1
+	WData[0] = 0xA8; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x0F; WData[4] = 0xFF; // DMAX = 5 000 Deceleration above V1
 	tmc5160_write(WData);
 
-	WData[0] = 0xAA; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0xFF; WData[4] = 0xFF; // D1 = 10 000 Deceleration below V1
+	WData[0] = 0xAA; WData[1] = 0x00; WData[2] = 0x03; WData[3] = 0x0F; WData[4] = 0xFF; // D1 = 10 000 Deceleration below V1
 	tmc5160_write(WData);
 
 	WData[0] = 0xAB; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0F; // VSTOP = 15 Stop velocity (Near to zero)

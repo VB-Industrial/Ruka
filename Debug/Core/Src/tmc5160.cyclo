@@ -9,9 +9,9 @@
 ../Core/Src/tmc5160.c:267:9:tmc5160_position_read	1
 ../Core/Src/tmc5160.c:287:9:tmc5160_velocity_read	1
 ../Core/Src/tmc5160.c:310:6:tmc5160_init	1
-../Core/Src/tmc5160.c:372:6:tmc5160_set_motor_direction	2
-../Core/Src/tmc5160.c:388:6:tmc5160_set_zero	1
-../Core/Src/tmc5160.c:398:6:tmc5160_disarm	1
-../Core/Src/tmc5160.c:403:6:tmc5160_arm	1
-../Core/Src/tmc5160.c:408:6:tmc5160_stop	1
-../Core/Src/tmc5160.c:425:9:tmc5160_torque_to_curent	2
+../Core/Src/tmc5160.c:376:6:tmc5160_set_motor_direction	2
+../Core/Src/tmc5160.c:392:6:tmc5160_set_zero	1
+../Core/Src/tmc5160.c:402:6:tmc5160_disarm	1
+../Core/Src/tmc5160.c:407:6:tmc5160_arm	1
+../Core/Src/tmc5160.c:412:6:tmc5160_stop	1
+../Core/Src/tmc5160.c:429:9:tmc5160_torque_to_curent	2
