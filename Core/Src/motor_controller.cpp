@@ -13,20 +13,20 @@ extern "C" {
 #include "joint_config.h"
 #include "as50xx.h"
 
-motor motor;
+motor m;
 
 extern joint_config jc;
 
-static float angle_enc_read_for_debug = 0.0;
-static uint16_t enc_ticks_read_for_debug = 0;
+static float angle_enc_read_for_debug = 0.0; //to be able to read this value inside STM32Monitor
+static uint16_t enc_ticks_read_for_debug = 0; //to be able to read this value inside STM32Monitor
 
 //Основной цикл управления 1кГц здесь читается энкодер, к нему применяется фильтр и выдется управление на мотор в зависимости от уставки пришедшей сверху через cyphal
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == TIM7) {
-        motor.update();
+        m.update();
     }
     if (htim->Instance == TIM6) {
-    	angle_enc_read_for_debug = motor.read_encoder();
+    	angle_enc_read_for_debug = m.read_encoder();
     	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
     }
 }
@@ -34,7 +34,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 motor::motor()
 	{
-
+	as50_readAngle(&this->prev_ticks_from_encoder, 100); //encoder init
 	};
 
 void motor::update()
@@ -67,10 +67,39 @@ float motor::get_velocity()
 float motor::read_encoder()
 {
 	uint16_t raw_ticks_from_encoder;
+	uint16_t filtered_ticks_from_encoder;
 	as50_readAngle(&raw_ticks_from_encoder, 100);
-	enc_ticks_read_for_debug = raw_ticks_from_encoder;
-	raw_gear_angle_from_encoder = static_cast<float>(raw_ticks_from_encoder) * ((M_PI * 2) / gear_encoder_CPR);
+	filtered_ticks_from_encoder = simple_filter(raw_ticks_from_encoder);
+	enc_ticks_read_for_debug = filtered_ticks_from_encoder; //to be able to read this value inside STM32Monitor
+	raw_gear_angle_from_encoder = static_cast<float>(filtered_ticks_from_encoder) * ((M_PI * 2) / gear_encoder_CPR);
 	return raw_gear_angle_from_encoder;
+};
+
+void motor::move_to_encoder_position(uint16_t encoder_tics_to_go)
+{
+		int8_t Kp = 100;
+		uint32_t epsilon = 5;
+		uint32_t deviation = 0;
+		uint16_t raw_ticks_from_encoder;
+		as50_readAngle(&raw_ticks_from_encoder, 100);
+		deviation = encoder_tics_to_go - simple_filter(raw_ticks_from_encoder);
+		while(deviation > epsilon)
+		{
+			as50_readAngle(&raw_ticks_from_encoder, 100);
+			deviation = jc.direction * (encoder_tics_to_go - raw_ticks_from_encoder);
+			tmc5160_move(deviation * Kp);
+			HAL_Delay(1);
+		}
+		tmc5160_stop();
+		//tmc5160_set_zero();
+};
+
+uint16_t motor::simple_filter(uint16_t encoder_tics)
+{
+	uint16_t filtered_encoder_value_tics = 0;
+	filtered_encoder_value_tics = (encoder_tics + this->prev_ticks_from_encoder)/2;
+	this->prev_ticks_from_encoder = filtered_encoder_value_tics;
+	return filtered_encoder_value_tics;
 };
 
 }

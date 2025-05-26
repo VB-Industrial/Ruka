@@ -18,9 +18,13 @@ public:
 	void set_position_to_go(float rad);
 	float get_position();
 	float get_velocity();
+	void move_to_encoder_position(uint16_t encoder_tics);
+	uint16_t prev_ticks_from_encoder;
 private:
 	void _apply_speed(float speed);
+	uint16_t simple_filter(uint16_t encoder_tics);
 	uint16_t gear_encoder_CPR {16383};
+
 };
 
 

@@ -677,22 +677,7 @@ void cyphal_can_starter(FDCAN_HandleTypeDef* hfdcan)
 }
 
 
-void calib_move(joint_config * jc)
-{
-	int8_t Kp = 100;
-	uint32_t epsilon = 10;
-	uint32_t deviation = 0;
-	deviation = jc->zero_enc - enc_angle;
-	while(deviation > epsilon)
-	{
-		as50_readAngle(&enc_angle, 100);
-		deviation = jc->direction * (jc->zero_enc - enc_angle);
-		tmc5160_move(deviation * Kp);
-		HAL_Delay(1);
-	}
-	tmc5160_stop();
-	tmc5160_set_zero();
-}
+
 
 }
 
