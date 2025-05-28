@@ -52,3 +52,11 @@ int32_t rad_to_steps(float rads, int32_t full_steps)
 	steps = (int32_t)((full_steps * rads)/(M_PI * 2));
 	return steps;
 }
+
+uint16_t simple_EMA_filter(uint16_t ticks, uint16_t prev_ticks, float alpha)
+{
+	uint16_t filtered_encoder_value_tics = 0;
+	filtered_encoder_value_tics = alpha * ticks + (1 - alpha) * prev_ticks;
+	return filtered_encoder_value_tics;
+}
+

@@ -1,4 +1,5 @@
 Core/Src/communication.o: ../Core/Src/communication.cpp \
+ ../Core/Inc/drive_controller.hpp ../Core/Inc/encoder_gen.hpp \
  ../Core/Inc/main.h ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
@@ -82,10 +83,11 @@ Core/Src/communication.o: ../Core/Src/communication.cpp \
  ../Drivers/libcyphal/libs/uavcan/time/SynchronizedTimestamp_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h \
  ../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h \
- ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h \
- ../Core/Inc/motor_controller.hpp ../Core/Inc/as50xx.h ../Core/Inc/spi.h \
- ../Core/Inc/utility.h ../Core/Inc/communication.h \
+ ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h ../Core/Inc/as50xx.h \
+ ../Core/Inc/spi.h ../Core/Inc/utility.h ../Core/Inc/communication.h \
  ../Core/Inc/joint_config.h ../Core/Inc/tmc5160.h ../Core/Inc/utility.h
+../Core/Inc/drive_controller.hpp:
+../Core/Inc/encoder_gen.hpp:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -172,7 +174,6 @@ Core/Src/communication.o: ../Core/Src/communication.cpp \
 ../Drivers/libcyphal/libs/uavcan/_register/List_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/node/GetInfo_1_0.h:
 ../Drivers/libcyphal/libs/uavcan/node/Version_1_0.h:
-../Core/Inc/motor_controller.hpp:
 ../Core/Inc/as50xx.h:
 ../Core/Inc/spi.h:
 ../Core/Inc/utility.h:

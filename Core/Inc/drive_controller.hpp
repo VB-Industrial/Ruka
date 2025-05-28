@@ -5,28 +5,30 @@
  *      Author: VR
  */
 
-#ifndef INC_MOTOR_CONTROLLER_HPP_
-#define INC_MOTOR_CONTROLLER_HPP_
+#ifndef INC_DRIVE_CONTROLLER_HPP_
+#define INC_DRIVE_CONTROLLER_HPP_
 
-class motor {
+#include <cstdint>
+#include "encoder_gen.hpp"
+
+class drive {
 public:
 	float filtered_angle;
 	float raw_gear_angle_from_encoder;
-	motor();
+	drive();
+	encoder e;
 	void update();
-	float read_encoder();
 	void set_position_to_go(float rad);
 	float get_position();
 	float get_velocity();
 	void move_to_encoder_position(uint16_t encoder_tics);
-	uint16_t prev_ticks_from_encoder;
+	void calibrate_encoder();
 private:
-	void _apply_speed(float speed);
-	uint16_t simple_filter(uint16_t encoder_tics);
-	uint16_t gear_encoder_CPR {16383};
+	void move(float speed);
+
 
 };
 
 
 
-#endif /* INC_MOTOR_CONTROLLER_HPP_ */
+#endif /* INC_DRIVE_CONTROLLER_HPP_ */

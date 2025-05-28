@@ -17,5 +17,6 @@ double clamp_value_noref(double min_value, double value, double max_value);
 void clamp_value(double *min_value, double *value, double *max_value);
 float steps_to_rads(int32_t steps, int32_t full_steps);
 int32_t rad_to_steps(float rads, int32_t full_steps);
+uint16_t simple_EMA_filter(uint16_t ticks, uint16_t prev_ticks, float alpha);
 
 #endif /* INC_UTILITY_H_ */

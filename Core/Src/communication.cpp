@@ -1,3 +1,4 @@
+#include <drive_controller.hpp>
 #include "main.h"
 #include "ruka_joints.h"
 
@@ -20,7 +21,6 @@
 
 #include <uavcan/node/GetInfo_1_0.h>
 
-#include "motor_controller.hpp"
 
 extern "C" {
 #include "as50xx.h"
@@ -30,7 +30,7 @@ extern "C" {
 extern motor_config mc;
 extern joint_config jc;
 extern joint_config_address jc_a;
-extern motor motor;
+extern drive drv;
 
 
 extern uint16_t enc_angle;
@@ -124,7 +124,7 @@ public:
 
     	//New version POS-VEL control
     	//tmc5160_acceleration(10000000);
-    	motor.set_position_to_go(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
+    	drv.set_position_to_go(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
     	if(fabs(js_in.angular_velocity.radian_per_second) < 0.0001)
     	{
     		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
@@ -543,8 +543,8 @@ void send_JS(joint_config * jc) {             //float* pos, float* vel, float* e
 //			.angular_velocity = steps_to_rads(tmc5160_velocity_read(), jc->full_steps),
 //			.angular_acceleration = eff_in
 
-			.angular_position = motor.get_position(),
-			.angular_velocity = motor.get_velocity(),
+			.angular_position = drv.get_position(),
+			.angular_velocity = drv.get_velocity(),
 			.angular_acceleration = eff_in
 	};
     interface->send_msg<JS_msg>(
