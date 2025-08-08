@@ -18,7 +18,7 @@ public:
 	drive();
 	encoder e;
 	void update();
-	void set_position_to_go(float rad);
+	void js_move(float pos, float w, float w_acc);
 	float get_position();
 	float get_velocity();
 	void move_to_encoder_position(uint16_t encoder_tics);

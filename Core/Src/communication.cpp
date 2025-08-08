@@ -123,14 +123,9 @@ public:
 //    	}
 
     	//New version POS-VEL control
-    	//tmc5160_acceleration(10000000);
-    	drv.set_position_to_go(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-    	if(fabs(js_in.angular_velocity.radian_per_second) < 0.0001)
-    	{
-    		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-        	tmc5160_velocity(rad_to_steps(20000, jc.full_steps));
-        	tmc5160_position(rad_to_steps(js_in.angular_position.radian, jc.full_steps));
-    	}
+    	drv.js_move(js_in.angular_position.radian,
+    				js_in.angular_velocity.radian_per_second,
+    				js_in.angular_acceleration.radian_per_second_per_second);
     }
 };
 

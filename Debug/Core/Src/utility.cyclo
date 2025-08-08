@@ -1,0 +1,6 @@
+../Core/Src/utility.c:12:9:sign_extend_bits_to_32	2
+../Core/Src/utility.c:30:8:clamp_value_noref	3
+../Core/Src/utility.c:36:6:clamp_value	3
+../Core/Src/utility.c:42:7:steps_to_rads	1
+../Core/Src/utility.c:49:9:rad_to_steps	1
+../Core/Src/utility.c:56:10:simple_EMA_filter	1

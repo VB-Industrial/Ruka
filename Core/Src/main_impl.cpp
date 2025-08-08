@@ -44,32 +44,32 @@ void main_cpp()
 	vec_4ax quat = {0};
 	vec_4ax gyro = {0};
 
-	tmc5160_move(50000);
+	//tmc5160_move(50000);
 
 	//rv = HAL_I2C_IsDeviceReady(&hi2c4, 0x29, 1, 10);
 	//IMU_setup();
-//	while(1)
-//	{
-//	      uint32_t now = HAL_GetTick();
-//	      if ( (now - last_hbeat) >= 1000) {
-//	          last_hbeat = now;
-//	          heartbeat();
-//	      	  //imu_get_quat(&quat);
-//	      	  //imu_get_linear(&linear);
-//	      	  //imu_get_gyro(&gyro);
-//	          //sprintf(msg,"%d\n\0", q[1]);
-//	          //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
-//	          //send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
-//	          //HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-//	      }
-//	      if ( (now - last_js) >= 100) {
-//	    	  last_js = now;
-//	    	  send_JS(&jc);
-//	    	  //as50_readAngle(&enc_angle, 100);
-//	    	  //HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
-//	      }
-//	      cyphal_loop();
-//	}
+	while(1)
+	{
+	      uint32_t now = HAL_GetTick();
+	      if ( (now - last_hbeat) >= 1000) {
+	          last_hbeat = now;
+	          heartbeat();
+	      	  //imu_get_quat(&quat);
+	      	  //imu_get_linear(&linear);
+	      	  //imu_get_gyro(&gyro);
+	          //sprintf(msg,"%d\n\0", q[1]);
+	          //HAL_UART_Transmit_IT(&huart2, msg, sizeof(msg));
+	          //send_IMU(&quat.w, &quat.x, &quat.y, &quat.z, &linear.x, &linear.y, &linear.z, &gyro.x, &gyro.y, &gyro.z);
+	          //HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+	      }
+	      if ( (now - last_js) >= 100) {
+	    	  last_js = now;
+	    	  send_JS(&jc);
+	    	  //as50_readAngle(&enc_angle, 100);
+	    	  //HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+	      }
+	      cyphal_loop();
+	}
 };
 
 } //extern C end

@@ -327,8 +327,8 @@ void tmc5160_init(motor_config * mc)
 	WData[0] = 0x8B; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = mc->max_irun_scaler; //GLOBAL CURRENT SCALER
 	tmc5160_write(WData);
 
-	int init_ihold = mc->init_irun * 0.7;
-	WData[0] = 0x90; WData[1] = 0x00; WData[2] = 0x00; WData[3] = init_ihold; WData[4] = mc->init_irun; //  IHOLDDELAY=0,  IRUN=10/31,  IHOLD=02/31
+	//int init_ihold = mc->init_irun * 0.7; //to elaborate
+	WData[0] = 0x90; WData[1] = 0x00; WData[2] = 0x00; WData[3] = mc->init_irun; WData[4] = mc->init_irun; //  IHOLDDELAY=0,  IRUN=10/31,  IHOLD=02/31
 	tmc5160_write(WData);
 
 	WData[0] = 0x91; WData[1] = 0x00; WData[2] = 0x00; WData[3] = 0x00; WData[4] = 0x0A; // TPOWERDOWN=10: Delay before power down in stand still

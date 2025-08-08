@@ -1,11 +1,12 @@
+C:\ST\STM32CubeIDE_1.14.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.200.202406191623\tools\bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/include/c++/12.3.1/cmath:241:3:constexpr float std::fabs(float)	16	static
 ../Core/Src/drive_controller.cpp:25:6:void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef*)	16	static
 ../Core/Src/drive_controller.cpp:37:1:drive::drive()	16	static
 ../Core/Src/drive_controller.cpp:42:6:void drive::update()	16	static
-../Core/Src/drive_controller.cpp:48:6:void drive::set_position_to_go(float)	16	static
-../Core/Src/drive_controller.cpp:53:6:void drive::move(float)	24	static
-../Core/Src/drive_controller.cpp:59:7:float drive::get_position()	16	static
-../Core/Src/drive_controller.cpp:64:7:float drive::get_velocity()	16	static
-../Core/Src/drive_controller.cpp:71:6:void drive::move_to_encoder_position(uint16_t)	40	static
-../Core/Src/drive_controller.cpp:88:6:void drive::calibrate_encoder()	16	static
-../Core/Src/drive_controller.cpp:100:1:void __static_initialization_and_destruction_0(int, int)	16	static
-../Core/Src/drive_controller.cpp:100:1:cpp)	8	static
+../Core/Src/drive_controller.cpp:48:6:void drive::js_move(float, float, float)	32	static
+../Core/Src/drive_controller.cpp:67:6:void drive::move(float)	24	static
+../Core/Src/drive_controller.cpp:73:7:float drive::get_position()	16	static
+../Core/Src/drive_controller.cpp:78:7:float drive::get_velocity()	16	static
+../Core/Src/drive_controller.cpp:85:6:void drive::move_to_encoder_position(uint16_t)	40	static
+../Core/Src/drive_controller.cpp:102:6:void drive::calibrate_encoder()	16	static
+../Core/Src/drive_controller.cpp:114:1:void __static_initialization_and_destruction_0(int, int)	16	static
+../Core/Src/drive_controller.cpp:114:1:cpp)	8	static

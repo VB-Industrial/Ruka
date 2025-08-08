@@ -36,7 +36,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 
 drive::drive()
 	{
-		//this->e = encoder e;
+
 	};
 
 void drive::update()
@@ -45,9 +45,23 @@ void drive::update()
 	};
 
 
-void drive::set_position_to_go(float rad)
+void drive::js_move(float pos, float w, float w_acc)
 {
-
+	if(w_acc != 0.0)
+	{
+		//tmc5160_velocity(rad_to_steps(w, jc.full_steps));
+		tmc5160_move(rad_to_steps(w_acc, jc.full_steps));
+	}
+	else if(fabs(w) < 0.0001)
+	{
+		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
+    	tmc5160_velocity(rad_to_steps(20000, jc.full_steps));
+    	tmc5160_position(rad_to_steps(pos, jc.full_steps));
+	}
+	else
+	{
+		tmc5160_move(rad_to_steps(w, jc.full_steps));
+	}
 };
 
 void drive::move(float speed) {

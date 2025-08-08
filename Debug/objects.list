@@ -7,6 +7,7 @@
 "./Core/Src/drive_controller.o"
 "./Core/Src/encoder_gen.o"
 "./Core/Src/fdcan.o"
+"./Core/Src/gear_gen.o"
 "./Core/Src/gpio.o"
 "./Core/Src/i2c.o"
 "./Core/Src/joint_config.o"
